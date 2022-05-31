@@ -1,4 +1,4 @@
-import javafx.event.ActionEvent;
+
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
@@ -11,31 +11,32 @@ public class ISU {
     JButton button;
 
     // Constructor
-    public ISU () {
-        frame = new JFrame ("Basic JFrame Example");
+    public ISU() {
+        frame = new JFrame("Basic JFrame Example");
         frame.setPreferredSize(new Dimension(200, 200));
         frame.setLocation(200, 200);
 
-        myPanel = new JPanel ();
-        label = new JLabel ("Hello World!");
-        button = new JButton ("Hide");
+        myPanel = new JPanel();
+        label = new JLabel("Hello World!");
+        button = new JButton("Hide");
 
-        myPanel.add (label);
-        myPanel.add (button);
+        myPanel.add(label);
+        myPanel.add(button);
 
-        frame.add (myPanel);
-        frame.pack ();
-        frame.setVisible (true);
-    } 
-
-    public void actionPerformed (ActionEvent event) {
-        
+        frame.add(myPanel);
+        frame.pack();
+        frame.setVisible(true);
     }
 
-    public void newGame ()
-	{
+    public void actionPerformed(ActionEvent event) {
 
-    public static void main (String[] args) {
-        new ISU ();
+    }
+
+
+    public static void main(String[] args) {
+        new ISU();
     }
 }
+
+
+
