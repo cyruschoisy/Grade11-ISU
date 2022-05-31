@@ -3,7 +3,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.*;
 
 public class ISU {
-
     JFrame frame;
     JPanel myPanel;
     JLabel label;
@@ -12,8 +11,8 @@ public class ISU {
     // Constructor
     public ISU() {
         frame = new JFrame("Basic JFrame Example");
-        frame.setPreferredSize(new Dimension(200, 200));
-        frame.setLocation(200, 200);
+        frame.setPreferredSize(new Dimension(1920, 1080));
+        frame.setLocation(0, 0);
 
         myPanel = new JPanel();
         label = new JLabel("Hello World!");
@@ -30,7 +29,6 @@ public class ISU {
     public void actionPerformed(ActionEvent event) {
 
     }
-
 
     public static void main(String[] args) {
         new ISU();
