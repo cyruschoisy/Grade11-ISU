@@ -1,8 +1,14 @@
 import javafx.event.ActionEvent;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 import javax.swing.*;
 
 public class ISU {
+
+    JFrame frame;
+    JPanel myPanel;
+    JLabel label;
+    JButton button;
 
     // Constructor
     public ISU () {
@@ -29,7 +35,7 @@ public class ISU {
     public void newGame ()
 	{
 
-    public static void main(String[] args) throws Exception {
-        
+    public static void main (String[] args) {
+        new ISU ();
     }
 }
