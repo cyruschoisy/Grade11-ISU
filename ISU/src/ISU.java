@@ -20,17 +20,17 @@ public class ISU {
         myPanel.setLayout (new BorderLayout());
 
         buttons = new JPanel ();
-        buttons.setLayout (new FlowLayout());
+        buttons.setLayout (new BoxLayout (buttons, BoxLayout.PAGE_AXIS));
 
         startButton = new JButton ("Start");
         aboutUs = new JButton ("About us");
         howTo = new JButton ("How to play");
 
-        buttons.add (BorderLayout.NORTH, startButton);
-        buttons.add (BorderLayout.CENTER, aboutUs);
-        buttons.add (BorderLayout.SOUTH, howTo);
+        buttons.add (startButton);
+        buttons.add (aboutUs);
+        buttons.add (howTo);
 
-        myPanel.add (BorderLayout.CENTER, buttons);
+        myPanel.add (buttons, BorderLayout.CENTER);
 
         frame.add (myPanel);
         frame.pack ();
