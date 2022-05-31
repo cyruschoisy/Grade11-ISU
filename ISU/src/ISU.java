@@ -1,29 +1,40 @@
-import java.awt.Dimension;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 
 public class ISU {
     JFrame frame;
     JPanel myPanel;
-    JLabel label;
-    JButton button;
+    JPanel buttons;
+    JButton startButton;
+    JButton aboutUs;
+    JButton howTo;
 
     // Constructor
-    public ISU() {
+    public ISU () {
         frame = new JFrame("Basic JFrame Example");
         frame.setPreferredSize(new Dimension(1920, 1080));
         frame.setLocation(0, 0);
 
         myPanel = new JPanel();
-        label = new JLabel("Hello World!");
-        button = new JButton("Hide");
+        myPanel.setLayout (new BorderLayout());
 
-        myPanel.add(label);
-        myPanel.add(button);
+        buttons = new JPanel ();
+        buttons.setLayout (new FlowLayout());
 
-        frame.add(myPanel);
-        frame.pack();
-        frame.setVisible(true);
+        startButton = new JButton ("Start");
+        aboutUs = new JButton ("About us");
+        howTo = new JButton ("How to play");
+
+        buttons.add (BorderLayout.NORTH, startButton);
+        buttons.add (BorderLayout.CENTER, aboutUs);
+        buttons.add (BorderLayout.SOUTH, howTo);
+
+        myPanel.add (BorderLayout.CENTER, buttons);
+
+        frame.add (myPanel);
+        frame.pack ();
+        frame.setVisible (true);
     }
 
     public void actionPerformed(ActionEvent event) {
