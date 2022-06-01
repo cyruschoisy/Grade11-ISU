@@ -3,7 +3,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.*;
 
 public class ISU {
-    JFrame frame;
+    public static JFrame frame;
+    public static Graphics g;
 
     JPanel myPanel;
     JPanel buttons;
