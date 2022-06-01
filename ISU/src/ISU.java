@@ -42,6 +42,7 @@ public class ISU {
 //        myPanel.add (bgdImage);
         myPanel.add (buttons);
 
+        frame.setUndecorated(true);
         frame.add (myPanel);
         frame.pack ();
         frame.setVisible (true);
