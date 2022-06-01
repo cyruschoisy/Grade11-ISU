@@ -53,6 +53,7 @@ public class ISU {
 
     public static void main(String[] args) {
         new ISU();
+        Game.Main();
     }
 }
 
