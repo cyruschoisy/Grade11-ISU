@@ -1,10 +1,12 @@
 public class GameEntity {
 
-    int x = 5;
+    //Initialize variables, default values for now
+    public static int health;
+    public static int speed;
 
-    public static void Init(String[] args) {
-        GameEntity Enemy = new GameEntity();
-        System.out.println(Enemy.x);
+    //Main method
+    public GameEntity(int health, int speed) {
+        //Object code here
     }
 
 }
