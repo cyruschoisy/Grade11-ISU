@@ -4,16 +4,22 @@ import javax.swing.*;
 
 public class ISU {
     JFrame frame;
+
     JPanel myPanel;
     JPanel buttons;
+
     JButton startButton;
     JButton aboutUs;
     JButton howTo;
 
+    JLabel bgd;
+    ImageIcon bgdImage;
+    String background = "firstMap.png";
+
     // Constructor
     public ISU () {
         frame = new JFrame("Basic JFrame Example");
-        frame.setPreferredSize(new Dimension(1920, 1080));
+        frame.setPreferredSize(new Dimension(800, 600));
         frame.setLocation(0, 0);
 
         myPanel = new JPanel();
@@ -30,7 +36,11 @@ public class ISU {
         buttons.add (aboutUs);
         buttons.add (howTo);
 
-        myPanel.add (buttons, BorderLayout.CENTER);
+        JPanel bgd = new JPanel ();
+//        bgd. (background);
+
+//        myPanel.add (bgdImage);
+        myPanel.add (buttons);
 
         frame.add (myPanel);
         frame.pack ();
