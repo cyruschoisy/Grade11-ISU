@@ -18,44 +18,45 @@ public class Start {
         String background = "firstMap.png";
 
         // Constructor
-        public ISU () {
-            frame = new JFrame("Basic JFrame Example");
-            frame.setPreferredSize(new Dimension(800, 600));
-            frame.setLocation(0, 0);
+    public Start () {
+        frame = new JFrame("Basic JFrame Example");
+        frame.setPreferredSize(new Dimension(800, 600));
+        frame.setLocation(0, 0);
 
-            myPanel = new JPanel();
-            myPanel.setLayout (new BorderLayout());
+        myPanel = new JPanel();
+        myPanel.setLayout(new BorderLayout());
 
-            buttons = new JPanel ();
-            buttons.setLayout (new BoxLayout (buttons, BoxLayout.PAGE_AXIS));
+        buttons = new JPanel();
+        buttons.setLayout(new BoxLayout(buttons, BoxLayout.PAGE_AXIS));
 
-            startButton = new JButton ("Start");
-            aboutUs = new JButton ("About us");
-            howTo = new JButton ("How to play");
+        startButton = new JButton("Start");
+        aboutUs = new JButton("About us");
+        howTo = new JButton("How to play");
 
-            buttons.add (startButton);
-            buttons.add (aboutUs);
-            buttons.add (howTo);
+        buttons.add(startButton);
+        buttons.add(aboutUs);
+        buttons.add(howTo);
 
-            JPanel bgd = new JPanel ();
-//        bgd. (background);
+        JPanel bgd = new JPanel();
 
-//        myPanel.add (bgdImage);
-            myPanel.add (buttons);
+//      bgd. (background);
 
-            frame.setUndecorated(true);
-            frame.add (myPanel);
-            frame.pack ();
-            frame.setVisible (true);
-        }
+//      myPanel.add (bgdImage);
+        myPanel.add (buttons);
 
-        public void actionPerformed(ActionEvent event) {
+        frame.setUndecorated(true);
+        frame.add (myPanel);
+        frame.pack ();
+        frame.setVisible (true);
+    }
 
-        }
+    public void actionPerformed(ActionEvent event) {
 
-        public static void main(String[] args) {
-            new ISU();
-            Game.Main();
-        }
+    }
+
+    public static void main(String[] args) {
+        new Start ();
+        Game.Main();
     }
 }
+

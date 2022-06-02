@@ -13,7 +13,7 @@ public class GameEntity {
     public void start() {
         //Add the image onto the screen ("spawn it in")
         enemyOne = Toolkit.getDefaultToolkit().getImage("enemyOne.png");
-        ISU.g.drawImage (enemyOne, 200, 200, 100, 100, (ImageObserver) this);
+        Start.g.drawImage (enemyOne, 200, 200, 100, 100, (ImageObserver) this);
 
         //Alter animation path for different maps
         if (Game.map == 1) {
