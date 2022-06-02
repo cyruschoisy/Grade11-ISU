@@ -33,7 +33,7 @@ public class Start {
         aboutUs = new JButton("About us");
         howTo = new JButton("How to play");
 
-        bgd = new JLabel ("towerDefence.png");
+        bgd = new JLabel ("/media/towerDefence.png");
 
 
         buttons.add(startButton);
