@@ -2,7 +2,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 
-public class ISU {
+public class Start {
     JFrame frame;
 
     JPanel myPanel;
@@ -17,7 +17,7 @@ public class ISU {
     String background = "firstMap.png";
 
     // Constructor
-    public ISU () {
+    public Start() {
         frame = new JFrame("Basic JFrame Example");
         frame.setPreferredSize(new Dimension(800, 600));
         frame.setLocation(0, 0);
@@ -52,7 +52,7 @@ public class ISU {
     }
 
     public static void main(String[] args) {
-        new ISU();
+        new Start ();
     }
 }
 
