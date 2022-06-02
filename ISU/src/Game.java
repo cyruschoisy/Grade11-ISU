@@ -12,12 +12,12 @@ public class Game {
     //Main method
     public static void Main () {
 
-        //Set the health and speed of the enemies
-        GameEntity.health = 1;
-        GameEntity.speed = 100;
-
-        //Instantiate the object
-        GameEntity enemy = new GameEntity();
+//        //Set the health and speed of the enemies
+//        GameEntity.health = 1;
+//        GameEntity.speed = 100;
+//
+//        //Instantiate the object
+//        GameEntity enemy = new GameEntity();
 
     }
 
