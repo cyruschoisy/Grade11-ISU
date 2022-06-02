@@ -33,15 +33,14 @@ public class Start {
         aboutUs = new JButton("About us");
         howTo = new JButton("How to play");
 
+        bgd = new JLabel ("towerDefence.png");
+
+
         buttons.add(startButton);
         buttons.add(aboutUs);
         buttons.add(howTo);
 
-        JPanel bgd = new JPanel();
-
-//      bgd. (background);
-
-//      myPanel.add (bgdImage);
+        myPanel.add (bgd);
         myPanel.add (buttons);
 
         frame.setUndecorated(true);
