@@ -2,8 +2,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 
-public class Start {
-    JFrame frame;
+public class ISU {
+    public static JFrame frame;
+    public static Graphics g;
 
     JPanel myPanel;
     JPanel buttons;
@@ -17,7 +18,7 @@ public class Start {
     String background = "firstMap.png";
 
     // Constructor
-    public Start() {
+    public ISU () {
         frame = new JFrame("Basic JFrame Example");
         frame.setPreferredSize(new Dimension(800, 600));
         frame.setLocation(0, 0);
@@ -42,6 +43,7 @@ public class Start {
 //        myPanel.add (bgdImage);
         myPanel.add (buttons);
 
+        frame.setUndecorated(true);
         frame.add (myPanel);
         frame.pack ();
         frame.setVisible (true);
@@ -52,7 +54,8 @@ public class Start {
     }
 
     public static void main(String[] args) {
-        new Start ();
+        new ISU();
+        Game.Main();
     }
 }
 
