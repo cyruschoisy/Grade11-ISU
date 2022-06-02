@@ -14,7 +14,7 @@ public class Start {
         JButton howTo;
 
         JLabel bgd;
-        ImageIcon bgdImage;
+        ImageIcon [] start;
         String background = "/media/firstMap.png";
 
         // Constructor
@@ -23,18 +23,19 @@ public class Start {
         frame.setPreferredSize(new Dimension(800, 600));
         frame.setLocation(0, 0);
 
+        String [] start = {"/media/towerDefence.png"};
+
         myPanel = new JPanel();
-        myPanel.setLayout(new BorderLayout());
+        myPanel.setLayout (new BorderLayout());
 
         buttons = new JPanel();
-        buttons.setLayout(new BoxLayout(buttons, BoxLayout.PAGE_AXIS));
+        buttons.setLayout (new BoxLayout(buttons, BoxLayout.PAGE_AXIS));
 
         startButton = new JButton("Start");
         aboutUs = new JButton("About us");
         howTo = new JButton("How to play");
 
-        bgd = new JLabel ("towerDefence.png");
-
+        bgd = new JLabel (start[0]);
 
         buttons.add(startButton);
         buttons.add(aboutUs);
