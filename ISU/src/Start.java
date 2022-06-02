@@ -15,7 +15,7 @@ public class Start {
 
         JLabel bgd;
         ImageIcon bgdImage;
-        String background = "firstMap.png";
+        String background = "/media/firstMap.png";
 
         // Constructor
     public Start () {
