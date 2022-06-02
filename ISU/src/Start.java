@@ -67,7 +67,6 @@ public class Start extends JPanel {
         frame.setLocation(0, 0);
 
         Start myPanel = new Start ();
-        frame.setUndecorated(true);
         frame.add (myPanel);
         frame.pack ();
         frame.setVisible (true);
