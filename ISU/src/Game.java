@@ -1,8 +1,8 @@
 public class Game {
 
     //Initialize variables
-    public static int map = 1;
-    public static int wave = 1;
+    public static int map;
+    public static int wave;
 
     //Initialize 2D Array
     //20 rows, 15 columns
