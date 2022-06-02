@@ -38,7 +38,7 @@ public class GameEntity {
     }
 
     //Main method
-    public GameEntity() {
+    public void Main() {
         start();
     }
 }
