@@ -1,5 +1,8 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
 import javax.swing.*;
 
 public class Start extends JPanel {
@@ -9,11 +12,6 @@ public class Start extends JPanel {
     JPanel myPanel;
     JPanel buttons;
 
-    JButton startButton;
-    JButton aboutUs;
-    JButton howTo;
-
-    JLabel bgd;
     ImageIcon bgdImage;
     String background = "/media/firstMap.png";
 
@@ -21,37 +19,41 @@ public class Start extends JPanel {
 
     // Constructor
     public Start() {
-        setLayout (new BorderLayout());
-        buttons = new JPanel();
-        buttons.setLayout (new BoxLayout(buttons, BoxLayout.PAGE_AXIS));
-
-        startButton = new JButton("Start");
-        aboutUs = new JButton("About us");
-        howTo = new JButton("How to play");
-
-        bgd = new JLabel ("media/towerDefence.png");
-
-        buttons.add (startButton);
-        buttons.add (aboutUs);
-        buttons.add (howTo);
-
-        //  add (BorderLayout.NORTH, bgd);
-        add(BorderLayout.SOUTH, buttons);
-
+        setLayout (new BorderLayout ());
+        
         //Instantiate the object
         enemy = new GameEntity();
+        
     }
 
     public void paintComponent (Graphics g) {
         super.paintComponent (g);
-        Image blah = Toolkit.getDefaultToolkit().getImage("media/enemyOne.png");
-        g.drawImage(blah, 100, 100, this);
+        Image blah = Toolkit.getDefaultToolkit().getImage("media/towerDefence.png");
+        g.drawImage(blah, 0, 0, 800, 561, this);
+        
 
-        System.out.print ("HI");
     }
 
-    public void actionPerformed(ActionEvent event) {
+    public void actionPerformed (ActionEvent event) {
+    	String click = event.getActionCommand (); 
+    	
+    }
+    
+    public void mouseClicked (MouseEvent e) {
+    	int x, y;
+		x = e.getX ();
+		y = e.getY ();
 
+		System.out.print ("x: " + x + "y: " + y);
+		
+		handleAction (x, y);
+    }
+    
+    public void handleAction (int x, int y) {
+    	
+//    	if (x) { // Exit
+//    		System.exit (0);
+//    	}
     }
 
     public static void main (String[] args) {
