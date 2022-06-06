@@ -76,6 +76,8 @@ public class Start extends JPanel {
         frame.setVisible (true);
 
         // Game.Main();
+        
+        // testest
     }
 }
 
