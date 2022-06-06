@@ -18,7 +18,7 @@ public class Start extends JPanel {
     GameEntity enemy;
 
     // Constructor
-    public Start() {
+    public Start () {
         setLayout (new BorderLayout ());
         
         //Instantiate the object
@@ -30,13 +30,10 @@ public class Start extends JPanel {
         super.paintComponent (g);
         Image blah = Toolkit.getDefaultToolkit().getImage("media/towerDefence.png");
         g.drawImage(blah, 0, 0, 800, 561, this);
-        
-
     }
 
     public void actionPerformed (ActionEvent event) {
-    	String click = event.getActionCommand (); 
-    	
+    	String click = event.getActionCommand ();
     }
     
     public void mouseClicked (MouseEvent e) {
@@ -51,9 +48,21 @@ public class Start extends JPanel {
     
     public void handleAction (int x, int y) {
     	
-//    	if (x) { // Exit
-//    		System.exit (0);
-//    	}
+    	if (x >= 700 && x <= 800 && y >= 550 && y <= 600) { // Exit button
+    		System.exit (0);
+    	}
+    	
+    	else if (x >= 300 && x <= 500 && y >= 300 && y <= 350) { // Start button
+    		
+    	}
+    	
+    	else if (x >= 300 && x <= 500 && y >= 400 && y <= 450) { // About us button
+    		
+    	}
+    	
+    	else if (x >= 300 && x <= 500 && y >= 500 && y <= 550) { // How to Play button
+    		
+    	}
     }
 
     public static void main (String[] args) {
