@@ -10,6 +10,9 @@ import javax.swing.*;
 public class Start extends JPanel implements MouseListener{
     public static JFrame frame;
     public static Graphics g;
+    public static int map;
+    public static int wave;
+    public static int[][] board = new int[15][20];
 
     JPanel myPanel;
     JPanel buttons;

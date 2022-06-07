@@ -12,7 +12,7 @@ public class GameEntity {
 
     public GameEntity () {
         //Add the image onto the screen ("spawn it in")
-        enemyOne = Toolkit.getDefaultToolkit().getImage("/media/enemyOne.png");
+        enemyOne = Toolkit.getDefaultToolkit().getImage("media/enemyOne.png");
         health = 100;
         speed = 10;
 //        //Alter animation path for different maps
