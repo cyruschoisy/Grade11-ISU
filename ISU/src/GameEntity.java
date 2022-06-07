@@ -5,16 +5,18 @@ import java.awt.image.ImageObserver;
 public class GameEntity {
 
     //Initialize variables
-    public int health;
-    public int speed;
+    private int health;
+    private int speed;
+    private int h;
+    private int w;
 
-    public  Image enemyOne;
+    public Image enemyOne;
 
     public GameEntity () {
         //Add the image onto the screen ("spawn it in")
-        enemyOne = Toolkit.getDefaultToolkit().getImage("media/enemyOne.png");
-        health = 100;
-        speed = 10;
+
+        loadImage();
+
 //        //Alter animation path for different maps
 //        if (Game.map == 1) {
 //            animationPathOne(GameEntity.speed);
@@ -23,6 +25,13 @@ public class GameEntity {
 //        } else if (Game.map == 3) {
 //            animationPathThree(GameEntity.speed);
 //        }
+    }
+
+    public void loadImage() {
+        ImageIcon entity = new ImageIcon("media/enemyOne.png");
+        enemyOne = entity.getImage();
+        w = enemyOne.getWidth(null);
+        h = enemyOne.getHeight(null);
     }
 
     public static void animationPathOne(int speed) {
@@ -37,8 +46,4 @@ public class GameEntity {
         //Describe the path of the entity
     }
 
-    //Main method
-//    public void Main() {
-//        start();
-//    }
 }

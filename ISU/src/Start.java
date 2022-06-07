@@ -29,8 +29,6 @@ public class Start extends JPanel implements MouseListener{
         //Call the constructor for the object
         enemy = new GameEntity();
         
-        
-        
     }
 
     public void paintComponent (Graphics g) {
