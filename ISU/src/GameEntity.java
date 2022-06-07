@@ -5,8 +5,8 @@ import java.awt.image.ImageObserver;
 public class GameEntity {
 
     //Initialize variables
-    public  int health;
-    public  int speed;
+    public int health;
+    public int speed;
 
     public  Image enemyOne;
 
