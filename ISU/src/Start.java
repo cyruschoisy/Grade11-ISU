@@ -36,6 +36,9 @@ public class Start extends JPanel implements MouseListener{
         	enemy.speed = (int)(Math.random() * 99) + 1;
         	enemy.health = (int)(Math.random() * 9) + 1;
         	enemy = new GameEntity();
+            width = (int)(Math.random() * 99) + 1;
+            height = (int)(Math.random() * 99) + 1;
+            this.repaint();
         }
         
     }

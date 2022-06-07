@@ -5,8 +5,8 @@ import java.awt.image.ImageObserver;
 public class GameEntity {
 
     //Initialize variables
-    private int health;
-    private int speed;
+    public int health;
+    public int speed;
     private int h;
     private int w;
 
