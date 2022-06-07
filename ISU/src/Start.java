@@ -35,6 +35,12 @@ public class Start extends JPanel implements MouseListener{
         super.paintComponent (g);
         Image blah = Toolkit.getDefaultToolkit().getImage("media/towerDefence.png");
         g.drawImage(blah, 0, 0, 800, 561, this);
+        drawEntitiy(g);
+    }
+
+    public void drawEntitiy(Graphics g) {
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.drawImage(enemy.getImage(), 100, 100, this);
     }
 
     public void actionPerformed (ActionEvent event) {

@@ -34,6 +34,10 @@ public class GameEntity {
         h = enemyOne.getHeight(null);
     }
 
+    public Image getImage() {
+        return enemyOne;
+    }
+
     public static void animationPathOne(int speed) {
         //Describe the path of the entity
     }
