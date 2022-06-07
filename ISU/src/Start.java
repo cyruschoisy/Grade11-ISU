@@ -40,7 +40,7 @@ public class Start extends JPanel implements MouseListener{
 
     public void drawEntitiy(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        g2d.drawImage(enemy.getImage(), 100, 100, this);
+        g2d.drawImage(enemy.getImage(), 100, 100, 100, 100,this);
     }
 
     public void actionPerformed (ActionEvent event) {
