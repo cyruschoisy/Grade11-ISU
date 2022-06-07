@@ -13,6 +13,11 @@ public class Start extends JPanel implements MouseListener{
     public static int map;
     public static int wave;
     public static int[][] board = new int[15][20];
+    
+    int posX = 100;
+    int posY = 100;
+    int width = 100;
+    int height = 100;
 
     JPanel myPanel;
     JPanel buttons;
@@ -27,7 +32,11 @@ public class Start extends JPanel implements MouseListener{
         setLayout (new BorderLayout ());
         addMouseListener (this);
         //Call the constructor for the object
-        enemy = new GameEntity();
+        for (int i = 1; i < 10; i++) {
+        	enemy.speed = (int)(Math.random() * 99) + 1;
+        	enemy.health = (int)(Math.random() * 9) + 1;
+        	enemy = new GameEntity();
+        }
         
     }
 
@@ -35,12 +44,12 @@ public class Start extends JPanel implements MouseListener{
         super.paintComponent (g);
         Image blah = Toolkit.getDefaultToolkit().getImage("media/towerDefence.png");
         g.drawImage(blah, 0, 0, 800, 561, this);
-        drawEntitiy(g);
+        drawEntity (g, posX, posY, width, height);
     }
 
-    public void drawEntitiy(Graphics g) {
+    public void drawEntity (Graphics g, int posX, int posY, int width, int height) {
         Graphics2D g2d = (Graphics2D) g;
-        g2d.drawImage(enemy.getImage(), 100, 100, 100, 100,this);
+        g2d.drawImage(enemy.getImage(), posX, posY, width, height, this);
     }
 
     public void actionPerformed (ActionEvent event) {
@@ -101,7 +110,7 @@ public class Start extends JPanel implements MouseListener{
     }
 
     public static void main (String[] args) {
-        frame = new JFrame ("Basic JFrame Example");
+        frame = new JFrame ("Tower Defence");
         frame.setPreferredSize (new Dimension (800, 600));
         frame.setLocation(0, 0);
 
