@@ -122,9 +122,10 @@ public class Start extends JPanel implements MouseListener{
 	}
     public void handleAction (int x, int y) {
         if (aboutUs == false)  {
-            if (x >= 642 && x <= 12 && y >= 721 && y <= 38) { // Exit button
+            if (x >= 642 && x <= 721 && y >= 12 && y <= 38) { // Exit button
                 picture = "towerDefence";
-                startScreen = true; 
+                startScreen = true;
+                repaint();
             }
         }
 
@@ -135,7 +136,7 @@ public class Start extends JPanel implements MouseListener{
 	    	
 	    	else if (x >= 331 && x <= 467 && y >= 194 && y <= 233) { // Start button
 	    		System.out.println ("START");
-	    		picture = "firstMap2";
+	    		picture = "firstMap";
 	    		startScreen = false;
 	    		repaint(); 
 	    	}
