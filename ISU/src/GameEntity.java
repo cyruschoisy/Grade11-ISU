@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.ImageObserver;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class GameEntity {
 
@@ -9,6 +11,9 @@ public class GameEntity {
     public int speed;
     private int h;
     private int w;
+
+    Path currentRelativePath = Paths.get("");
+    String root = currentRelativePath.toAbsolutePath().toString();
 
     public Image enemyOne;
 
@@ -28,7 +33,9 @@ public class GameEntity {
     }
 
     public void loadImage() {
-        ImageIcon entity = new ImageIcon("/media/enemyOne.png");
+        String enemyPath = root + "/media/enemyOne.png";
+        System.out.println(enemyPath);
+        ImageIcon entity = new ImageIcon(enemyPath);
         enemyOne = entity.getImage();
         w = enemyOne.getWidth (null);
         h = enemyOne.getHeight (null);
