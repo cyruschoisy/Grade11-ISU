@@ -19,7 +19,7 @@ public class Start extends JPanel implements Runnable, MouseListener{
     public String root;
 
     public final int FPS = 30;
-    
+
     int posX = 100;
     int posY = 100;
     int width = 100;
@@ -36,6 +36,7 @@ public class Start extends JPanel implements Runnable, MouseListener{
     String picture = "towerDefence";
 
     boolean startScreen = true;
+    boolean aboutUs = true;
     
     // Constructor
     public Start () {
@@ -115,7 +116,7 @@ public class Start extends JPanel implements Runnable, MouseListener{
 		x = e.getX ();
 		y = e.getY ();
 
-		//System.out.println ("x: " + x + " y: " + y);
+		System.out.println ("x: " + x + " y: " + y);
 		
 		handleAction (x, y);
     }
@@ -144,6 +145,14 @@ public class Start extends JPanel implements Runnable, MouseListener{
 		
 	}
     public void handleAction (int x, int y) {
+        if (aboutUs == false)  {
+            if (x >= 642 && x <= 721 && y >= 12 && y <= 38) { // Exit button
+                picture = "towerDefence";
+                startScreen = true;
+                repaint();
+            }
+        }
+
     	if (startScreen = true) {
 	    	if (x >= 644 && x <= 719 && y >= 507 && y <= 531) { // Exit button
 	    		System.exit (0);
@@ -152,13 +161,17 @@ public class Start extends JPanel implements Runnable, MouseListener{
 	    	else if (x >= 331 && x <= 467 && y >= 194 && y <= 233) { // Start button
 	    		System.out.println ("START");
 	    		picture = "firstMapFinal";
+	    		picture = "firstMap";
 	    		startScreen = false;
 	    		repaint(); 
 	    	}
 	    	
 	    	else if (x >= 289 && x <= 510 && y >= 274 && y <= 313) { // About us button
 	    		System.out.println ("ABOUT US");
-	    	}
+                picture = "aboutUs";
+                aboutUs = false;
+                repaint();
+            }
 	    	
 	    	else if (x >= 244 && x <= 552 && y >= 353 && y <= 391) { // How to Play button
 	    		System.out.println ("HOW TO PLAY");
