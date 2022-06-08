@@ -16,6 +16,8 @@ public class Start extends JPanel implements MouseListener{
     public static int map;
     public static int wave;
     public static int[][] board = new int[15][20];
+
+
     
     int posX = 100;
     int posY = 100;
@@ -31,8 +33,8 @@ public class Start extends JPanel implements MouseListener{
     GameEntity enemy;
     
     String picture = "towerDefence";
-    
-    boolean startScreen = true;  
+
+    boolean startScreen = true;
     
     // Constructor
     public Start () {
@@ -61,6 +63,7 @@ public class Start extends JPanel implements MouseListener{
 
         String splashImagePath = root + "/ISU/media/" + picture + ".png";
         File splashImage = new File(splashImagePath);
+        System.out.println("Entire path: " + splashImagePath);
 
         Image blah;
         if (splashImage.exists() && !splashImage.isDirectory()) {

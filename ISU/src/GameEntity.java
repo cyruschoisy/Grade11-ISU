@@ -28,7 +28,7 @@ public class GameEntity {
     }
 
     public void loadImage() {
-        ImageIcon entity = new ImageIcon("media/enemyOne.png");
+        ImageIcon entity = new ImageIcon("/media/enemyOne.png");
         enemyOne = entity.getImage();
         w = enemyOne.getWidth (null);
         h = enemyOne.getHeight (null);
