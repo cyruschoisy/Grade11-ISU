@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.ImageObserver;
+import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -18,8 +19,8 @@ public class GameEntity {
     public Image enemyOne;
 
     public GameEntity () {
-        //Add the image onto the screen ("spawn it in")
 
+        System.out.println("LOADING THE ENEMY");
         loadImage();
 
 //        //Alter animation path for different maps
@@ -33,7 +34,7 @@ public class GameEntity {
     }
 
     public void loadImage() {
-        String enemyPath = root + "/media/enemyOne.png";
+        String enemyPath = root + "\\ISU\\media\\enemyOne.png";
         System.out.println(enemyPath);
         ImageIcon entity = new ImageIcon(enemyPath);
         enemyOne = entity.getImage();
