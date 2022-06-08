@@ -169,6 +169,7 @@ public class Start extends JPanel implements Runnable, MouseListener{
 	    		System.out.println ("ABOUT US");
                 picture = "aboutUs";
                 aboutUs = false;
+                startScreen = false;
                 repaint();
             }
 	    	
