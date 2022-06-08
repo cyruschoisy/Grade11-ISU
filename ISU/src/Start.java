@@ -4,6 +4,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import javax.swing.*;
 
@@ -51,10 +54,23 @@ public class Start extends JPanel implements MouseListener{
 
     public void paintComponent (Graphics g) {
         super.paintComponent (g);
-        Image blah = Toolkit.getDefaultToolkit().getImage("media/" + picture + ".png");
-        g.drawImage(blah, 0, 0, 800, 561, this);
-        
-        drawEntity (g, posX, posY, width, height);
+
+        Path currentRelativePath = Paths.get("");
+        String root = currentRelativePath.toAbsolutePath().toString();
+        System.out.println("Current absolute path is: " + root);
+
+        String splashImagePath = root + "/ISU/media/" + picture + ".png";
+        File splashImage = new File(splashImagePath);
+
+        Image blah;
+        if (splashImage.exists() && !splashImage.isDirectory()) {
+            blah = Toolkit.getDefaultToolkit().getImage(splashImagePath);
+            g.drawImage(blah, 0, 0, 800, 561, this);
+        } else {
+            System.out.println("IMAGE CANNOT BE FOUND");
+        }
+
+       drawEntity (g, posX, posY, width, height);
     }
 
     public void drawEntity (Graphics g, int posX, int posY, int width, int height) {
