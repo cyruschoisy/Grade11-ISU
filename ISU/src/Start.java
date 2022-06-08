@@ -16,6 +16,7 @@ public class Start extends JPanel implements MouseListener{
     public static int map;
     public static int wave;
     public static int[][] board = new int[15][20];
+    public String root;
 
     int posX = 100;
     int posY = 100;
