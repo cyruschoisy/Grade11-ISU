@@ -28,8 +28,8 @@ public class Start extends JPanel implements Runnable, MouseListener{
     JPanel myPanel;
     JPanel buttons;
 
-    ImageIcon bgdImage;
-    String background = "media/firstMap.png";
+//    ImageIcon bgdImage;
+//    String background = "media/firstMap.png";
 
     GameEntity enemy;
     
@@ -161,7 +161,6 @@ public class Start extends JPanel implements Runnable, MouseListener{
 	    	else if (x >= 331 && x <= 467 && y >= 194 && y <= 233) { // Start button
 	    		System.out.println ("START");
 	    		picture = "firstMapFinal";
-	    		picture = "firstMap";
 	    		startScreen = false;
 	    		repaint(); 
 	    	}
