@@ -26,32 +26,40 @@ public class Start extends JPanel implements MouseListener{
     String background = "media/firstMap.png";
 
     GameEntity enemy;
-
+    
+    String picture = "towerDefence";
+    
+    boolean startScreen = true;  
+    
     // Constructor
     public Start () {
         setLayout (new BorderLayout ());
         addMouseListener (this);
         //Call the constructor for the object
         for (int i = 1; i < 10; i++) {
-        	enemy.speed = (int)(Math.random() * 99) + 1;
-        	enemy.health = (int)(Math.random() * 9) + 1;
+        	width = (int)(Math.random () * 99) + 1;
+            height = (int)(Math.random () * 99) + 1;
+            posX = (int)(Math.random () * 99) + 1;
+            posY = (int)(Math.random () * 99) + 1;
+            
+//        	enemy.speed = (int)(Math.random() * 99) + 1;
+//        	enemy.health = (int)(Math.random() * 9) + 1;
         	enemy = new GameEntity();
-            width = (int)(Math.random() * 99) + 1;
-            height = (int)(Math.random() * 99) + 1;
-            this.repaint();
+        	this.paint (g);
         }
-        
     }
 
     public void paintComponent (Graphics g) {
         super.paintComponent (g);
-        Image blah = Toolkit.getDefaultToolkit().getImage("media/towerDefence.png");
+        Image blah = Toolkit.getDefaultToolkit().getImage("media/" + picture + ".png");
         g.drawImage(blah, 0, 0, 800, 561, this);
+        
         drawEntity (g, posX, posY, width, height);
     }
 
     public void drawEntity (Graphics g, int posX, int posY, int width, int height) {
         Graphics2D g2d = (Graphics2D) g;
+        
         g2d.drawImage(enemy.getImage(), posX, posY, width, height, this);
     }
 
@@ -94,21 +102,25 @@ public class Start extends JPanel implements MouseListener{
 		
 	}
     public void handleAction (int x, int y) {
-    	
-    	if (x >= 644 && x <= 719 && y >= 507 && y <= 531) { // Exit button
-    		System.exit (0);
-    	}
-    	
-    	else if (x >= 331 && x <= 467 && y >= 194 && y <= 233) { // Start button
-    		System.out.println ("START");
-    	}
-    	
-    	else if (x >= 289 && x <= 510 && y >= 274 && y <= 313) { // About us button
-    		System.out.println ("ABOUT US");
-    	}
-    	
-    	else if (x >= 244 && x <= 552 && y >= 353 && y <= 391) { // How to Play button
-    		System.out.println ("HOW TO PLAY");
+    	if (startScreen = true) {
+	    	if (x >= 644 && x <= 719 && y >= 507 && y <= 531) { // Exit button
+	    		System.exit (0);
+	    	}
+	    	
+	    	else if (x >= 331 && x <= 467 && y >= 194 && y <= 233) { // Start button
+	    		System.out.println ("START");
+	    		picture = "firstMap2";
+	    		startScreen = false;
+	    		repaint(); 
+	    	}
+	    	
+	    	else if (x >= 289 && x <= 510 && y >= 274 && y <= 313) { // About us button
+	    		System.out.println ("ABOUT US");
+	    	}
+	    	
+	    	else if (x >= 244 && x <= 552 && y >= 353 && y <= 391) { // How to Play button
+	    		System.out.println ("HOW TO PLAY");
+	    	}
     	}
     }
 
@@ -123,8 +135,7 @@ public class Start extends JPanel implements MouseListener{
         frame.setVisible (true);
 
         // Game.Main();
-        
-        // testest
+
     }
 
 
