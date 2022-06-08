@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 
 import javax.swing.*;
 
-public class Start extends JPanel implements MouseListener{
+public class Start extends JPanel implements Runnable, MouseListener{
     public static JFrame frame;
     public static Graphics g;
     public static int map;
@@ -18,7 +18,7 @@ public class Start extends JPanel implements MouseListener{
     public static int[][] board = new int[15][20];
     public String root;
 
-
+    public final int FPS = 30;
     
     int posX = 100;
     int posY = 100;
@@ -43,8 +43,8 @@ public class Start extends JPanel implements MouseListener{
         addMouseListener (this);
         //Call the constructor for the object
         for (int i = 1; i < 10; i++) {
-        	width = (int)(Math.random () * 99) + 1;
-            height = (int)(Math.random () * 99) + 1;
+        	width = 100;
+            height = 100;
             posX = (int)(Math.random () * 99) + 1;
             posY = (int)(Math.random () * 99) + 1;
             
@@ -53,6 +53,28 @@ public class Start extends JPanel implements MouseListener{
         	enemy = new GameEntity();
         	this.paint (g);
         }
+    }
+
+    @Override
+    public void run() {
+        System.exit(909900);
+        System.out.println("Init. Framerate");
+        while(true) {
+            update();
+            this.repaint();
+            try {
+                Thread.sleep(1000/FPS);
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void update() {
+        //Create our movement for the enemies
+        posX += 2;
+        posY += 2;
+        System.out.println(posX + ", " + posY);
     }
 
     public void paintComponent (Graphics g) {
@@ -129,7 +151,7 @@ public class Start extends JPanel implements MouseListener{
 	    	
 	    	else if (x >= 331 && x <= 467 && y >= 194 && y <= 233) { // Start button
 	    		System.out.println ("START");
-	    		picture = "firstMap2";
+	    		picture = "firstMapFinal";
 	    		startScreen = false;
 	    		repaint(); 
 	    	}

@@ -19,23 +19,12 @@ public class GameEntity {
     public Image enemyOne;
 
     public GameEntity () {
-
         System.out.println("LOADING THE ENEMY");
         loadImage();
-
-//        //Alter animation path for different maps
-//        if (Game.map == 1) {
-//            animationPathOne(GameEntity.speed);
-//        } else if (Game.map == 2) {
-//            animationPathTwo(GameEntity.speed);
-//        } else if (Game.map == 3) {
-//            animationPathThree(GameEntity.speed);
-//        }
     }
 
     public void loadImage() {
         String enemyPath = root + "\\ISU\\media\\enemyOne.png";
-        System.out.println(enemyPath);
         ImageIcon entity = new ImageIcon(enemyPath);
         enemyOne = entity.getImage();
         w = enemyOne.getWidth (null);
