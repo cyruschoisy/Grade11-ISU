@@ -6,7 +6,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class GameEntity {
-
     //Initialize variables
     public int health;
     public int speed;
