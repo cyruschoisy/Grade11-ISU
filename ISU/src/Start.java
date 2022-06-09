@@ -7,10 +7,9 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
 import javax.swing.*;
 
-public class Start extends JPanel implements Runnable, MouseListener{
+public class Start extends JPanel implements Runnable, MouseListener {
     public static JFrame frame;
     public static Graphics g;
     public static int map;
