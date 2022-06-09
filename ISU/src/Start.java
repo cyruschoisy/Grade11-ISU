@@ -14,12 +14,12 @@ import javax.imageio.ImageIO;
 
 import javax.swing.*;
 
-public class Start extends JPanel implements Runnable, MouseListener{
+public class Start extends JPanel implements Runnable, MouseListener {
     public static JFrame frame;
     public static Graphics g;
     public static int map = 0;
     public static int wave;
-    public static int[][] board = new int[15][20];
+    public static int[][] board = new int [8][6];
     public int count = 0;
     public String root;
 
@@ -175,7 +175,7 @@ public class Start extends JPanel implements Runnable, MouseListener{
 	    	
 	    	else if (x >= 331 && x <= 467 && y >= 194 && y <= 233) { // Start button
 	    		System.out.println ("START");
-	    		picture = "firstMapFinal";
+	    		picture = "secondmap";
                 map = 1;
 	    		startScreen = false;
 	    		repaint(); 
