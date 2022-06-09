@@ -25,7 +25,7 @@ public class Start extends JPanel implements Runnable, MouseListener{
 
     public static BufferedImage enemyImage;
 
-    public final int FPS = 30;
+    public final int FPS = 10;
 
     int posX = 200;
     int posY = 200;
@@ -77,8 +77,6 @@ public class Start extends JPanel implements Runnable, MouseListener{
     }
 
     public void update() {
-        //Create our movement for the enemies
-        posX += 4;
     }
 
     public void paintComponent (Graphics g) {
@@ -99,12 +97,14 @@ public class Start extends JPanel implements Runnable, MouseListener{
         } else {
             System.out.println("IMAGE CANNOT BE FOUND");
         }
-
-        for (int i = 0; i < GameEntity.MapEnemyCount.length; i++) {
-            for (int j = 0; j < GameEntity.MapEnemyCount[i]; j++) {
-                g.drawImage(enemyImage, getXPos(count), getYPos(count), 100, 100, null);
-                if (count != 49) {
-                    count++;
+        if (!startScreen) {
+            System.out.println("Enemy moving");
+            for (int i = 0; i < GameEntity.MapEnemyCount.length; i++) {
+                for (int j = 0; j < GameEntity.MapEnemyCount[i]; j++) {
+                    g.drawImage(enemyImage, getXPos(count), getYPos(count), 100, 100, null);
+                    if (count != 49) {
+                        count++;
+                    }
                 }
             }
         }
