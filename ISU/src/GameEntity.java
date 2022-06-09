@@ -13,6 +13,12 @@ public class GameEntity {
     private int h;
     private int w;
 
+    public static int[] Map1EnemyMovementX = {2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2};
+    public static int[] Map1EnemyMovementY = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+    public static int[] MapEnemyCount = {2, 3, 4, 6, 8, 10, 12, 14, 15, 20};
+
+    public static int enemyOneDistance = 5;
+
     Path currentRelativePath = Paths.get("");
     String root = currentRelativePath.toAbsolutePath().toString();
 
