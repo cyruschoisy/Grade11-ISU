@@ -7,20 +7,28 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
+import java.awt.image.BufferedImage;
+import java.io.*;
+import javax.imageio.ImageIO;
+
 import javax.swing.*;
 
-public class Start extends JPanel implements Runnable, MouseListener {
+public class Start extends JPanel implements Runnable, MouseListener{
     public static JFrame frame;
     public static Graphics g;
-    public static int map;
+    public static int map = 0;
     public static int wave;
     public static int[][] board = new int[15][20];
+    public int count = 0;
     public String root;
+
+    public static BufferedImage enemyImage;
 
     public final int FPS = 30;
 
-    int posX = 100;
-    int posY = 100;
+    int posX = 200;
+    int posY = 200;
     int width = 100;
     int height = 100;
 
@@ -39,25 +47,23 @@ public class Start extends JPanel implements Runnable, MouseListener {
     
     // Constructor
     public Start () {
+        enemy = new GameEntity();
         setLayout (new BorderLayout ());
         addMouseListener (this);
-        //Call the constructor for the object
-        for (int i = 1; i < 10; i++) {
-        	width = 100;
-            height = 100;
-            posX = (int)(Math.random () * 99) + 1;
-            posY = (int)(Math.random () * 99) + 1;
-            
-//        	enemy.speed = (int)(Math.random() * 99) + 1;
-//        	enemy.health = (int)(Math.random() * 9) + 1;
-        	enemy = new GameEntity();
-        	this.paint (g);
+
+        Thread thread = new Thread(this);
+        thread.start();
+
+        try{
+            enemyImage = ImageIO.read(new File("enemyOne.png"));
+        }
+        catch (Exception e){
+            System.out.println(e);
         }
     }
 
     @Override
     public void run() {
-        System.exit(909900);
         System.out.println("Init. Framerate");
         while(true) {
             update();
@@ -72,9 +78,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
     public void update() {
         //Create our movement for the enemies
-        posX += 2;
-        posY += 2;
-        System.out.println(posX + ", " + posY);
+        posX += 4;
     }
 
     public void paintComponent (Graphics g) {
@@ -82,11 +86,11 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
         Path currentRelativePath = Paths.get("");
         String root = currentRelativePath.toAbsolutePath().toString();
-        System.out.println("Current absolute path is: " + root);
+//        System.out.println("Current absolute path is: " + root);
 
         String splashImagePath = root + "/ISU/media/" + picture + ".png";
         File splashImage = new File(splashImagePath);
-        System.out.println("Entire path: " + splashImagePath);
+//        System.out.println("Entire path: " + splashImagePath);
 
         Image blah;
         if (splashImage.exists() && !splashImage.isDirectory()) {
@@ -96,19 +100,31 @@ public class Start extends JPanel implements Runnable, MouseListener {
             System.out.println("IMAGE CANNOT BE FOUND");
         }
 
-       drawEntity (g, posX, posY, width, height);
+        for (int i = 0; i < GameEntity.MapEnemyCount.length; i++) {
+            for (int j = 0; j < GameEntity.MapEnemyCount[i]; j++) {
+                g.drawImage(enemyImage, getXPos(count), getYPos(count), 100, 100, null);
+                if (count != 49) {
+                    count++;
+                }
+            }
+        }
     }
 
-    public void drawEntity (Graphics g, int posX, int posY, int width, int height) {
-        Graphics2D g2d = (Graphics2D) g;
-        
-        g2d.drawImage(enemy.getImage(), posX, posY, width, height, this);
+    public int getXPos(int count) {
+        posX += GameEntity.Map1EnemyMovementX[count];
+
+        return posX;
+    }
+
+    public int getYPos(int count) {
+        posY += GameEntity.Map1EnemyMovementY[count];
+
+        return posY;
     }
 
     public void actionPerformed (ActionEvent event) {
-    	String click = event.getActionCommand ();
+        String click = event.getActionCommand ();
     }
-    
     
     public void mouseClicked (MouseEvent e) {
     	int x, y;
@@ -160,6 +176,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
 	    	else if (x >= 331 && x <= 467 && y >= 194 && y <= 233) { // Start button
 	    		System.out.println ("START");
 	    		picture = "firstMapFinal";
+                map = 1;
 	    		startScreen = false;
 	    		repaint(); 
 	    	}
@@ -188,10 +205,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
         frame.pack ();
         frame.setVisible (true);
 
-        // Game.Main();
 
     }
-
-
 }
 
