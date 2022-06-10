@@ -25,10 +25,11 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
     public static BufferedImage enemyImage;
 
-    public final int FPS = 10;
+    public final int FPS = 30;
+    public int FPSCOUNT = 0;
 
-    int posX = 200;
-    int posY = 200;
+    int posX = 0;
+    int posY = 175;
     int width = 100;
     int height = 100;
 
@@ -60,14 +61,16 @@ public class Start extends JPanel implements Runnable, MouseListener {
         catch (Exception e){
             System.out.println(e);
         }
+
     }
 
     @Override
     public void run() {
-        System.out.println("Init. Framerate");
         while(true) {
             update();
             this.repaint();
+            FPSCOUNT++;
+            System.out.println(FPSCOUNT);
             try {
                 Thread.sleep(1000/FPS);
             } catch(Exception e) {
@@ -99,28 +102,28 @@ public class Start extends JPanel implements Runnable, MouseListener {
         }
         if (!startScreen) {
             System.out.println("Enemy moving");
-            for (int i = 0; i < GameEntity.MapEnemyCount.length; i++) {
-                for (int j = 0; j < GameEntity.MapEnemyCount[i]; j++) {
-                    g.drawImage(enemyImage, getXPos(count), getYPos(count), 100, 100, null);
-                    if (count != 49) {
-                        count++;
-                    }
-                }
+            g.drawImage(enemyImage, posX, posY, 100, 100, this);
+            posX += 2;
+            if (posX > 215 && posX < 500) {
+                posY -= 1;
+            } else if (posX > 850) {
+                posX += 0;
+                System.out.println("Stopped moving");
             }
         }
     }
 
-    public int getXPos(int count) {
-        posX += GameEntity.Map1EnemyMovementX[count];
-
-        return posX;
-    }
-
-    public int getYPos(int count) {
-        posY += GameEntity.Map1EnemyMovementY[count];
-
-        return posY;
-    }
+//    public int getXPos(int count) {
+//        posX += GameEntity.Map1EnemyMovementX[count];
+//
+//        return posX;
+//    }
+//
+//    public int getYPos(int count) {
+//        posY += GameEntity.Map1EnemyMovementY[count];
+//
+//        return posY;
+//    }
 
     public void actionPerformed (ActionEvent event) {
         String click = event.getActionCommand ();
@@ -178,7 +181,8 @@ public class Start extends JPanel implements Runnable, MouseListener {
 	    		picture = "secondmap";
                 map = 1;
 	    		startScreen = false;
-	    		repaint(); 
+                FPSCOUNT = 0;
+                repaint();
 	    	}
 	    	
 	    	else if (x >= 289 && x <= 510 && y >= 274 && y <= 313) { // About us button
