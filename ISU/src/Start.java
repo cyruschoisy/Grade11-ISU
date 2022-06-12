@@ -24,6 +24,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
     public String root;
 
     public static BufferedImage enemyImage;
+    public static BufferedImage towerImage;
 
     public final int FPS = 30;
     public int FPSCOUNT = 0;
@@ -58,6 +59,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
         try{
             enemyImage = ImageIO.read(new File("enemyOne.png"));
+            towerImage = ImageIO.read(new File("tower1.png"));
         }
         catch (Exception e){
             System.out.println(e);
@@ -114,7 +116,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
                 System.out.println("Stopped moving");
             }
 
-            g.drawImage ()
+            g.drawImage(towerImage, 0, 220, 50, 50, this);
         }
     }
 
@@ -212,7 +214,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
         if (inGame == true) {
             if (x >= 1 && x <= 105 && y >= 132 && y <= 220) { // (0, 0)
-                  System.out.println ("0, 0");
+                System.out.println ("0, 0");
             }
 
             else if (x >= 108 && x <= 214 && y >= 131 && y <= 224) { // (1, 0)
