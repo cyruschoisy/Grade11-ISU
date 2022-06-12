@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.concurrent.TimeUnit;
 import javax.imageio.ImageIO;
 
 import javax.swing.*;
@@ -105,18 +106,29 @@ public class Start extends JPanel implements Runnable, MouseListener {
             System.out.println("IMAGE CANNOT BE FOUND");
         }
         if (inGame == true) {
-            System.out.println("Enemy moving");
-            g.drawImage(enemyImage, posX, posY, 100, 100, this);
-            posX += 2;
-            if (posX > 215 && posX < 500) {
-                posY -= 1;
-            }
-            else if (posX > 850) {
-                posX += 0;
-                System.out.println("Stopped moving");
-            }
+            for (int i = 0; i < 10; i++) {
 
-            g.drawImage(towerImage, 0, 220, 50, 50, this);
+                System.out.println("Enemy moving");
+                g.drawImage(enemyImage, posX, posY, 100, 100, this);
+                posX += 2;
+                if (posX > 215 && posX < 500) {
+                    posY -= 1;
+                }
+
+                else if (posX > 850) {
+                    posX += 0;
+                    System.out.println("Stopped moving");
+                }
+
+                long slowdown = 1;
+
+                try {
+                    Thread.sleep(slowdown * 20);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+//            g.drawImage(towerImage, 0, 220, 50, 50, this);
+            }
         }
     }
 
