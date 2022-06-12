@@ -45,6 +45,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
     boolean startScreen = true;
     boolean aboutUs = true;
+    boolean inGame = false;
     
     // Constructor
     public Start () {
@@ -70,7 +71,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
             update();
             this.repaint();
             FPSCOUNT++;
-            System.out.println(FPSCOUNT);
+//            System.out.println(FPSCOUNT);
             try {
                 Thread.sleep(1000/FPS);
             } catch(Exception e) {
@@ -167,6 +168,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
             if (x >= 642 && x <= 721 && y >= 12 && y <= 38) { // Exit button
                 picture = "towerDefence";
                 startScreen = true;
+                inGame = false;
                 repaint();
             }
         }
@@ -180,7 +182,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
 	    		System.out.println ("START");
 	    		picture = "secondmap";
                 map = 1;
-	    		startScreen = false;
+	    		startScreen = true;
                 FPSCOUNT = 0;
                 repaint();
 	    	}
@@ -190,13 +192,38 @@ public class Start extends JPanel implements Runnable, MouseListener {
                 picture = "aboutUs";
                 aboutUs = false;
                 startScreen = false;
+                inGame = false;
                 repaint();
             }
 	    	
 	    	else if (x >= 244 && x <= 552 && y >= 353 && y <= 391) { // How to Play button
 	    		System.out.println ("HOW TO PLAY");
+
 	    	}
     	}
+
+//        if (inGame == true) {
+//            if (x >= 3 && x <= 104 && y >= 91 && y <= 180) { // (0, 1)
+//
+//            }
+//
+//            else if (x >= 109 && x <= 211 && y >= 91 && y <= 187) { // (1, 1)
+//
+//            }
+//
+//            else if (x >= 109 && x <= 211 && y >= 91 && y <= 187) { // (0, 3)
+//
+//            }
+//
+//            else if (x >= 217 && x <= 321 && y >= 1 && y <= 87) { // (2, 0)
+//
+//            }
+//
+//            else if (x >= 217 && x <= 321 && y >= 1 && y <= 87) { // (2, 0)
+//
+//            }
+
+        }
     }
 
     public static void main (String[] args) {
