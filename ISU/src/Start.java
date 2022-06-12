@@ -223,7 +223,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
 //
 //            }
 
-        }
+//        }
     }
 
     public static void main (String[] args) {
