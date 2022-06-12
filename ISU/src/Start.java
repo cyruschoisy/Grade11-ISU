@@ -44,7 +44,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
     String picture = "towerDefence";
 
     boolean startScreen = true;
-    boolean aboutUs = true;
+    boolean aboutUs = false;
     boolean inGame = false;
     
     // Constructor
@@ -98,19 +98,23 @@ public class Start extends JPanel implements Runnable, MouseListener {
         if (splashImage.exists() && !splashImage.isDirectory()) {
             blah = Toolkit.getDefaultToolkit().getImage(splashImagePath);
             g.drawImage(blah, 0, 0, 800, 561, this);
-        } else {
+        }
+        else {
             System.out.println("IMAGE CANNOT BE FOUND");
         }
-        if (!startScreen) {
+        if (inGame == true) {
             System.out.println("Enemy moving");
             g.drawImage(enemyImage, posX, posY, 100, 100, this);
             posX += 2;
             if (posX > 215 && posX < 500) {
                 posY -= 1;
-            } else if (posX > 850) {
+            }
+            else if (posX > 850) {
                 posX += 0;
                 System.out.println("Stopped moving");
             }
+
+            g.drawImage ()
         }
     }
 
@@ -164,7 +168,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
 		
 	}
     public void handleAction (int x, int y) {
-        if (aboutUs == false)  {
+        if (aboutUs == true)  {
             if (x >= 642 && x <= 721 && y >= 12 && y <= 38) { // Exit button
                 picture = "towerDefence";
                 startScreen = true;
@@ -182,7 +186,8 @@ public class Start extends JPanel implements Runnable, MouseListener {
 	    		System.out.println ("START");
 	    		picture = "secondmap";
                 map = 1;
-	    		startScreen = true;
+	    		startScreen = false;
+                inGame = true;
                 FPSCOUNT = 0;
                 repaint();
 	    	}
@@ -190,7 +195,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
 	    	else if (x >= 289 && x <= 510 && y >= 274 && y <= 313) { // About us button
 	    		System.out.println ("ABOUT US");
                 picture = "aboutUs";
-                aboutUs = false;
+                aboutUs = true;
                 startScreen = false;
                 inGame = false;
                 repaint();
@@ -199,31 +204,38 @@ public class Start extends JPanel implements Runnable, MouseListener {
 	    	else if (x >= 244 && x <= 552 && y >= 353 && y <= 391) { // How to Play button
 	    		System.out.println ("HOW TO PLAY");
 
+                aboutUs = false;
+                startScreen = false;
+                inGame = false;
 	    	}
     	}
 
-//        if (inGame == true) {
-//            if (x >= 3 && x <= 104 && y >= 91 && y <= 180) { // (0, 1)
-//
-//            }
-//
-//            else if (x >= 109 && x <= 211 && y >= 91 && y <= 187) { // (1, 1)
-//
-//            }
-//
-//            else if (x >= 109 && x <= 211 && y >= 91 && y <= 187) { // (0, 3)
-//
-//            }
-//
-//            else if (x >= 217 && x <= 321 && y >= 1 && y <= 87) { // (2, 0)
-//
-//            }
-//
-//            else if (x >= 217 && x <= 321 && y >= 1 && y <= 87) { // (2, 0)
-//
-//            }
+        if (inGame == true) {
+            if (x >= 1 && x <= 105 && y >= 132 && y <= 220) { // (0, 0)
+                  System.out.println ("0, 0");
+            }
 
-//        }
+            else if (x >= 108 && x <= 214 && y >= 131 && y <= 224) { // (1, 0)
+                System.out.println ("1, 0");
+            }
+
+            else if (x >= 216 && x <= 317 && y >= 128 && y <= 223) { // (2, 0)
+                System.out.println("2, 0");
+            }
+
+            else if (x >= 2 && x <= 109 && y >= 331 && y <= 426) { // (0, 2)
+                System.out.println ("0, 2");
+            }
+
+            else if (x >= 110 && x <= 215 && y >= 330 && y <= 423) { // (1, 2)
+                System.out.println ("1, 2");
+            }
+
+            else if (x >= 219 && x <= 320 && y >= 330 && y <= 423) { // (2, 2)
+                System.out.println ("2, 2");
+            }
+
+        }
     }
 
     public static void main (String[] args) {
