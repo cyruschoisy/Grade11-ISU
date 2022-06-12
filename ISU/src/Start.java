@@ -50,6 +50,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
     boolean inGame = false;
 
     Rectangle [] enemies = new Rectangle [10];
+    Rectangle [] enemiesList = new Rectangle [10];
 
     // Constructor
     public Start () {
@@ -111,7 +112,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
         if (inGame == true) {
             for (int i = 0; i < 10; i++) {
                 System.out.println ("Enemy moving");
-                g.drawImage (enemyImage, posX, posY, 100, 100, this);
+//                g.drawImage (enemyImage, enemiesList[i].x, enemiesList[i].y, 100, 100, this);
 
                 // Moving the ghost along the track
                 posX += 2;
