@@ -44,13 +44,14 @@ public class Start extends JPanel implements Runnable, MouseListener {
     GameEntity enemy;
     
     String picture = "towerDefence";
-
+    int x, y;
     boolean startScreen = true;
     boolean aboutUs = false;
     boolean inGame = false;
-
-    Rectangle [] enemies = new Rectangle [10];
+    boolean [] clickedTowers = new boolean [12];
+    int enemyCount = 0;
     Rectangle [] enemiesList = new Rectangle [10];
+    Rectangle [] towers = new Rectangle [12];
 
     // Constructor
     public Start () {
@@ -68,6 +69,19 @@ public class Start extends JPanel implements Runnable, MouseListener {
         catch (Exception e){
             System.out.println(e);
         }
+
+        towers [0] = new Rectangle (0, 132, 100, 100);
+        towers [1] = new Rectangle (0, 132, 100, 100);
+        towers [2] = new Rectangle (0, 132, 100, 100);
+        towers [3] = new Rectangle (0, 132, 100, 100);
+        towers [4] = new Rectangle (0, 132, 100, 100);
+        towers [5] = new Rectangle (0, 132, 100, 100);
+        towers [6] = new Rectangle (0, 132, 100, 100);
+        towers [7] = new Rectangle (0, 132, 100, 100);
+        towers [8] = new Rectangle (0, 132, 100, 100);
+        towers [9] = new Rectangle (0, 132, 100, 100);
+        towers [10] = new Rectangle (0, 132, 100, 100);
+        towers [11] = new Rectangle (0, 132, 100, 100);
     }
 
     @Override
@@ -86,8 +100,26 @@ public class Start extends JPanel implements Runnable, MouseListener {
     }
 
     public void update() {
+        moveEnemy();
     }
 
+    public void moveEnemy () {
+        //spawn a new enemy every certain frame counts
+        if (FPSCOUNT % 30 == 0 && enemyCount < 10) {
+            enemiesList[enemyCount++] = new Rectangle (0,200,100,100);
+        }
+        //Loop through all the enemies and move them
+        // Moving the ghost along the track
+
+        for (int i = 0; i < enemyCount; i++) {
+            if (enemiesList[i] != null) {
+                enemiesList[i].x += 2;
+                if (enemiesList[i].x > 215 && enemiesList[i].x < 500) {
+                    enemiesList[i].y -= 1;
+                }
+            }
+        }
+    }
     public void paintComponent (Graphics g) {
         super.paintComponent (g);
 
@@ -110,31 +142,21 @@ public class Start extends JPanel implements Runnable, MouseListener {
         }
 
         if (inGame == true) {
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < enemyCount; i++) {
 //                enemiesList [x] =
 //                System.out.println ("Enemy moving");
                 g.drawImage (enemyImage, enemiesList[i].x, enemiesList[i].y, 100, 100, this);
 
-                // Moving the ghost along the track
-                posX += 2;
-                if (posX > 215 && posX < 500) {
-                    posY -= 1;
-                }
-                else if (posX > 850) {
-                    posX += 0;
-//                    System.out.println("Stopped moving");
-                }
-                // slowing down the movement of the ghost
-                long slowdown = 1;
-                try {
-                    Thread.sleep(slowdown * 20);
-                }
 
-                catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
             }
         }
+
+        for (int i = 0; i < towers.length; i++) {
+            if (clickedTowers[i] == true) {
+                g.drawImage (enemyImage, towers [i].x, towers[i].y, 100, 100, this);
+            }
+        }
+
     }
 
 //    public int getXPos(int count) {
@@ -154,7 +176,6 @@ public class Start extends JPanel implements Runnable, MouseListener {
     }
     
     public void mouseClicked (MouseEvent e) {
-    	int x, y;
 		x = e.getX ();
 		y = e.getY ();
 
@@ -230,30 +251,13 @@ public class Start extends JPanel implements Runnable, MouseListener {
     	}
 
         if (inGame == true) {
-            if (x >= 1 && x <= 105 && y >= 132 && y <= 220) { // (0, 0)
-                System.out.println ("0, 0");
+            for (int i = 0; i < towers.length; i++) {
+                if (x > towers [i].x && x < towers[i].x + 100 && y > towers [i].y && y < towers [i].y + 100) {
+                    clickedTowers [i] = true;
+                    System.out.print (clickedTowers [i]);
+                    break;
+                }
             }
-
-            else if (x >= 108 && x <= 214 && y >= 131 && y <= 224) { // (1, 0)
-                System.out.println ("1, 0");
-            }
-
-            else if (x >= 216 && x <= 317 && y >= 128 && y <= 223) { // (2, 0)
-                System.out.println("2, 0");
-            }
-
-            else if (x >= 2 && x <= 109 && y >= 331 && y <= 426) { // (0, 2)
-                System.out.println ("0, 2");
-            }
-
-            else if (x >= 110 && x <= 215 && y >= 330 && y <= 423) { // (1, 2)
-                System.out.println ("1, 2");
-            }
-
-            else if (x >= 219 && x <= 320 && y >= 330 && y <= 423) { // (2, 2)
-                System.out.println ("2, 2");
-            }
-
         }
     }
 
