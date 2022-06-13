@@ -111,6 +111,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
         if (inGame == true) {
             for (int i = 0; i < 10; i++) {
+//                enemiesList [x] =
 //                System.out.println ("Enemy moving");
                 g.drawImage (enemyImage, enemiesList[i].x, enemiesList[i].y, 100, 100, this);
 
