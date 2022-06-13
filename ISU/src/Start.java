@@ -68,7 +68,6 @@ public class Start extends JPanel implements Runnable, MouseListener {
         catch (Exception e){
             System.out.println(e);
         }
-
     }
 
     @Override
@@ -100,19 +99,20 @@ public class Start extends JPanel implements Runnable, MouseListener {
         File splashImage = new File(splashImagePath);
 //        System.out.println("Entire path: " + splashImagePath);
 
-        Image blah;
+        Image background;
 
         if (splashImage.exists() && !splashImage.isDirectory()) {
-            blah = Toolkit.getDefaultToolkit().getImage(splashImagePath);
-            g.drawImage(blah, 0, 0, 800, 561, this);
+            background = Toolkit.getDefaultToolkit().getImage(splashImagePath);
+            g.drawImage(background, 0, 0, 800, 561, this);
         }
         else {
             System.out.println("IMAGE CANNOT BE FOUND");
         }
+
         if (inGame == true) {
             for (int i = 0; i < 10; i++) {
-                System.out.println ("Enemy moving");
-//                g.drawImage (enemyImage, enemiesList[i].x, enemiesList[i].y, 100, 100, this);
+//                System.out.println ("Enemy moving");
+                g.drawImage (enemyImage, enemiesList[i].x, enemiesList[i].y, 100, 100, this);
 
                 // Moving the ghost along the track
                 posX += 2;
@@ -121,13 +121,15 @@ public class Start extends JPanel implements Runnable, MouseListener {
                 }
                 else if (posX > 850) {
                     posX += 0;
-                    System.out.println("Stopped moving");
+//                    System.out.println("Stopped moving");
                 }
                 // slowing down the movement of the ghost
                 long slowdown = 1;
                 try {
                     Thread.sleep(slowdown * 20);
-                } catch (InterruptedException e) {
+                }
+
+                catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
             }
