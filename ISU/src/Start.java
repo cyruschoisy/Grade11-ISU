@@ -71,8 +71,8 @@ public class Start extends JPanel implements Runnable, MouseListener {
         }
 
         towers [0] = new Rectangle (0, 132, 100, 100);
-        towers [1] = new Rectangle (0, 132, 100, 100);
-        towers [2] = new Rectangle (0, 132, 100, 100);
+        towers [1] = new Rectangle (0, 232, 100, 100);
+        towers [2] = new Rectangle (0, 332, 100, 100);
         towers [3] = new Rectangle (0, 132, 100, 100);
         towers [4] = new Rectangle (0, 132, 100, 100);
         towers [5] = new Rectangle (0, 132, 100, 100);
@@ -105,7 +105,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
     public void moveEnemy () {
         //spawn a new enemy every certain frame counts
-        if (FPSCOUNT % 30 == 0 && enemyCount < 10) {
+        if (FPSCOUNT % 50 == 0 && enemyCount < 10) {
             enemiesList[enemyCount++] = new Rectangle (0,200,100,100);
         }
         //Loop through all the enemies and move them
@@ -146,8 +146,6 @@ public class Start extends JPanel implements Runnable, MouseListener {
 //                enemiesList [x] =
 //                System.out.println ("Enemy moving");
                 g.drawImage (enemyImage, enemiesList[i].x, enemiesList[i].y, 100, 100, this);
-
-
             }
         }
 
@@ -270,8 +268,6 @@ public class Start extends JPanel implements Runnable, MouseListener {
         frame.add (myPanel);
         frame.pack ();
         frame.setVisible (true);
-
-
     }
 }
 
