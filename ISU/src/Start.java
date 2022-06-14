@@ -33,6 +33,9 @@ public class Start extends JPanel implements Runnable, MouseListener {
     public final int FPS = 30;
     public int FPSCOUNT = 0;
 
+    public int ghostX;
+    public int ghostY;
+
     int posX = 0;
     int posY = 175;
     int width = 100;
@@ -156,31 +159,48 @@ public class Start extends JPanel implements Runnable, MouseListener {
         for (int i = 0; i < towers.length; i++) {
             if (clickedTowers[i] == true) {
                 System.out.println("DRAWING TOWER");
-                g.drawImage (towerBaseImage, towers [i].x, towers[i].y, 100, 100, this);
-                try {
-                    towerSwivelImage = rotateImage();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                g.drawImage (towerBaseImage, towers[i].x, towers[i].y, 100, 100, this);
+                if (FPSCOUNT < 251) {
+                    g.drawImage(rotateImage(90), towers[i].x, towers[i].y, 100, 100, this);
+                } else {
+                    g.drawImage (rotateImage(getTheta(enemiesList[0].x, enemiesList[0].y, i)), towers [i].x, towers[i].y, 100, 100, this);
+                    System.out.println(getTheta(enemiesList[0].x, enemiesList[0].y, i));
                 }
-                g.drawImage (towerSwivelImage, towers [i].x, towers[i].y, 100, 100, this);
             }
         }
     }
 
-    public BufferedImage rotateImage() throws IOException {
-        final double rads = Math.toRadians(90);
-        final double sin = Math.abs(Math.sin(rads));
-        final double cos = Math.abs(Math.cos(rads));
-        final int w = (int) Math.floor(towerSwivelImage.getWidth() * cos + towerSwivelImage.getHeight() * sin);
-        final int h = (int) Math.floor(towerSwivelImage.getHeight() * cos + towerSwivelImage.getWidth() * sin);
-        final BufferedImage rotatedImage = new BufferedImage(w, h, towerSwivelImage.getType());
-        final AffineTransform at = new AffineTransform();
-        at.translate(w / 2, h / 2);
-        at.rotate(rads,0, 0);
-        at.translate(-towerSwivelImage.getWidth() / 2, -towerSwivelImage.getHeight() / 2);
-        final AffineTransformOp rotateOp = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
-        rotateOp.filter(towerSwivelImage,rotatedImage);
-        ImageIO.write(rotatedImage, "PNG", new File("towerSwivel"));
+    public double getTheta(int x2, int y2, int i) {
+
+        int x1 = towers[i].x;
+        int y1 = towers[i].y;
+
+        double hypotenuse = Math.sqrt((y2 - y1) * (y2 - y1) + (x2 - x1) * (x2 - x1));
+        double vertical = x1 - x2;
+        double theta = Math.acos(vertical / hypotenuse);
+
+        return theta;
+    }
+
+    public BufferedImage rotateImage(double theta) {
+
+        double sin = Math.abs(Math.sin(Math.toRadians(theta)));
+        double cos = Math.abs(Math.cos(Math.toRadians(theta)));
+
+        int width = (int) Math.round(towerSwivelImage.getWidth() * cos + towerSwivelImage.getHeight() * sin);
+        int height = (int) Math.round(towerSwivelImage.getWidth() * sin + towerSwivelImage.getHeight() * cos);
+
+        BufferedImage rotatedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+
+        AffineTransform at = new AffineTransform();
+
+        at.translate(width / 2, height / 2);
+
+        at.rotate(Math.toRadians(theta),0, 0);
+        at.translate(-towerSwivelImage.getWidth() / 2, -towerBaseImage.getHeight() / 2);
+        AffineTransformOp rotateOp = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+
+        rotateOp.filter(towerSwivelImage, rotatedImage);
 
         return rotatedImage;
     }
