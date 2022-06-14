@@ -154,7 +154,6 @@ public class Start extends JPanel implements Runnable, MouseListener {
                 g.drawImage (enemyImage, towers [i].x, towers[i].y, 100, 100, this);
             }
         }
-
     }
 
 //    public int getXPos(int count) {
