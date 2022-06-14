@@ -160,7 +160,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
             if (clickedTowers[i] == true) {
                 System.out.println("DRAWING TOWER");
                 g.drawImage (towerBaseImage, towers[i].x, towers[i].y, 100, 100, this);
-                if (FPSCOUNT < 251) {
+                if (FPSCOUNT < 201) {
                     g.drawImage(rotateImage(90), towers[i].x, towers[i].y, 100, 100, this);
                 } else {
                     g.drawImage (rotateImage(getTheta(enemiesList[0].x, enemiesList[0].y, i)), towers [i].x, towers[i].y, 100, 100, this);
@@ -175,9 +175,11 @@ public class Start extends JPanel implements Runnable, MouseListener {
         int x1 = towers[i].x;
         int y1 = towers[i].y;
 
-        double hypotenuse = Math.sqrt((y2 - y1) * (y2 - y1) + (x2 - x1) * (x2 - x1));
-        double vertical = x1 - x2;
-        double theta = Math.acos(vertical / hypotenuse);
+        double hypotenuse = Math.sqrt(((y2 - y1) * (y2 - y1)) + ((x2 - x1) * (x2 - x1)));
+        double vertical = y1 - y2;
+        double theta = (Math.asin(vertical / hypotenuse));
+        theta = Math.toDegrees(theta);
+        theta = 180 - theta;
 
         return theta;
     }
