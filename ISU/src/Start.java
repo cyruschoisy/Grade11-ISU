@@ -4,6 +4,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -26,6 +28,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
     public static BufferedImage enemyImage;
     public static BufferedImage towerBaseImage;
+    public static BufferedImage towerSwivelImage;
 
     public final int FPS = 30;
     public int FPSCOUNT = 0;
@@ -65,6 +68,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
         try{
             enemyImage = ImageIO.read(new File("enemyOne.png"));
             towerBaseImage = ImageIO.read(new File("towerBase.png"));
+            towerSwivelImage = ImageIO.read(new File("towerSwivel.png"));
         }
         catch (Exception e){
             System.out.println(e);
@@ -105,7 +109,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
     public void moveEnemy () {
         //spawn a new enemy every certain frame counts
-        if (inGame && FPSCOUNT % 100 == 0 && enemyCount < 3) {
+        if (inGame && FPSCOUNT % 200 == 0 && enemyCount < 2) {
             enemiesList[enemyCount++] = new Rectangle (0,200,100,100);
         }
         //Loop through all the enemies and move them
@@ -151,9 +155,34 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
         for (int i = 0; i < towers.length; i++) {
             if (clickedTowers[i] == true) {
+                System.out.println("DRAWING TOWER");
                 g.drawImage (towerBaseImage, towers [i].x, towers[i].y, 100, 100, this);
+                try {
+                    rotateImage();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                g.drawImage (towerSwivelImage, towers [i].x, towers[i].y, 100, 100, this);
             }
         }
+    }
+
+    public BufferedImage rotateImage() throws IOException {
+        final double rads = Math.toRadians(90);
+        final double sin = Math.abs(Math.sin(rads));
+        final double cos = Math.abs(Math.cos(rads));
+        final int w = (int) Math.floor(towerSwivelImage.getWidth() * cos + towerSwivelImage.getHeight() * sin);
+        final int h = (int) Math.floor(towerSwivelImage.getHeight() * cos + towerSwivelImage.getWidth() * sin);
+        final BufferedImage rotatedImage = new BufferedImage(w, h, towerSwivelImage.getType());
+        final AffineTransform at = new AffineTransform();
+        at.translate(w / 2, h / 2);
+        at.rotate(rads,0, 0);
+        at.translate(-towerSwivelImage.getWidth() / 2, -towerSwivelImage.getHeight() / 2);
+        final AffineTransformOp rotateOp = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+        rotateOp.filter(towerSwivelImage,rotatedImage);
+        ImageIO.write(rotatedImage, "PNG", new File("towerSwivel"));
+
+        return rotatedImage;
     }
 
     public void actionPerformed (ActionEvent event) {
