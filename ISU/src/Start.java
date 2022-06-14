@@ -105,7 +105,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
     public void moveEnemy () {
         //spawn a new enemy every certain frame counts
-        if (FPSCOUNT % 50 == 0 && enemyCount < 10) {
+        if (inGame && FPSCOUNT % 100 == 0 && enemyCount < 3) {
             enemiesList[enemyCount++] = new Rectangle (0,200,100,100);
         }
         //Loop through all the enemies and move them
@@ -156,18 +156,6 @@ public class Start extends JPanel implements Runnable, MouseListener {
         }
 
     }
-
-//    public int getXPos(int count) {
-//        posX += GameEntity.Map1EnemyMovementX[count];
-//
-//        return posX;
-//    }
-//
-//    public int getYPos(int count) {
-//        posY += GameEntity.Map1EnemyMovementY[count];
-//
-//        return posY;
-//    }
 
     public void actionPerformed (ActionEvent event) {
         String click = event.getActionCommand ();
@@ -226,7 +214,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
                 map = 1;
 	    		startScreen = false;
                 inGame = true;
-                FPSCOUNT = 0;
+                FPSCOUNT = 1;
                 repaint();
 	    	}
 	    	
@@ -249,6 +237,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
     	}
 
         if (inGame == true) {
+            FPSCOUNT = 1;
             for (int i = 0; i < towers.length; i++) {
                 if (x > towers [i].x && x < towers[i].x + 100 && y > towers [i].y && y < towers [i].y + 100) {
                     clickedTowers [i] = true;
