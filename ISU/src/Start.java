@@ -33,8 +33,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
     public final int FPS = 30;
     public int FPSCOUNT = 0;
 
-    public int ghostX;
-    public int ghostY;
+    public int enemyTrack = 0;
 
     int posX = 0;
     int posY = 175;
@@ -112,7 +111,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
     public void moveEnemy () {
         //spawn a new enemy every certain frame counts
-        if (inGame && FPSCOUNT % 200 == 0 && enemyCount < 2) {
+        if (inGame && FPSCOUNT % 275 == 0 && enemyCount < 5) {
             enemiesList[enemyCount++] = new Rectangle (0,200,100,100);
         }
         //Loop through all the enemies and move them
@@ -160,11 +159,13 @@ public class Start extends JPanel implements Runnable, MouseListener {
             if (clickedTowers[i] == true) {
                 System.out.println("DRAWING TOWER");
                 g.drawImage (towerBaseImage, towers[i].x, towers[i].y, 100, 100, this);
-                if (FPSCOUNT < 201) {
-                    g.drawImage(rotateImage(90), towers[i].x, towers[i].y, 100, 100, this);
+                if (FPSCOUNT < 276) {
+                    g.drawImage(rotateImage(270), towers[i].x, towers[i].y, 100, 100, this);
                 } else {
-                    g.drawImage (rotateImage(getTheta(enemiesList[0].x, enemiesList[0].y, i)), towers [i].x, towers[i].y, 100, 100, this);
-                    System.out.println(getTheta(enemiesList[0].x, enemiesList[0].y, i));
+                        if (enemiesList[enemyTrack].x > 775) {
+                            enemyTrack++;
+                        }
+                    g.drawImage (rotateImage(getTheta(enemiesList[enemyTrack].x, enemiesList[enemyTrack].y, i)), towers [i].x, towers[i].y, 100, 100, this);
                 }
             }
         }
