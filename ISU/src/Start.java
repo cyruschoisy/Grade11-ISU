@@ -158,7 +158,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
                 System.out.println("DRAWING TOWER");
                 g.drawImage (towerBaseImage, towers [i].x, towers[i].y, 100, 100, this);
                 try {
-                    rotateImage();
+                    towerSwivelImage = rotateImage();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
