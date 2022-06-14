@@ -25,7 +25,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
     public String root;
 
     public static BufferedImage enemyImage;
-    public static BufferedImage towerImage;
+    public static BufferedImage towerBaseImage;
 
     public final int FPS = 30;
     public int FPSCOUNT = 0;
@@ -64,7 +64,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
         try{
             enemyImage = ImageIO.read(new File("enemyOne.png"));
-            towerImage = ImageIO.read(new File("tower1.png"));
+            towerBaseImage = ImageIO.read(new File("towerBase.png"));
         }
         catch (Exception e){
             System.out.println(e);
@@ -151,7 +151,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
         for (int i = 0; i < towers.length; i++) {
             if (clickedTowers[i] == true) {
-                g.drawImage (enemyImage, towers [i].x, towers[i].y, 100, 100, this);
+                g.drawImage (towerBaseImage, towers [i].x, towers[i].y, 100, 100, this);
             }
         }
     }
