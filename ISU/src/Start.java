@@ -11,8 +11,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.awt.image.BufferedImage;
-import java.io.*;
-import java.util.concurrent.TimeUnit;
 import javax.imageio.ImageIO;
 
 import javax.swing.*;
@@ -43,9 +41,6 @@ public class Start extends JPanel implements Runnable, MouseListener {
     JPanel myPanel;
     JPanel buttons;
 
-//    ImageIcon bgdImage;
-//    String background = "media/firstMap.png";
-
     GameEntity enemy;
     
     String picture = "towerDefence";
@@ -53,10 +48,10 @@ public class Start extends JPanel implements Runnable, MouseListener {
     boolean startScreen = true;
     boolean aboutUs = false;
     boolean inGame = false;
-    boolean [] clickedTowers = new boolean [12];
+    boolean [] clickedTowers = new boolean [48];
     int enemyCount = 0;
     Rectangle [] enemiesList = new Rectangle [10];
-    Rectangle [] towers = new Rectangle [12];
+    Rectangle [] towers = new Rectangle [48];
 
     // Constructor
     public Start () {
@@ -70,24 +65,59 @@ public class Start extends JPanel implements Runnable, MouseListener {
         try{
             enemyImage = ImageIO.read(new File("enemyOne.png"));
             towerBaseImage = ImageIO.read(new File("towerBase.png"));
-            towerSwivelImage = ImageIO.read(new File("towerSwivel.png"));
+            towerSwivelImage = ImageIO.read(new File("towerSwivelLarge2.png"));
         }
         catch (Exception e){
             System.out.println(e);
         }
 
-        towers [0] = new Rectangle (0, 132, 100, 100);
-        towers [1] = new Rectangle (0, 232, 100, 100);
-        towers [2] = new Rectangle (0, 332, 100, 100);
-        towers [3] = new Rectangle (0, 132, 100, 100);
-        towers [4] = new Rectangle (0, 132, 100, 100);
-        towers [5] = new Rectangle (0, 132, 100, 100);
-        towers [6] = new Rectangle (0, 132, 100, 100);
-        towers [7] = new Rectangle (0, 132, 100, 100);
-        towers [8] = new Rectangle (0, 132, 100, 100);
-        towers [9] = new Rectangle (0, 132, 100, 100);
-        towers [10] = new Rectangle (0, 132, 100, 100);
-        towers [11] = new Rectangle (0, 132, 100, 100);
+        towers [0] = new Rectangle (0, 0, 95, 90);
+        towers [1] = new Rectangle (100, 0, 95, 90);
+        towers [2] = new Rectangle (200, 0, 95, 90);
+        towers [3] = new Rectangle (300, 0, 95, 90);
+        towers [4] = new Rectangle (400, 0, 95, 90);
+        towers [5] = new Rectangle (500, 0, 95, 90);
+        towers [6] = new Rectangle (600, 0, 95, 90);
+        towers [7] = new Rectangle (700, 0, 95, 90);
+
+        towers [8] = new Rectangle (0, 95, 95, 90);
+        towers [9] = new Rectangle (100, 95, 95, 90);
+
+        towers [10] = new Rectangle (0, 190, 95, 90);
+        towers [11] = new Rectangle (100, 190, 95, 90);
+        towers [12] = new Rectangle (300, 190, 95, 90);
+        towers [13] = new Rectangle (400, 190, 95, 90);
+        towers [14] = new Rectangle (500, 190, 95, 90);
+        towers [15] = new Rectangle (600, 190, 95, 90);
+        towers [16] = new Rectangle (700, 190, 95, 90);
+
+        towers [17] = new Rectangle (0, 285, 95, 90);
+        towers [18] = new Rectangle (100, 285, 95, 90);
+        towers [19] = new Rectangle (200, 285, 95, 90);
+        towers [20] = new Rectangle (300, 285, 95, 90);
+        towers [21] = new Rectangle (400, 285, 95, 90);
+        towers [22] = new Rectangle (500, 285, 95, 90);
+        towers [23] = new Rectangle (600, 285, 95, 90);
+        towers [24] = new Rectangle (700, 285, 95, 90);
+
+        towers [25] = new Rectangle (0, 380, 95, 90);
+        towers [26] = new Rectangle (100, 380, 95, 90);
+        towers [27] = new Rectangle (200, 380, 95, 90);
+        towers [28] = new Rectangle (300, 380, 95, 90);
+        towers [29] = new Rectangle (400, 380, 95, 90);
+        towers [30] = new Rectangle (500, 380, 95, 90);
+        towers [31] = new Rectangle (600, 380, 95, 90);
+        towers [32] = new Rectangle (700, 380, 95, 90);
+
+        towers [33] = new Rectangle (0, 475, 95, 90);
+        towers [34] = new Rectangle (100, 475, 95, 90);
+        towers [35] = new Rectangle (200, 475, 95, 90);
+        towers [36] = new Rectangle (300, 475, 95, 90);
+        towers [37] = new Rectangle (400, 475, 95, 90);
+        towers [38] = new Rectangle (500, 475, 95, 90);
+        towers [39] = new Rectangle (600, 475, 95, 90);
+        towers [40] = new Rectangle (700, 475, 95, 90);
+
     }
 
     @Override
@@ -111,21 +141,23 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
     public void moveEnemy () {
         //spawn a new enemy every certain frame counts
-        if (inGame && FPSCOUNT % 275 == 0 && enemyCount < 5) {
-            enemiesList[enemyCount++] = new Rectangle (0,200,100,100);
+        if (inGame && FPSCOUNT % 45 == 0 && enemyCount < 5) {
+            enemiesList[enemyCount++] = new Rectangle (-100,250,100,100);
         }
         //Loop through all the enemies and move them
         // Moving the ghost along the track
 
         for (int i = 0; i < enemyCount; i++) {
             if (enemiesList[i] != null) {
-                enemiesList[i].x += 2;
-                if (enemiesList[i].x > 215 && enemiesList[i].x < 500) {
-                    enemiesList[i].y -= 1;
+                if (enemiesList[i].x <= 200 || enemiesList[i].y <= 75) {
+                    enemiesList[i].x += 2;
+                } else {
+                    enemiesList[i].y -= 2;
                 }
             }
         }
     }
+
     public void paintComponent (Graphics g) {
         super.paintComponent (g);
 
@@ -157,15 +189,14 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
         for (int i = 0; i < towers.length; i++) {
             if (clickedTowers[i] == true) {
-                System.out.println("DRAWING TOWER");
-                g.drawImage (towerBaseImage, towers[i].x, towers[i].y, 100, 100, this);
-                if (FPSCOUNT < 276) {
-                    g.drawImage(rotateImage(270), towers[i].x, towers[i].y, 100, 100, this);
+                g.drawImage (towerBaseImage, towers[i].x + 7, towers[i].y + 5, 80, 80, this);
+                if (FPSCOUNT < 50) {
+                    g.drawImage(rotateImage(270), towers[i].x + 7, towers[i].y + 5, 80, 80, this);
                 } else {
                         if (enemiesList[enemyTrack].x > 775) {
                             enemyTrack++;
                         }
-                    g.drawImage (rotateImage(getTheta(enemiesList[enemyTrack].x, enemiesList[enemyTrack].y, i)), towers [i].x, towers[i].y, 100, 100, this);
+                    g.drawImage (rotateImage(getTheta(enemiesList[enemyTrack].x, enemiesList[enemyTrack].y, i)), towers [i].x + 7, towers[i].y + 5, 80, 80, this);
                 }
             }
         }
@@ -176,11 +207,17 @@ public class Start extends JPanel implements Runnable, MouseListener {
         int x1 = towers[i].x;
         int y1 = towers[i].y;
 
-        double hypotenuse = Math.sqrt(((y2 - y1) * (y2 - y1)) + ((x2 - x1) * (x2 - x1)));
+        double hypotenuse;
+
+        hypotenuse = Math.sqrt(((y2 - y1) * (y2 - y1)) + ((x2 - x1) * (x2 - x1)));
+
         double vertical = y1 - y2;
         double theta = (Math.asin(vertical / hypotenuse));
         theta = Math.toDegrees(theta);
-        theta = 180 - theta;
+
+         if (x2 > x1) {
+            theta = 180 - theta;
+        }
 
         return theta;
     }
@@ -190,8 +227,10 @@ public class Start extends JPanel implements Runnable, MouseListener {
         double sin = Math.abs(Math.sin(Math.toRadians(theta)));
         double cos = Math.abs(Math.cos(Math.toRadians(theta)));
 
-        int width = (int) Math.round(towerSwivelImage.getWidth() * cos + towerSwivelImage.getHeight() * sin);
-        int height = (int) Math.round(towerSwivelImage.getWidth() * sin + towerSwivelImage.getHeight() * cos);
+        //cos, sin
+        //sin, cos
+        int width = (int) Math.round(towerSwivelImage.getWidth() / 2.7 + towerSwivelImage.getHeight() / 2.7);
+        int height = (int) Math.round(towerSwivelImage.getWidth() / 2.7 + towerSwivelImage.getHeight() / 2.7);
 
         BufferedImage rotatedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
@@ -200,7 +239,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
         at.translate(width / 2, height / 2);
 
         at.rotate(Math.toRadians(theta),0, 0);
-        at.translate(-towerSwivelImage.getWidth() / 2, -towerBaseImage.getHeight() / 2);
+        at.translate(-towerSwivelImage.getWidth() / 2, -towerSwivelImage.getHeight() / 2);
         AffineTransformOp rotateOp = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
 
         rotateOp.filter(towerSwivelImage, rotatedImage);
@@ -244,6 +283,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
 		// TODO Auto-generated method stub
 		
 	}
+
     public void handleAction (int x, int y) {
         if (aboutUs == true)  {
             if (x >= 642 && x <= 721 && y >= 12 && y <= 38) { // Exit button
@@ -261,7 +301,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
 	    	
 	    	else if (x >= 331 && x <= 467 && y >= 194 && y <= 233) { // Start button
 	    		System.out.println ("START");
-	    		picture = "secondmap";
+	    		picture = "firstMapGrid";
                 map = 1;
 	    		startScreen = false;
                 inGame = true;
@@ -280,7 +320,6 @@ public class Start extends JPanel implements Runnable, MouseListener {
 	    	
 	    	else if (x >= 244 && x <= 552 && y >= 353 && y <= 391) { // How to Play button
 	    		System.out.println ("HOW TO PLAY");
-
                 aboutUs = false;
                 startScreen = false;
                 inGame = false;
