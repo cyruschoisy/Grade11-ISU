@@ -41,9 +41,6 @@ public class Start extends JPanel implements Runnable, MouseListener {
     JPanel myPanel;
     JPanel buttons;
 
-//    ImageIcon bgdImage;
-//    String background = "media/firstMap.png";
-
     GameEntity enemy;
     
     String picture = "towerDefence";
@@ -120,8 +117,9 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
         for (int i = 0; i < enemyCount; i++) {
             if (enemiesList[i] != null) {
-                enemiesList[i].x += 2;
-                if (enemiesList[i].x > 215 && enemiesList[i].x < 500) {
+                if (enemiesList[i].x <= 200 || enemiesList[i].y <= 200) {
+                    enemiesList[i].x += 2;
+                } else {
                     enemiesList[i].y -= 1;
                 }
             }
@@ -262,7 +260,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
 	    	
 	    	else if (x >= 331 && x <= 467 && y >= 194 && y <= 233) { // Start button
 	    		System.out.println ("START");
-	    		picture = "mapOne";
+	    		picture = "firstMapGrid";
                 map = 1;
 	    		startScreen = false;
                 inGame = true;
@@ -301,7 +299,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
     public static void main (String[] args) {
         frame = new JFrame ("Tower Defence");
-        frame.setPreferredSize (new Dimension (800, 800));
+        frame.setPreferredSize (new Dimension (800, 600));
         frame.setLocation(0, 0);
 
         Start myPanel = new Start ();
