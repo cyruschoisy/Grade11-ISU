@@ -262,7 +262,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
 	    	
 	    	else if (x >= 331 && x <= 467 && y >= 194 && y <= 233) { // Start button
 	    		System.out.println ("START");
-	    		picture = "secondmap";
+	    		picture = "mapOne";
                 map = 1;
 	    		startScreen = false;
                 inGame = true;
@@ -301,7 +301,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
     public static void main (String[] args) {
         frame = new JFrame ("Tower Defence");
-        frame.setPreferredSize (new Dimension (800, 600));
+        frame.setPreferredSize (new Dimension (800, 800));
         frame.setLocation(0, 0);
 
         Start myPanel = new Start ();
