@@ -227,8 +227,10 @@ public class Start extends JPanel implements Runnable, MouseListener {
         double sin = Math.abs(Math.sin(Math.toRadians(theta)));
         double cos = Math.abs(Math.cos(Math.toRadians(theta)));
 
-        int width = (int) Math.round(towerSwivelImage.getWidth() * cos + towerSwivelImage.getHeight() * sin);
-        int height = (int) Math.round(towerSwivelImage.getWidth() * sin + towerSwivelImage.getHeight() * cos);
+        //cos, sin
+        //sin, cos
+        int width = (int) Math.round(towerSwivelImage.getWidth() / 2.7 + towerSwivelImage.getHeight() / 2.7);
+        int height = (int) Math.round(towerSwivelImage.getWidth() / 2.7 + towerSwivelImage.getHeight() / 2.7);
 
         BufferedImage rotatedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
