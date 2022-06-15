@@ -65,7 +65,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
         try{
             enemyImage = ImageIO.read(new File("enemyOne.png"));
             towerBaseImage = ImageIO.read(new File("towerBase.png"));
-            towerSwivelImage = ImageIO.read(new File("towerSwivelLarge.png"));
+            towerSwivelImage = ImageIO.read(new File("towerSwivelLarge2.png"));
         }
         catch (Exception e){
             System.out.println(e);
