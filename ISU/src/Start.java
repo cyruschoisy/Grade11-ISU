@@ -71,21 +71,21 @@ public class Start extends JPanel implements Runnable, MouseListener {
             System.out.println(e);
         }
 
-        towers [0] = new Rectangle (5, 132, 100, 100);
+        towers [0] = new Rectangle (0, 0, 95, 90);
         towers [1] = new Rectangle (110, 132, 100, 100);
         towers [2] = new Rectangle (220, 132, 100, 100);
-
-        towers [3] = new Rectangle (5, 332, 100, 100);
-        towers [4] = new Rectangle (110, 332, 100, 100);
-        towers [5] = new Rectangle (220, 332, 100, 100);
-
-        towers [6] = new Rectangle (477, 0, 100, 100);
-        towers [7] = new Rectangle (587, 0, 100, 100);
-        towers [8] = new Rectangle (693, 0, 100, 100);
-
-        towers [9] = new Rectangle (477, 200, 100, 100);
-        towers [10] = new Rectangle (587, 200, 100, 100);
-        towers [11] = new Rectangle (693, 200, 100, 100);
+//
+//        towers [3] = new Rectangle (5, 332, 100, 100);
+//        towers [4] = new Rectangle (110, 332, 100, 100);
+//        towers [5] = new Rectangle (220, 332, 100, 100);
+//
+//        towers [6] = new Rectangle (477, 0, 100, 100);
+//        towers [7] = new Rectangle (587, 0, 100, 100);
+//        towers [8] = new Rectangle (693, 0, 100, 100);
+//
+//        towers [9] = new Rectangle (477, 200, 100, 100);
+//        towers [10] = new Rectangle (587, 200, 100, 100);
+//        towers [11] = new Rectangle (693, 200, 100, 100);
     }
 
     @Override
@@ -109,18 +109,18 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
     public void moveEnemy () {
         //spawn a new enemy every certain frame counts
-        if (inGame && FPSCOUNT % 275 == 0 && enemyCount < 5) {
-            enemiesList[enemyCount++] = new Rectangle (0,200,100,100);
+        if (inGame && FPSCOUNT % 45 == 0 && enemyCount < 5) {
+            enemiesList[enemyCount++] = new Rectangle (-100,235,100,100);
         }
         //Loop through all the enemies and move them
         // Moving the ghost along the track
 
         for (int i = 0; i < enemyCount; i++) {
             if (enemiesList[i] != null) {
-                if (enemiesList[i].x <= 200 || enemiesList[i].y <= 200) {
+                if (enemiesList[i].x <= 200 || enemiesList[i].y <= 50) {
                     enemiesList[i].x += 2;
                 } else {
-                    enemiesList[i].y -= 1;
+                    enemiesList[i].y -= 2;
                 }
             }
         }
@@ -157,14 +157,14 @@ public class Start extends JPanel implements Runnable, MouseListener {
         for (int i = 0; i < towers.length; i++) {
             if (clickedTowers[i] == true) {
 //                System.out.println("DRAWING TOWER");
-                g.drawImage (towerBaseImage, towers[i].x, towers[i].y, 100, 100, this);
-                if (FPSCOUNT < 276) {
-                    g.drawImage(rotateImage(270), towers[i].x, towers[i].y, 100, 100, this);
+                g.drawImage (towerBaseImage, towers[i].x + 7, towers[i].y + 5, 80, 80, this);
+                if (FPSCOUNT < 50) {
+                    g.drawImage(rotateImage(270), towers[i].x + 7, towers[i].y + 5, 80, 80, this);
                 } else {
                         if (enemiesList[enemyTrack].x > 775) {
                             enemyTrack++;
                         }
-                    g.drawImage (rotateImage(getTheta(enemiesList[enemyTrack].x, enemiesList[enemyTrack].y, i)), towers [i].x, towers[i].y, 100, 100, this);
+                    g.drawImage (rotateImage(getTheta(enemiesList[enemyTrack].x, enemiesList[enemyTrack].y, i)), towers [i].x + 7, towers[i].y + 5, 80, 80, this);
                 }
             }
         }
@@ -199,7 +199,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
         at.translate(width / 2, height / 2);
 
         at.rotate(Math.toRadians(theta),0, 0);
-        at.translate(-towerSwivelImage.getWidth() / 2, -towerBaseImage.getHeight() / 2);
+        at.translate(-towerSwivelImage.getWidth() / 2, -towerSwivelImage.getHeight() / 2);
         AffineTransformOp rotateOp = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
 
         rotateOp.filter(towerSwivelImage, rotatedImage);
