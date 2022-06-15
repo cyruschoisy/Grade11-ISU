@@ -116,7 +116,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
         towers [37] = new Rectangle (400, 475, 95, 90);
         towers [38] = new Rectangle (500, 475, 95, 90);
         towers [39] = new Rectangle (600, 475, 95, 90);
-        towers [39] = new Rectangle (700, 475, 95, 90);
+        towers [40] = new Rectangle (700, 475, 95, 90);
 
     }
 
@@ -157,6 +157,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
             }
         }
     }
+
     public void paintComponent (Graphics g) {
         super.paintComponent (g);
 
@@ -206,11 +207,17 @@ public class Start extends JPanel implements Runnable, MouseListener {
         int x1 = towers[i].x;
         int y1 = towers[i].y;
 
-        double hypotenuse = Math.sqrt(((y2 - y1) * (y2 - y1)) + ((x2 - x1) * (x2 - x1)));
+        double hypotenuse;
+
+        hypotenuse = Math.sqrt(((y2 - y1) * (y2 - y1)) + ((x2 - x1) * (x2 - x1)));
+
         double vertical = y1 - y2;
         double theta = (Math.asin(vertical / hypotenuse));
         theta = Math.toDegrees(theta);
-        theta = 180 - theta;
+
+         if (x2 > x1) {
+            theta = 180 - theta;
+        }
 
         return theta;
     }
@@ -274,6 +281,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
 		// TODO Auto-generated method stub
 		
 	}
+
     public void handleAction (int x, int y) {
         if (aboutUs == true)  {
             if (x >= 642 && x <= 721 && y >= 12 && y <= 38) { // Exit button
