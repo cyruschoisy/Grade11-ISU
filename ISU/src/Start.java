@@ -11,8 +11,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.awt.image.BufferedImage;
-import java.io.*;
-import java.util.concurrent.TimeUnit;
 import javax.imageio.ImageIO;
 
 import javax.swing.*;
