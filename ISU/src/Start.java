@@ -128,7 +128,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
             FPSCOUNT++;
 //            System.out.println(FPSCOUNT);
             try {
-                Thread.sleep(1000/FPS);
+                Thread.sleep(800/FPS);
             } catch(Exception e) {
                 e.printStackTrace();
             }
@@ -224,11 +224,6 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
     public BufferedImage rotateImage(double theta) {
 
-        double sin = Math.abs(Math.sin(Math.toRadians(theta)));
-        double cos = Math.abs(Math.cos(Math.toRadians(theta)));
-
-        //cos, sin
-        //sin, cos
         int width = (int) Math.round(towerSwivelImage.getWidth() / 2.7 + towerSwivelImage.getHeight() / 2.7);
         int height = (int) Math.round(towerSwivelImage.getWidth() / 2.7 + towerSwivelImage.getHeight() / 2.7);
 
@@ -327,7 +322,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
     	}
 
         if (inGame == true) {
-            FPSCOUNT = 1;
+//            FPSCOUNT = 1;
             for (int i = 0; i < towers.length; i++) {
                 if (x > towers [i].x && x < towers[i].x + 100 && y > towers [i].y && y < towers [i].y + 100) {
                     clickedTowers [i] = true;
