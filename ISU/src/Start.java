@@ -153,7 +153,6 @@ public class Start extends JPanel implements Runnable, MouseListener {
             if (towerBullets [i] != null) {
                 if ((FPSCOUNT - startShot [i]) % 20 == 0) {
                     towerBullets [i].add (new Rectangle (towers[i]));
-                    g.drawImage(rotateImage(bullet, getTheta(enemiesList [enemyTrack].x, enemiesList [enemyTrack].y, i)), towers[i].x + 7, towers[i].y + 5, 80, 80, this);
                 }
             }
         }
@@ -239,6 +238,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
             if (towerBullets [i] != null) {
                 for (int j = 0; j < towerBullets[i].size(); j++) {
                     g.drawRect (towerBullets[i].get(j).x, towerBullets[i].get(j).y, 20, 20);
+                    g.drawImage (rotateImage(bullet, getTheta (enemiesList [enemyTrack].x, enemiesList [enemyTrack].y, i)), 10, 10, this);
                 }
             }
         }
