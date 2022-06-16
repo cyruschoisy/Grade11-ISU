@@ -28,6 +28,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
     public static BufferedImage enemyImage;
     public static BufferedImage towerBaseImage;
     public static BufferedImage towerSwivelImage;
+    public static BufferedImage bullet;
 
     public final int FPS = 30;
     public int FPSCOUNT = 0;
@@ -69,11 +70,11 @@ public class Start extends JPanel implements Runnable, MouseListener {
             enemyImage = ImageIO.read(new File("enemyOne.png"));
             towerBaseImage = ImageIO.read(new File("towerBase.png"));
             towerSwivelImage = ImageIO.read(new File("towerSwivelLarge2.png"));
+            bullet = ImageIO.read(new File("bullet.png"));
         }
         catch (Exception e){
             System.out.println(e);
         }
-
         // All the available spots for towers
         towers [0] = new Rectangle (0, 0, 95, 90);
         towers [1] = new Rectangle (100, 0, 95, 90);
