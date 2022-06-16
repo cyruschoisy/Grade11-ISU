@@ -244,7 +244,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
         }
     }
 
-    public double getTheta(int x2, int y2, int i) {
+    public double getTheta (int x2, int y2, int i) {
 
         int x1 = towers[i].x;
         int y1 = towers[i].y;
@@ -264,8 +264,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
         return theta;
     }
 
-    public BufferedImage rotateImage(double theta) {
-
+    public BufferedImage rotateImage (double theta) {
         int width = (int) Math.round(towerSwivelImage.getWidth() / 2.7 + towerSwivelImage.getHeight() / 2.7);
         int height = (int) Math.round(towerSwivelImage.getWidth() / 2.7 + towerSwivelImage.getHeight() / 2.7);
 
@@ -275,11 +274,11 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
         at.translate(width / 2, height / 2);
 
-        at.rotate(Math.toRadians(theta),0, 0);
-        at.translate(-towerSwivelImage.getWidth() / 2, -towerSwivelImage.getHeight() / 2);
-        AffineTransformOp rotateOp = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+        at.rotate (Math.toRadians(theta),0, 0);
+        at.translate (-towerSwivelImage.getWidth() / 2, -towerSwivelImage.getHeight() / 2);
+        AffineTransformOp rotateOp = new AffineTransformOp (at, AffineTransformOp.TYPE_BILINEAR);
 
-        rotateOp.filter(towerSwivelImage, rotatedImage);
+        rotateOp.filter (towerSwivelImage, rotatedImage);
 
         return rotatedImage;
     }
