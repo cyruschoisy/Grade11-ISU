@@ -21,27 +21,18 @@ public class Start extends JPanel implements Runnable, MouseListener {
     public static Graphics g;
     public static int map = 0;
     public static int wave;
-    public static int[][] board = new int [8][6];
-    public int count = 0;
-    public String root;
+    public static double slope;
 
     public static BufferedImage enemyImage;
     public static BufferedImage towerBaseImage;
     public static BufferedImage towerSwivelImage;
     public static BufferedImage bullet;
+    public static BufferedImage rotatedBullet;
 
     public final int FPS = 30;
     public int FPSCOUNT = 0;
 
     public int enemyTrack = 0;
-
-    int posX = 0;
-    int posY = 175;
-    int width = 100;
-    int height = 100;
-
-    JPanel myPanel;
-    JPanel buttons;
 
     GameEntity enemy;
     
@@ -50,6 +41,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
     boolean startScreen = true;
     boolean aboutUs = false;
     boolean inGame = false;
+    boolean bulletSetup = false;
     boolean [] clickedTowers = new boolean [48];
     int enemyCount = 0;
     Rectangle [] enemiesList = new Rectangle [10];
@@ -160,7 +152,9 @@ public class Start extends JPanel implements Runnable, MouseListener {
         for (int i = 0; i < towerBullets.length; i++) {
             if (towerBullets [i] != null) {
                 for (int j = 0; j < towerBullets[i].size(); j++) {
-                    towerBullets[i].get(j).x++;
+                    towerBullets[i].get(j).x += slope;
+                    towerBullets[i].get(j).y += -slope;
+
                     if (towerBullets [i].get(j).x >= 800 || towerBullets [i].get(j).y >= 800 || towerBullets [i].get(j).x <= 0 || towerBullets [i].get(j).y <= 0) {
                         towerBullets [i].remove (j);
                         j--;
@@ -237,8 +231,25 @@ public class Start extends JPanel implements Runnable, MouseListener {
         for (int i = 0; i < towerBullets.length; i++) {
             if (towerBullets [i] != null) {
                 for (int j = 0; j < towerBullets[i].size(); j++) {
-                    g.drawRect (towerBullets[i].get(j).x, towerBullets[i].get(j).y, 20, 20);
-                    g.drawImage (rotateImage(bullet, getTheta (enemiesList [enemyTrack].x, enemiesList [enemyTrack].y, i)), towers [i].x + 7, towers[i].y + 5, 10, 10, this);
+                    g.drawRect(towerBullets[i].get(j).x, towerBullets[i].get(j).y, 20, 20);
+
+                    double slope = 0;
+                    if (!bulletSetup) {
+                        double angle = getTheta(enemiesList[enemyTrack].x, enemiesList[enemyTrack].y, i);
+
+                        if (towers[i].x > enemiesList[enemyTrack].x) {
+                            angle = angle - 180;
+                        }
+
+                        rotatedBullet = rotateImage(bullet, angle);
+                        g.drawImage(rotatedBullet, towers[i].x + 7, towers[i].y + 5, 10, 10, this);
+                        slope = getSlope(towers[i].x, towers[i].y, enemiesList[enemyTrack].x, enemiesList[enemyTrack].y);
+                        bulletSetup = true;
+                    } else {
+                        slope = Math.ceil(slope);
+                        slope *= 5;
+                        g.drawImage(rotatedBullet, towerBullets[i].get(j).x, towerBullets[i].get(j).y, 10, 10, this);
+                    }
                 }
             }
         }
