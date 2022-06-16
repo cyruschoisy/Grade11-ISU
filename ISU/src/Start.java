@@ -152,15 +152,8 @@ public class Start extends JPanel implements Runnable, MouseListener {
         for (int i = 0; i < towerBullets.length; i++) {
             if (towerBullets [i] != null) {
                 for (int j = 0; j < towerBullets[i].size(); j++) {
-<<<<<<< Updated upstream
                     towerBullets[i].get(j).x += slope;
                     towerBullets[i].get(j).y += -slope;
-=======
-                    towerBullets[i].get(j).x++;
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 
                     if (towerBullets [i].get(j).x >= 800 || towerBullets [i].get(j).y >= 800 || towerBullets [i].get(j).x <= 0 || towerBullets [i].get(j).y <= 0) {
                         towerBullets [i].remove (j);
