@@ -11,6 +11,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 import javax.swing.*;
@@ -52,6 +53,8 @@ public class Start extends JPanel implements Runnable, MouseListener {
     int enemyCount = 0;
     Rectangle [] enemiesList = new Rectangle [10];
     Rectangle [] towers = new Rectangle [48];
+    ArrayList <Rectangle> [] towerBullets = new ArrayList [40];
+    int [] startShot = new int [40];
 
     // Constructor
     public Start () {
@@ -117,7 +120,6 @@ public class Start extends JPanel implements Runnable, MouseListener {
         towers [38] = new Rectangle (500, 475, 95, 90);
         towers [39] = new Rectangle (600, 475, 95, 90);
         towers [40] = new Rectangle (700, 475, 95, 90);
-
     }
 
     @Override
@@ -137,7 +139,39 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
     public void update() {
         moveEnemy();
+        updateBullets ();
     }
+
+    public void updateBullets () {
+
+        //Check to see if it is time to add a new bullet to each tower
+        for (int i = 0; i < towerBullets.length; i++) {
+            if (towerBullets [i] != null) {
+                if ((FPSCOUNT - startShot [i]) % 20 == 0) {
+                    towerBullets [i].add (new Rectangle (towers[i]));
+                }
+            }
+        }
+
+        for (int i = 0; i < towerBullets.length; i++) {
+            if (towerBullets [i] != null) {
+                for (int j = 0; j < towerBullets[i].size(); j++) {
+                    towerBullets[i].get(j).x++;
+                    if (towerBullets [i].get(j).x >= 800 || towerBullets [i].get(j).y >= 800 || towerBullets [i].get(j).x <= 0 || towerBullets [i].get(j).y <= 0) {
+                        towerBullets [i].remove (j);
+                        j--;
+                    }
+
+                }
+            }
+        }
+    }
+
+// Method for updateBullets
+    // Go through each existing bullet and move them.
+    // Check to see if it is time to create a new bullet, by looking ath te current frame count and the stored frame count and seeing if it is
+    // n frames yet
+
 
     public void moveEnemy () {
         //spawn a new enemy every certain frame counts
@@ -197,6 +231,14 @@ public class Start extends JPanel implements Runnable, MouseListener {
                             enemyTrack++;
                         }
                     g.drawImage (rotateImage(getTheta(enemiesList[enemyTrack].x, enemiesList[enemyTrack].y, i)), towers [i].x + 7, towers[i].y + 5, 80, 80, this);
+                }
+            }
+        }
+
+        for (int i = 0; i < towerBullets.length; i++) {
+            if (towerBullets [i] != null) {
+                for (int j = 0; j < towerBullets[i].size(); j++) {
+                    g.drawRect (towerBullets [i].get(j).x, towerBullets [i].get (j).y, 20, 20);
                 }
             }
         }
@@ -323,13 +365,28 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
         if (inGame == true) {
 //            FPSCOUNT = 1;
+            int clickedPos = -1;
             for (int i = 0; i < towers.length; i++) {
                 if (x > towers [i].x && x < towers[i].x + 100 && y > towers [i].y && y < towers [i].y + 100) {
-                    clickedTowers [i] = true;
+                    if (clickedTowers [i] == false) {
+                        clickedPos = i;
+                        clickedTowers [i] = true;
+                    }
                     System.out.print (clickedTowers [i]);
                     break;
                 }
             }
+
+            if (clickedPos != -1) {
+                towerBullets [clickedPos] = new ArrayList <Rectangle> ();
+                towerBullets [clickedPos].add (new Rectangle (towers[clickedPos]));
+                startShot [clickedPos] = FPSCOUNT;
+            }
+
+            // Check if this tower has been clicked already;
+            // If this is a new tower that is clicked, then generate a new arraylist for that tower and start spawning bullets
+            // Also, in the clickTowerFrame array of that tower, store the current FPSCOUNT
+
         }
     }
 
