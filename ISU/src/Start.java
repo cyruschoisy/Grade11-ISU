@@ -74,6 +74,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
             System.out.println(e);
         }
 
+        // All the available spots for towers
         towers [0] = new Rectangle (0, 0, 95, 90);
         towers [1] = new Rectangle (100, 0, 95, 90);
         towers [2] = new Rectangle (200, 0, 95, 90);
@@ -122,6 +123,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
         towers [40] = new Rectangle (700, 475, 95, 90);
     }
 
+    // FPS count
     @Override
     public void run() {
         while(true) {
@@ -137,16 +139,13 @@ public class Start extends JPanel implements Runnable, MouseListener {
         }
     }
 
+    // Moving the enemy and moving the bullets
     public void update() {
         moveEnemy();
         updateBullets ();
     }
 
-    // Method for updateBullets
-    // Go through each existing bullet and move them.
-    // Check to see if it is time to create a new bullet, by looking ath te current frame count and the stored frame count and seeing if it is
-    // n frames yet
-
+    // Goes through each bullets and moves them, if its off the page, it will undraw and remove the bullet
     public void updateBullets () {
         //Check to see if it is time to add a new bullet to each tower
         for (int i = 0; i < towerBullets.length; i++) {
@@ -170,6 +169,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
         }
     }
 
+    // Moves the enemy
     public void moveEnemy () {
         //spawn a new enemy every certain frame counts
         if (inGame && FPSCOUNT % 45 == 0 && enemyCount < 5) {
@@ -189,6 +189,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
         }
     }
 
+    // Paint Component
     public void paintComponent (Graphics g) {
         super.paintComponent (g);
 
@@ -241,6 +242,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
         }
     }
 
+    // Gets theta for the angle of the turret nozzle
     public double getTheta (int x2, int y2, int i) {
 
         int x1 = towers[i].x;
@@ -261,6 +263,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
         return theta;
     }
 
+    // Rotates the nozzle image to fit theta
     public BufferedImage rotateImage (double theta) {
         int width = (int) Math.round(towerSwivelImage.getWidth() / 2.7 + towerSwivelImage.getHeight() / 2.7);
         int height = (int) Math.round(towerSwivelImage.getWidth() / 2.7 + towerSwivelImage.getHeight() / 2.7);
@@ -283,7 +286,8 @@ public class Start extends JPanel implements Runnable, MouseListener {
     public void actionPerformed (ActionEvent event) {
         String click = event.getActionCommand ();
     }
-    
+
+    // Gets mouse clicked
     public void mouseClicked (MouseEvent e) {
 		x = e.getX ();
 		y = e.getY ();
@@ -296,28 +300,26 @@ public class Start extends JPanel implements Runnable, MouseListener {
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
 	}
 
+    // When mouse is clicked, declares what will happen
     public void handleAction (int x, int y) {
+        // When on about us pane
         if (aboutUs == true)  {
             if (x >= 642 && x <= 721 && y >= 12 && y <= 38) { // Exit button
                 picture = "towerDefence";
@@ -327,6 +329,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
             }
         }
 
+        // When in start screen
     	if (startScreen = true) {
 	    	if (x >= 644 && x <= 719 && y >= 507 && y <= 531) { // Exit button
 	    		System.exit (0);
@@ -359,8 +362,9 @@ public class Start extends JPanel implements Runnable, MouseListener {
 	    	}
     	}
 
+        // When in game
         if (inGame == true) {
-//            FPSCOUNT = 1;
+            // Checks if a tower has been clicked yet, if yes - returns pos, if no - returns -1
             int clickedPos = -1;
             for (int i = 0; i < towers.length; i++) {
                 if (x > towers [i].x && x < towers[i].x + 100 && y > towers [i].y && y < towers [i].y + 100) {
@@ -373,16 +377,12 @@ public class Start extends JPanel implements Runnable, MouseListener {
                 }
             }
 
+            // Adds clicked pos for towers that have been clicked, also records FPS
             if (clickedPos != -1) {
                 towerBullets [clickedPos] = new ArrayList <Rectangle> ();
                 towerBullets [clickedPos].add (new Rectangle (towers[clickedPos]));
                 startShot [clickedPos] = FPSCOUNT;
             }
-
-            // Check if this tower has been clicked already;
-            // If this is a new tower that is clicked, then generate a new arraylist for that tower and start spawning bullets
-            // Also, in the clickTowerFrame array of that tower, store the current FPSCOUNT
-
         }
     }
 
