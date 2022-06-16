@@ -145,13 +145,14 @@ public class Start extends JPanel implements Runnable, MouseListener {
         updateBullets ();
     }
 
-    // Goes through each bullets and moves them, if its off the page, it will undraw and remove the bullet
+    // Goes through each bullet and moves them, if it's off the page, it will undraw and remove the bullet
     public void updateBullets () {
         //Check to see if it is time to add a new bullet to each tower
         for (int i = 0; i < towerBullets.length; i++) {
             if (towerBullets [i] != null) {
                 if ((FPSCOUNT - startShot [i]) % 20 == 0) {
                     towerBullets [i].add (new Rectangle (towers[i]));
+                    g.drawImage(rotateImage(bullet, getTheta(enemiesList [enemyTrack].x, enemiesList [enemyTrack].y, i)));
                 }
             }
         }
@@ -223,12 +224,12 @@ public class Start extends JPanel implements Runnable, MouseListener {
             if (clickedTowers[i] == true) {
                 g.drawImage (towerBaseImage, towers[i].x + 7, towers[i].y + 5, 80, 80, this);
                 if (FPSCOUNT < 50) {
-                    g.drawImage(rotateImage(270), towers[i].x + 7, towers[i].y + 5, 80, 80, this);
+                    g.drawImage(rotateImage(towerSwivelImage, 270), towers[i].x + 7, towers[i].y + 5, 80, 80, this);
                 } else {
                         if (enemiesList[enemyTrack].x > 775) {
                             enemyTrack++;
                         }
-                    g.drawImage (rotateImage (getTheta (enemiesList [enemyTrack].x, enemiesList [enemyTrack].y, i)), towers [i].x + 7, towers[i].y + 5, 80, 80, this);
+                    g.drawImage (rotateImage (towerSwivelImage, (getTheta (enemiesList [enemyTrack].x, enemiesList [enemyTrack].y, i))), towers [i].x + 7, towers[i].y + 5, 80, 80, this);
                 }
             }
         }
@@ -236,7 +237,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
         for (int i = 0; i < towerBullets.length; i++) {
             if (towerBullets [i] != null) {
                 for (int j = 0; j < towerBullets[i].size(); j++) {
-                    g.drawRect (towerBullets [i].get(j).x, towerBullets [i].get (j).y, 20, 20);
+                    g.drawRect (towerBullets[i].get(j).x, towerBullets[i].get(j).y, 20, 20);
                 }
             }
         }
@@ -263,10 +264,23 @@ public class Start extends JPanel implements Runnable, MouseListener {
         return theta;
     }
 
+    // Finds the slope of two objects
+    // NOTE: A slope of 1 means changing y by - 1 for every + 1 change in x
+    // A slope of -1 means changing y by + 1 for every - 1 change in x
+    public double getSlope(int x1, int y1, int x2, int y2) {
+
+        double vertical = y1 - y2;
+        double horizontal = x2 - x1;
+
+        double slope = vertical / horizontal;
+
+        return slope;
+    }
+
     // Rotates the nozzle image to fit theta
-    public BufferedImage rotateImage (double theta) {
-        int width = (int) Math.round(towerSwivelImage.getWidth() / 2.7 + towerSwivelImage.getHeight() / 2.7);
-        int height = (int) Math.round(towerSwivelImage.getWidth() / 2.7 + towerSwivelImage.getHeight() / 2.7);
+    public BufferedImage rotateImage (BufferedImage image, double theta) {
+        int width = (int) Math.round(image.getWidth() / 2.7 + image.getHeight() / 2.7);
+        int height = (int) Math.round(image.getWidth() / 2.7 + image.getHeight() / 2.7);
 
         BufferedImage rotatedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
@@ -275,10 +289,10 @@ public class Start extends JPanel implements Runnable, MouseListener {
         at.translate(width / 2, height / 2);
 
         at.rotate (Math.toRadians(theta),0, 0);
-        at.translate (-towerSwivelImage.getWidth() / 2, -towerSwivelImage.getHeight() / 2);
+        at.translate (-image.getWidth() / 2, -image.getHeight() / 2);
         AffineTransformOp rotateOp = new AffineTransformOp (at, AffineTransformOp.TYPE_BILINEAR);
 
-        rotateOp.filter (towerSwivelImage, rotatedImage);
+        rotateOp.filter (image, rotatedImage);
 
         return rotatedImage;
     }
