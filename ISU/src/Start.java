@@ -142,8 +142,12 @@ public class Start extends JPanel implements Runnable, MouseListener {
         updateBullets ();
     }
 
-    public void updateBullets () {
+    // Method for updateBullets
+    // Go through each existing bullet and move them.
+    // Check to see if it is time to create a new bullet, by looking ath te current frame count and the stored frame count and seeing if it is
+    // n frames yet
 
+    public void updateBullets () {
         //Check to see if it is time to add a new bullet to each tower
         for (int i = 0; i < towerBullets.length; i++) {
             if (towerBullets [i] != null) {
@@ -161,24 +165,17 @@ public class Start extends JPanel implements Runnable, MouseListener {
                         towerBullets [i].remove (j);
                         j--;
                     }
-
                 }
             }
         }
     }
-
-// Method for updateBullets
-    // Go through each existing bullet and move them.
-    // Check to see if it is time to create a new bullet, by looking ath te current frame count and the stored frame count and seeing if it is
-    // n frames yet
-
 
     public void moveEnemy () {
         //spawn a new enemy every certain frame counts
         if (inGame && FPSCOUNT % 45 == 0 && enemyCount < 5) {
             enemiesList[enemyCount++] = new Rectangle (-100,250,100,100);
         }
-        //Loop through all the enemies and move them
+        // Loop through all the enemies and move them
         // Moving the ghost along the track
 
         for (int i = 0; i < enemyCount; i++) {
@@ -230,7 +227,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
                         if (enemiesList[enemyTrack].x > 775) {
                             enemyTrack++;
                         }
-                    g.drawImage (rotateImage(getTheta(enemiesList[enemyTrack].x, enemiesList[enemyTrack].y, i)), towers [i].x + 7, towers[i].y + 5, 80, 80, this);
+                    g.drawImage (rotateImage (getTheta (enemiesList [enemyTrack].x, enemiesList [enemyTrack].y, i)), towers [i].x + 7, towers[i].y + 5, 80, 80, this);
                 }
             }
         }
