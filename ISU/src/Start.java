@@ -59,10 +59,10 @@ public class Start extends JPanel implements Runnable, MouseListener {
         thread.start();
 
         try{
-            enemyImage = ImageIO.read(new File("enemyOne.png"));
-            towerBaseImage = ImageIO.read(new File("towerBase.png"));
-            towerSwivelImage = ImageIO.read(new File("towerSwivelLarge2.png"));
-            bullet = ImageIO.read(new File("bullet.png"));
+            enemyImage = ImageIO.read (new File ("enemyOne.png"));
+            towerBaseImage = ImageIO.read (new File ("towerBase.png"));
+            towerSwivelImage = ImageIO.read (new File ("towerSwivelLarge2.png"));
+            bullet = ImageIO.read (new File ("bullet.png"));
         }
         catch (Exception e){
             System.out.println(e);
@@ -152,8 +152,12 @@ public class Start extends JPanel implements Runnable, MouseListener {
         for (int i = 0; i < towerBullets.length; i++) {
             if (towerBullets [i] != null) {
                 for (int j = 0; j < towerBullets[i].size(); j++) {
+<<<<<<< Updated upstream
                     towerBullets[i].get(j).x += slope;
                     towerBullets[i].get(j).y += -slope;
+=======
+                    towerBullets[i].get(j).x++;
+>>>>>>> Stashed changes
 
                     if (towerBullets [i].get(j).x >= 800 || towerBullets [i].get(j).y >= 800 || towerBullets [i].get(j).x <= 0 || towerBullets [i].get(j).y <= 0) {
                         towerBullets [i].remove (j);
@@ -257,7 +261,6 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
     // Gets theta for the angle of the turret nozzle
     public double getTheta (int x2, int y2, int i) {
-
         int x1 = towers[i].x;
         int y1 = towers[i].y;
 
