@@ -208,8 +208,6 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
         if (inGame == true) {
             for (int i = 0; i < enemyCount; i++) {
-//                enemiesList [x] =
-//                System.out.println ("Enemy moving");
                 g.drawImage (enemyImage, enemiesList[i].x, enemiesList[i].y, 100, 100, this);
             }
         }
@@ -227,28 +225,31 @@ public class Start extends JPanel implements Runnable, MouseListener {
                 }
             }
         }
-
+        
         for (int i = 0; i < towerBullets.length; i++) {
             if (towerBullets [i] != null) {
                 for (int j = 0; j < towerBullets[i].size(); j++) {
                     g.drawRect(towerBullets[i].get(j).x, towerBullets[i].get(j).y, 20, 20);
 
-                    double slope = 0;
-                    if (!bulletSetup) {
-                        double angle = getTheta(enemiesList[enemyTrack].x, enemiesList[enemyTrack].y, i);
+                    if (enemiesList [enemyTrack] != null) {
+                        double slope = 0;
+                        if (!bulletSetup) {
+                            double angle = getTheta(enemiesList[enemyTrack].x, enemiesList[enemyTrack].y, i);
 
-                        if (towers[i].x > enemiesList[enemyTrack].x) {
-                            angle = angle - 180;
+                            if (towers[i].x > enemiesList[enemyTrack].x) {
+                                angle = angle - 180;
+                            }
+
+                            rotatedBullet = rotateImage(bullet, angle);
+                            g.drawImage(rotatedBullet, towers[i].x + 7, towers[i].y + 5, 10, 10, this);
+                            slope = getSlope(towers[i].x, towers[i].y, enemiesList[enemyTrack].x, enemiesList[enemyTrack].y);
+                            bulletSetup = true;
+
+                        } else {
+                            slope = Math.ceil(slope);
+                            slope *= 5;
+                            g.drawImage(rotatedBullet, towerBullets[i].get(j).x, towerBullets[i].get(j).y, 10, 10, this);
                         }
-
-                        rotatedBullet = rotateImage(bullet, angle);
-                        g.drawImage(rotatedBullet, towers[i].x + 7, towers[i].y + 5, 10, 10, this);
-                        slope = getSlope(towers[i].x, towers[i].y, enemiesList[enemyTrack].x, enemiesList[enemyTrack].y);
-                        bulletSetup = true;
-                    } else {
-                        slope = Math.ceil(slope);
-                        slope *= 5;
-                        g.drawImage(rotatedBullet, towerBullets[i].get(j).x, towerBullets[i].get(j).y, 10, 10, this);
                     }
                 }
             }
