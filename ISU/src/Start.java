@@ -153,7 +153,9 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
                     rotatedBullet = rotateImage(bullet, angle);
                     g.drawImage(rotatedBullet, towers[i].x + 7, towers[i].y + 5, 10, 10, this);
+
                     // Add image rotation and slope and save it
+                    // Create two more array lists for slope and rotation of image
                 }
             }
         }
