@@ -145,6 +145,14 @@ public class Start extends JPanel implements Runnable, MouseListener {
             if (towerBullets [i] != null) {
                 if ((FPSCOUNT - startShot [i]) % 100 == 0) {
                     towerBullets [i].add (new Rectangle (towers[i]));
+                    double angle = getTheta(enemiesList[enemyTrack].x, enemiesList[enemyTrack].y, i);
+
+                    if (towers[i].x > enemiesList[enemyTrack].x) {
+                        angle = angle - 180;
+                    }
+
+                    rotatedBullet = rotateImage(bullet, angle);
+                    g.drawImage(rotatedBullet, towers[i].x + 7, towers[i].y + 5, 10, 10, this);
                     // Add image rotation and slope and save it
                 }
             }
@@ -232,14 +240,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
                     g.drawRect(towerBullets[i].get(j).x, towerBullets[i].get(j).y, 20, 20);
                     if (enemiesList [enemyTrack] != null) {
                         if (!bulletSetup) {
-                            double angle = getTheta(enemiesList[enemyTrack].x, enemiesList[enemyTrack].y, i);
 
-                            if (towers[i].x > enemiesList[enemyTrack].x) {
-                                angle = angle - 180;
-                            }
-
-                            rotatedBullet = rotateImage(bullet, angle);
-                            g.drawImage(rotatedBullet, towers[i].x + 7, towers[i].y + 5, 10, 10, this);
                             slope = getSlope(towers[i].x, towers[i].y, enemiesList[enemyTrack].x, enemiesList[enemyTrack].y);
                             slope *= 3;
                             bulletSetup = true;
