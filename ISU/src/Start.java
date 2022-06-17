@@ -145,6 +145,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
             if (towerBullets [i] != null) {
                 if ((FPSCOUNT - startShot [i]) % 100 == 0) {
                     towerBullets [i].add (new Rectangle (towers[i]));
+                    // Add image rotation and slope and save it
                 }
             }
         }
@@ -246,7 +247,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
                         } else {
                             System.out.println(slope);
                             towerBullets[i].get(j).x += slope;
-                            towerBullets[i].get(j).y += Math.round(slope);
+                            towerBullets[i].get(j).y += slope;
                             System.out.println(towerBullets[i].get(j).x + ", " + towerBullets[i].get(j).y);
                             g.drawImage(rotatedBullet, towerBullets[i].get(j).x, towerBullets[i].get(j).y, 10, 10, this);
                         }
