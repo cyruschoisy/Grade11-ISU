@@ -46,7 +46,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
     int enemyCount = 0;
     Rectangle [] enemiesList = new Rectangle [10];
     Rectangle [] towers = new Rectangle [48];
-    ArrayList <Rectangle> [] towerBullets = new ArrayList [40];
+    ArrayList <Rectangle> [] towerBullets = new ArrayList [41];
     int [] startShot = new int [40];
 
     // Constructor
@@ -143,17 +143,16 @@ public class Start extends JPanel implements Runnable, MouseListener {
         //Check to see if it is time to add a new bullet to each tower
         for (int i = 0; i < towerBullets.length; i++) {
             if (towerBullets [i] != null) {
-                if ((FPSCOUNT - startShot [i]) % 20 == 0) {
+                if ((FPSCOUNT - startShot [i]) % 100 == 0) {
                     towerBullets [i].add (new Rectangle (towers[i]));
                 }
             }
         }
 
+
         for (int i = 0; i < towerBullets.length; i++) {
             if (towerBullets [i] != null) {
                 for (int j = 0; j < towerBullets[i].size(); j++) {
-                    towerBullets[i].get(j).x += slope;
-                    towerBullets[i].get(j).y += -slope;
 
                     if (towerBullets [i].get(j).x >= 800 || towerBullets [i].get(j).y >= 800 || towerBullets [i].get(j).x <= 0 || towerBullets [i].get(j).y <= 0) {
                         towerBullets [i].remove (j);
@@ -230,9 +229,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
             if (towerBullets [i] != null) {
                 for (int j = 0; j < towerBullets[i].size(); j++) {
                     g.drawRect(towerBullets[i].get(j).x, towerBullets[i].get(j).y, 20, 20);
-
                     if (enemiesList [enemyTrack] != null) {
-                        double slope = 0;
                         if (!bulletSetup) {
                             double angle = getTheta(enemiesList[enemyTrack].x, enemiesList[enemyTrack].y, i);
 
@@ -243,11 +240,14 @@ public class Start extends JPanel implements Runnable, MouseListener {
                             rotatedBullet = rotateImage(bullet, angle);
                             g.drawImage(rotatedBullet, towers[i].x + 7, towers[i].y + 5, 10, 10, this);
                             slope = getSlope(towers[i].x, towers[i].y, enemiesList[enemyTrack].x, enemiesList[enemyTrack].y);
+                            slope *= 3;
                             bulletSetup = true;
 
                         } else {
-                            slope = Math.ceil(slope);
-                            slope *= 5;
+                            System.out.println(slope);
+                            towerBullets[i].get(j).x += slope;
+                            towerBullets[i].get(j).y += Math.round(slope);
+                            System.out.println(towerBullets[i].get(j).x + ", " + towerBullets[i].get(j).y);
                             g.drawImage(rotatedBullet, towerBullets[i].get(j).x, towerBullets[i].get(j).y, 10, 10, this);
                         }
                     }
@@ -389,7 +389,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
     	}
 
         // When in game
-        if (inGame == true) {
+        if (inGame == true && FPSCOUNT > 30) {
             // Checks if a tower has been clicked yet, if yes - returns pos, if no - returns -1
             int clickedPos = -1;
             for (int i = 0; i < towers.length; i++) {
