@@ -20,7 +20,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
     public static JFrame frame;
     public static Graphics g;
     public static int map = 0;
-    public static int wave;
+    public static int wave = 0;
     public static double slope;
 
     public static BufferedImage enemyImage;
@@ -28,6 +28,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
     public static BufferedImage towerSwivelImage;
     public static BufferedImage bullet;
     public static BufferedImage rotatedBullet;
+    public static BufferedImage waveImage;
 
     public final int FPS = 30;
     public int FPSCOUNT = 0;
@@ -49,6 +50,9 @@ public class Start extends JPanel implements Runnable, MouseListener {
     ArrayList <Rectangle> [] towerBullets = new ArrayList [41];
     int [] startShot = new int [40];
 
+    String [] waveFiles = {"wave1.png" , "wave2.png", "wave3.png", "wave4.png", "wave5.png"};
+    int [] enemiesPerWave = {5, 7, 10};
+
     // Constructor
     public Start () {
         enemy = new GameEntity();
@@ -63,6 +67,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
             towerBaseImage = ImageIO.read (new File ("towerBase.png"));
             towerSwivelImage = ImageIO.read (new File ("towerSwivelLarge2.png"));
             bullet = ImageIO.read (new File ("bullet.png"));
+            waveImage = ImageIO.read (new File (waveFiles [wave]));
         }
         catch (Exception e){
             System.out.println(e);
@@ -152,7 +157,6 @@ public class Start extends JPanel implements Runnable, MouseListener {
                     }
 
                     rotatedBullet = rotateImage(bullet, angle);
-                    g.drawImage(rotatedBullet, towers[i].x + 7, towers[i].y + 5, 10, 10, this);
 
                     // Add image rotation and slope and save it
                     // Create two more array lists for slope and rotation of image
@@ -177,7 +181,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
     // Moves the enemy
     public void moveEnemy () {
         //spawn a new enemy every certain frame counts
-        if (inGame && FPSCOUNT % 45 == 0 && enemyCount < 5) {
+        if (inGame && FPSCOUNT % 45 == 0 && enemyCount < enemiesPerWave [wave]) {
             enemiesList[enemyCount++] = new Rectangle (-100,250,100,100);
         }
         // Loop through all the enemies and move them
@@ -224,6 +228,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
         for (int i = 0; i < towers.length; i++) {
             if (clickedTowers[i] == true) {
+                g.drawImage (waveImage, 700, 700, 100, 40, this);
                 g.drawImage (towerBaseImage, towers[i].x + 7, towers[i].y + 5, 80, 80, this);
                 if (FPSCOUNT < 50) {
                     g.drawImage(rotateImage(towerSwivelImage, 270), towers[i].x + 7, towers[i].y + 5, 80, 80, this);
@@ -319,6 +324,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
     // Gets mouse clicked
     public void mouseClicked (MouseEvent e) {
+        wave = wave + 1;
 		x = e.getX ();
 		y = e.getY ();
 
