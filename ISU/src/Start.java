@@ -54,6 +54,8 @@ public class Start extends JPanel implements Runnable, MouseListener {
     int [] startShot = new int [40];
     Clip bgdMusic, click;
     int [] enemiesPerWave = {1, 3, 5, 7, 9};
+    int money = 0;
+    JLabel moneyText;
 
     // Constructor
     public Start () throws UnsupportedAudioFileException, IOException, LineUnavailableException {
@@ -66,6 +68,9 @@ public class Start extends JPanel implements Runnable, MouseListener {
         // Set up the icon image (Tracker not needed for the icon image)
         Image iconImage = Toolkit.getDefaultToolkit ().getImage ("enemyOne.png");
         frame.setIconImage (iconImage);
+
+        moneyText.setText (String.valueOf(money));
+        moneyText.add (frame);
 
         try{
             enemyImage = ImageIO.read (new File ("enemyOne.png"));
