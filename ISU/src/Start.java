@@ -291,12 +291,13 @@ public class Start extends JPanel implements Runnable, MouseListener {
                     if (enemiesList [enemyTrack] != null) {
                         if (setupBullets[i] != true) {
 
-                            slope = getSlope(towers[i].x, towers[i].y, enemiesList[enemyTrack].x, enemiesList[enemyTrack].y);
+                            slope = getSlope (towers[i].x, towers[i].y, enemiesList[enemyTrack].x, enemiesList[enemyTrack].y);
                             slope *= 10;
                             bulletSlope[i] = slope;
                             setupBullets[i] = true;
 
                         } else {
+                            System.out.println ("i: " + i);
                             System.out.println(bulletSlope[i]);
                             towerBullets[i].get(j).x += bulletSlope[i];
                             towerBullets[i].get(j).y += bulletSlope[i];
