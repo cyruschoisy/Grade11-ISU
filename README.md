@@ -1,6 +1,6 @@
 # Grade 11 ISU (ICS3U1)
 
-_**Made by Christian Fisla and Cyrus Choi**_
+_**Made by Cyrus Choi and Christian Fisla**_
 
 **Responsibilities of each Person**    
 
@@ -11,9 +11,10 @@ Cyrus:
 - Coded part of moveEnemy array to move the enemy along a certain path on the X and Y axis
 - Wrote handleAction array to run certain chunks of code based on where the user has clicked
 - Initialized background music
+- Initialized wave and money counter
 
 Christian: 
-- Found a way to include multiple images at once (using buffered image)
+- Included multiple images at once (using buffered image)
 - Initialized our FPS counter
 - Set angles and slope to rotate tower turret
 
@@ -25,9 +26,10 @@ Christian:
 **Additional Functionalities**
 - Made the tower turret rotate to track each enemy
 - Added click sound
+- You can place towers on any square in the grid aside for the track
 
 **Known bugs / Errors**
-- 
+- Crashes if you place the tower before the ghost (due to it reading null)
 
 **Other important Information**
 - Although this program is very different from what we originally imagined we could do in our time constraint, we hope you still enjoy playing level 1
