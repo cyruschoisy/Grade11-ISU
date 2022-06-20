@@ -44,13 +44,14 @@ public class Start extends JPanel implements Runnable, MouseListener {
     boolean startScreen = true;
     boolean aboutUs = false;
     boolean inGame = false;
-    boolean bulletSetup = false;
     boolean [] clickedTowers = new boolean [48];
     int enemyCount = 0;
     Rectangle [] enemiesList = new Rectangle [10];
     Rectangle [] towers = new Rectangle [48];
     ArrayList <Rectangle> [] towerBullets = new ArrayList [41];
     BufferedImage bullets [] = new BufferedImage[500];
+    Double bulletSlope [] = new Double[500];
+    Boolean setupBullets [] = new Boolean[500];
     int [] startShot = new int [40];
     Clip bgdMusic, click;
     int [] enemiesPerWave = {1, 3, 5, 7, 9};
@@ -68,6 +69,10 @@ public class Start extends JPanel implements Runnable, MouseListener {
         // Set up the icon image (Tracker not needed for the icon image)
         Image iconImage = Toolkit.getDefaultToolkit ().getImage ("enemyOne.png");
         frame.setIconImage (iconImage);
+
+        for (int i = 0; i < setupBullets.length; i++) {
+            setupBullets[i] = false;
+        }
 
 //        moneyText.setText (String.valueOf(money));
 //        moneyText.add (frame);
@@ -284,16 +289,17 @@ public class Start extends JPanel implements Runnable, MouseListener {
                 for (int j = 0; j < towerBullets[i].size(); j++) {
                     g.drawRect(towerBullets[i].get(j).x, towerBullets[i].get(j).y, 20, 20);
                     if (enemiesList [enemyTrack] != null) {
-                        if (!bulletSetup) {
+                        if (setupBullets[i] != true) {
 
                             slope = getSlope(towers[i].x, towers[i].y, enemiesList[enemyTrack].x, enemiesList[enemyTrack].y);
                             slope *= 10;
-                            bulletSetup = true;
+                            bulletSlope[i] = slope;
+                            setupBullets[i] = true;
 
                         } else {
-                            System.out.println(slope);
-                            towerBullets[i].get(j).x += slope;
-                            towerBullets[i].get(j).y += slope;
+                            System.out.println(bulletSlope[i]);
+                            towerBullets[i].get(j).x += bulletSlope[i];
+                            towerBullets[i].get(j).y += bulletSlope[i];
                             System.out.println(towerBullets[i].get(j).x + ", " + towerBullets[i].get(j).y);
                             g.drawImage(bullets[i], towerBullets[i].get(j).x, towerBullets[i].get(j).y, 10, 10, this);
                         }
