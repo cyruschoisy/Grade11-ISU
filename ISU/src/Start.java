@@ -50,7 +50,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
     Rectangle[] towers = new Rectangle[48];
     ArrayList<Rectangle>[] towerBullets = new ArrayList[41];
     BufferedImage bullets[] = new BufferedImage[500];
-    ArrayList<Double> bulletSlope[] = new ArrayList[41];
+    ArrayList <Double> bulletSlope[] = new ArrayList[41];
     Boolean setupBullets[] = new Boolean[500];
     int[] startShot = new int[40];
     Clip bgdMusic, click;
@@ -95,6 +95,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
             sound = AudioSystem.getAudioInputStream(new File("click.wav"));
             click = AudioSystem.getClip();
             click.open(sound);
+
         } catch (Exception e) {
             System.out.println(e);
         }
