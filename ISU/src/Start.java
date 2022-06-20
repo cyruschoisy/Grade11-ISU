@@ -24,18 +24,23 @@ public class Start extends JPanel implements Runnable, MouseListener {
     public static int map = 0;
     public static int wave = 0;
     public static double slope;
+    // Initializing all our images in the program
     public static BufferedImage enemyImage;
     public static BufferedImage towerBaseImage;
     public static BufferedImage towerSwivelImage;
     public static BufferedImage bullet;
     public static BufferedImage rotatedBullet;
     public static BufferedImage wave1Image;
-
+    public static BufferedImage wave2Image;
+    public static BufferedImage wave3Image;
+    public static BufferedImage wave4Image;
+    public static BufferedImage wave5Image;
+    // FPS / How many times the screen updates
     public final int FPS = 30;
     public int FPSCOUNT = 0;
-
+    // How many enemies are on the screen at once
     public int enemyTrack = 0;
-
+    // Background picture of track
     String picture = "towerDefence";
     int x, y;
     boolean startScreen = true;
@@ -68,7 +73,11 @@ public class Start extends JPanel implements Runnable, MouseListener {
             towerBaseImage = ImageIO.read (new File ("towerBase.png"));
             towerSwivelImage = ImageIO.read (new File ("towerSwivelLarge2.png"));
             bullet = ImageIO.read (new File ("bullet.png"));
-            wave1Image = ImageIO.read (new File ("wave1.png");
+            wave1Image = ImageIO.read (new File ("wave1.png"));
+            wave2Image = ImageIO.read (new File ("wave1.png"));
+            wave3Image = ImageIO.read (new File ("wave1.png"));
+            wave4Image = ImageIO.read (new File ("wave1.png"));
+            wave5Image = ImageIO.read (new File ("wave1.png"));
 
             AudioInputStream sound = AudioSystem.getAudioInputStream(new File ("music.wav"));
             bgdMusic = AudioSystem.getClip ();
