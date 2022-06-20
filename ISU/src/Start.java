@@ -24,21 +24,18 @@ public class Start extends JPanel implements Runnable, MouseListener {
     public static int map = 0;
     public static int wave = 0;
     public static double slope;
-
     public static BufferedImage enemyImage;
     public static BufferedImage towerBaseImage;
     public static BufferedImage towerSwivelImage;
     public static BufferedImage bullet;
     public static BufferedImage rotatedBullet;
-    public static BufferedImage waveImage;
+    public static BufferedImage wave1Image;
 
     public final int FPS = 30;
     public int FPSCOUNT = 0;
 
     public int enemyTrack = 0;
 
-    GameEntity enemy;
-    
     String picture = "towerDefence";
     int x, y;
     boolean startScreen = true;
@@ -52,13 +49,10 @@ public class Start extends JPanel implements Runnable, MouseListener {
     ArrayList <Rectangle> [] towerBullets = new ArrayList [41];
     int [] startShot = new int [40];
     Clip bgdMusic, click;
-
-    String [] waveFiles = {"wave1.png" , "wave2.png", "wave3.png", "wave4.png", "wave5.png"};
     int [] enemiesPerWave = {5, 7, 10};
 
     // Constructor
     public Start () throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-        enemy = new GameEntity();
         setLayout (new BorderLayout ());
         addMouseListener (this);
 
@@ -74,7 +68,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
             towerBaseImage = ImageIO.read (new File ("towerBase.png"));
             towerSwivelImage = ImageIO.read (new File ("towerSwivelLarge2.png"));
             bullet = ImageIO.read (new File ("bullet.png"));
-            waveImage = ImageIO.read (new File (waveFiles [wave]));
+            wave1Image = ImageIO.read (new File ("wave1.png");
 
             AudioInputStream sound = AudioSystem.getAudioInputStream(new File ("music.wav"));
             bgdMusic = AudioSystem.getClip ();
