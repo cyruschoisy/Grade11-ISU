@@ -7,12 +7,14 @@ import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
+import javax.sound.sampled.*;
 
 import javax.swing.*;
 
@@ -49,12 +51,13 @@ public class Start extends JPanel implements Runnable, MouseListener {
     Rectangle [] towers = new Rectangle [48];
     ArrayList <Rectangle> [] towerBullets = new ArrayList [41];
     int [] startShot = new int [40];
+    Clip bgdMusic, click;
 
     String [] waveFiles = {"wave1.png" , "wave2.png", "wave3.png", "wave4.png", "wave5.png"};
     int [] enemiesPerWave = {5, 7, 10};
 
     // Constructor
-    public Start () {
+    public Start () throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         enemy = new GameEntity();
         setLayout (new BorderLayout ());
         addMouseListener (this);
@@ -62,16 +65,29 @@ public class Start extends JPanel implements Runnable, MouseListener {
         Thread thread = new Thread(this);
         thread.start();
 
+        // Set up the icon image (Tracker not needed for the icon image)
+        Image iconImage = Toolkit.getDefaultToolkit ().getImage ("enemyOne.png");
+        frame.setIconImage (iconImage);
+
         try{
             enemyImage = ImageIO.read (new File ("enemyOne.png"));
             towerBaseImage = ImageIO.read (new File ("towerBase.png"));
             towerSwivelImage = ImageIO.read (new File ("towerSwivelLarge2.png"));
             bullet = ImageIO.read (new File ("bullet.png"));
             waveImage = ImageIO.read (new File (waveFiles [wave]));
+
+            AudioInputStream sound = AudioSystem.getAudioInputStream(new File ("music.wav"));
+            bgdMusic = AudioSystem.getClip ();
+            bgdMusic.open (sound);
+
+            sound = AudioSystem.getAudioInputStream(new File ("click.wav"));
+            click = AudioSystem.getClip ();
+            click.open (sound);
         }
         catch (Exception e){
             System.out.println(e);
         }
+
         // All the available spots for towers
         towers [0] = new Rectangle (0, 0, 95, 90);
         towers [1] = new Rectangle (100, 0, 95, 90);
@@ -367,6 +383,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
         // When in start screen
     	if (startScreen = true) {
+            bgdMusic.start();
 	    	if (x >= 644 && x <= 719 && y >= 507 && y <= 531) { // Exit button
 	    		System.exit (0);
 	    	}
@@ -415,6 +432,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
             // Adds clicked pos for towers that have been clicked, also records FPS
             if (clickedPos != -1) {
+                click.start();
                 towerBullets [clickedPos] = new ArrayList <Rectangle> ();
                 towerBullets [clickedPos].add (new Rectangle (towers[clickedPos]));
                 startShot [clickedPos] = FPSCOUNT;
@@ -422,7 +440,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
         }
     }
 
-    public static void main (String[] args) {
+    public static void main (String[] args) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         frame = new JFrame ("Tower Defence");
         frame.setPreferredSize (new Dimension (800, 600));
         frame.setLocation(0, 0);
