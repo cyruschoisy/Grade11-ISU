@@ -50,7 +50,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
     Rectangle [] enemiesList = new Rectangle [10];
     Rectangle [] towers = new Rectangle [48];
     ArrayList <Rectangle> [] towerBullets = new ArrayList [41];
-    ArrayList <BufferedImage> [] bullets = new ArrayList [1];
+    BufferedImage bullets [] = new BufferedImage[500];
     int [] startShot = new int [40];
     Clip bgdMusic, click;
     int [] enemiesPerWave = {1, 3, 5, 7, 9};
@@ -184,7 +184,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
                     }
 
                     rotatedBullet = rotateImage(bullet, angle);
-                    bullets [i].add (rotatedBullet);
+                    bullets[i] = rotatedBullet;
 
                     // Add image rotation and slope and save it
                     // Create two more array lists for slope and rotation of image
@@ -282,7 +282,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
                         if (!bulletSetup) {
 
                             slope = getSlope(towers[i].x, towers[i].y, enemiesList[enemyTrack].x, enemiesList[enemyTrack].y);
-                            slope *= 3;
+                            slope *= 10;
                             bulletSetup = true;
 
                         } else {
@@ -290,7 +290,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
                             towerBullets[i].get(j).x += slope;
                             towerBullets[i].get(j).y += slope;
                             System.out.println(towerBullets[i].get(j).x + ", " + towerBullets[i].get(j).y);
-                            g.drawImage(rotatedBullet, towerBullets[i].get(j).x, towerBullets[i].get(j).y, 10, 10, this);
+                            g.drawImage(bullets[i], towerBullets[i].get(j).x, towerBullets[i].get(j).y, 10, 10, this);
                         }
                     }
                 }
