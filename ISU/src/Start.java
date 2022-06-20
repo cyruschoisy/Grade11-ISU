@@ -52,9 +52,12 @@ public class Start extends JPanel implements Runnable, MouseListener {
     BufferedImage bullets[] = new BufferedImage[500];
     ArrayList <Double> bulletSlope[] = new ArrayList[41];
     Boolean setupBullets[] = new Boolean[500];
-    int[] startShot = new int[40];
+    int [] startShot = new int[40];
     Clip bgdMusic, click;
-    int[] enemiesPerWave = {1, 3, 5, 7, 9};
+    int [] enemiesPerWave = {1, 3, 5, 7, 9};
+
+    int [][] enemyHP = {{2}, {2, 2, 2}, {2, 2, 2, 2, 2}, {2, 2, 2, 2, 2, 2, 2}, {2, 2, 2, 2, 2, 2, 2, 2, 2}};
+
 //    int money = 4534534;
 //    JLabel moneyText;
 
@@ -203,6 +206,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
                     bulletSlope[i].add(slope);
                     setupBullets[i] = true;
+                    System.out.println ("HAAAAAAAAAAAAAAAAAAAAAAA");
 
                     // Add image rotation and slope and save it
                     // Create two more array lists for slope and rotation of image
@@ -216,6 +220,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
                     if (towerBullets[i].get(j).x >= 800 || towerBullets[i].get(j).y >= 800 || towerBullets[i].get(j).x <= 0 || towerBullets[i].get(j).y <= 0) {
                         towerBullets[i].remove(j);
+                        bulletSlope [i].remove (j);
                         j--;
                     }
                 }
@@ -225,7 +230,6 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
     // Moves the enemy
     public void moveEnemy() {
-        System.out.println("" + wave + " " + enemiesPerWave[wave]);
         //spawn a new enemy every certain frame counts
         if (inGame && FPSCOUNT % 45 == 0 && enemyCount < enemiesPerWave[wave]) {
             enemiesList[enemyCount++] = new Rectangle(-100, 250, 100, 100);
@@ -466,7 +470,6 @@ public class Start extends JPanel implements Runnable, MouseListener {
                 click.start();
                 towerBullets[clickedPos] = new ArrayList<Rectangle>();
                 bulletSlope[clickedPos] = new ArrayList<Double>();
-                towerBullets[clickedPos].add(new Rectangle(towers[clickedPos]));
                 startShot[clickedPos] = FPSCOUNT;
             }
         }
