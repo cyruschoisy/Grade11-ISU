@@ -50,6 +50,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
     Rectangle [] enemiesList = new Rectangle [10];
     Rectangle [] towers = new Rectangle [48];
     ArrayList <Rectangle> [] towerBullets = new ArrayList [41];
+    ArrayList <BufferedImage> [] bullets = new ArrayList [1];
     int [] startShot = new int [40];
     Clip bgdMusic, click;
     int [] enemiesPerWave = {1, 3, 5, 7, 9};
@@ -183,6 +184,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
                     }
 
                     rotatedBullet = rotateImage(bullet, angle);
+                    bullets [i].add (rotatedBullet);
 
                     // Add image rotation and slope and save it
                     // Create two more array lists for slope and rotation of image
