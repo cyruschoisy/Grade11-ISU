@@ -1,7 +1,5 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
@@ -54,7 +52,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
     ArrayList <Rectangle> [] towerBullets = new ArrayList [41];
     int [] startShot = new int [40];
     Clip bgdMusic, click;
-    int [] enemiesPerWave = {5, 7, 10};
+    int [] enemiesPerWave = {1, 3, 5, 7, 9};
 
     // Constructor
     public Start () throws UnsupportedAudioFileException, IOException, LineUnavailableException {
@@ -162,6 +160,15 @@ public class Start extends JPanel implements Runnable, MouseListener {
         updateBullets ();
     }
 
+    // Returns the correct waveImage to display
+    public BufferedImage waveCount (int [] enemiesPerWave, int wave) {
+        BufferedImage[] images = {wave1Image, wave2Image, wave3Image, wave4Image, wave5Image};
+
+        BufferedImage waveImage = images [wave];
+
+        return waveImage;
+    }
+
     // Goes through each bullet and moves them, if it's off the page, it will undraw and remove the bullet
     public void updateBullets () {
         //Check to see if it is time to add a new bullet to each tower
@@ -182,7 +189,6 @@ public class Start extends JPanel implements Runnable, MouseListener {
                 }
             }
         }
-
 
         for (int i = 0; i < towerBullets.length; i++) {
             if (towerBullets [i] != null) {
@@ -242,12 +248,18 @@ public class Start extends JPanel implements Runnable, MouseListener {
         if (inGame == true) {
             for (int i = 0; i < enemyCount; i++) {
                 g.drawImage (enemyImage, enemiesList[i].x, enemiesList[i].y, 100, 100, this);
+
+                // Changes wave image every 300 frames
+                if (FPSCOUNT % 300 == 0) {
+                    BufferedImage waveImage = waveCount (enemiesPerWave, wave);
+                    g.drawImage (waveImage, 800, 800, 100, 100, this);
+                    wave++;
+                }
             }
         }
 
         for (int i = 0; i < towers.length; i++) {
             if (clickedTowers[i] == true) {
-                g.drawImage (waveImage, 700, 700, 100, 40, this);
                 g.drawImage (towerBaseImage, towers[i].x + 7, towers[i].y + 5, 80, 80, this);
                 if (FPSCOUNT < 50) {
                     g.drawImage(rotateImage(towerSwivelImage, 270), towers[i].x + 7, towers[i].y + 5, 80, 80, this);
