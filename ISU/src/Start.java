@@ -217,6 +217,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
     // Moves the enemy
     public void moveEnemy () {
+        System.out.println ( "" + wave + " " + enemiesPerWave [wave]);
         //spawn a new enemy every certain frame counts
         if (inGame && FPSCOUNT % 45 == 0 && enemyCount < enemiesPerWave [wave]) {
             enemiesList[enemyCount++] = new Rectangle (-100,250,100,100);
@@ -265,7 +266,6 @@ public class Start extends JPanel implements Runnable, MouseListener {
                 if (FPSCOUNT % 300 == 0) {
                     BufferedImage waveImage = waveCount (enemiesPerWave, wave);
                     g.drawImage (waveImage, 800, 800, 100, 100, this);
-                    wave++;
                 }
             }
         }
@@ -275,11 +275,22 @@ public class Start extends JPanel implements Runnable, MouseListener {
                 g.drawImage (towerBaseImage, towers[i].x + 7, towers[i].y + 5, 80, 80, this);
                 if (FPSCOUNT < 50) {
                     g.drawImage(rotateImage(towerSwivelImage, 270), towers[i].x + 7, towers[i].y + 5, 80, 80, this);
-                } else {
+                }
+                else {
                         if (enemiesList[enemyTrack].x > 775) {
+                            enemiesList[enemyTrack] = null;
+                            enemyCount--;
                             enemyTrack++;
                         }
-                    g.drawImage (rotateImage (towerSwivelImage, (getTheta (enemiesList [enemyTrack].x, enemiesList [enemyTrack].y, i))), towers [i].x + 7, towers[i].y + 5, 80, 80, this);
+
+                        if (enemiesList [enemyTrack] == null) {
+                            wave++;
+                        }
+
+                        else {
+                            g.drawImage (rotateImage (towerSwivelImage, (getTheta (enemiesList [enemyTrack].x, enemiesList [enemyTrack].y, i))), towers [i].x + 7, towers[i].y + 5, 80, 80, this);
+
+                        }
                 }
             }
         }
@@ -369,7 +380,6 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
     // Gets mouse clicked
     public void mouseClicked (MouseEvent e) {
-        wave = wave + 1;
 		x = e.getX ();
 		y = e.getY ();
 
@@ -411,7 +421,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
         }
 
         // When in start screen
-    	if (startScreen = true) {
+    	if (startScreen == true) {
             bgdMusic.start();
 	    	if (x >= 644 && x <= 719 && y >= 507 && y <= 531) { // Exit button
 	    		System.exit (0);
