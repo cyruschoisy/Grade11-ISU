@@ -59,6 +59,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
     boolean howToPlay = false;
     int interval = 100;
     int money = 750; // Amount of money each user has
+    int costOfTower = 500;
     double tempTheta = 270;
     Clip bgdMusic, click; // Initialization of background music
 
@@ -312,7 +313,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
             interval = 20;
         }
         
-        else if (enemyCount == 249) {
+        else if (enemyTrack == 249) {
             startScreen = false;
             picture = "winner";
             System.out.println("YOU WIN");
@@ -568,9 +569,11 @@ public class Start extends JPanel implements Runnable, MouseListener {
                 if (x > towers[i].x && x < towers[i].x + 100 && y > towers[i].y && y < towers[i].y + 100) {
                     if (clickedTowers[i] == false) {
                         clickedPos = i;
-                        if (money >= 500) {
+                        if (money >= costOfTower) {
                             clickedTowers[i] = true;
-                            money -= 500;
+                            money -= costOfTower;
+                            costOfTower += 250;
+                            System.out.println("New Cost of Tower: " + costOfTower);
                             System.out.println("Balance: " + money);
                         } else {
                             System.out.println("INSUFFICIENT FUNDS");
@@ -601,4 +604,3 @@ public class Start extends JPanel implements Runnable, MouseListener {
         frame.setVisible(true);
     }
 }
-
