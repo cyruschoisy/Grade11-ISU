@@ -313,8 +313,10 @@ public class Start extends JPanel implements Runnable, MouseListener {
         }
         
         else if (enemyCount == 249) {
-            picture = "winner";
             startScreen = false;
+            picture = "winner";
+            System.out.println("YOU WIN");
+            repaint();
         }
         // Loop through all the enemies and move them
         // Moving the ghost along the track
