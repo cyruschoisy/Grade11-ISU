@@ -232,10 +232,6 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
                     bulletSlope[i].add(slope);
                     setupBullets[i] = true;
-//                    System.out.println (slope);
-
-                    // Add image rotation and slope and save it
-                    // Create two more array lists for slope and rotation of image
                 }
             }
         }
