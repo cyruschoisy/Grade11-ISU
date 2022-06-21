@@ -371,6 +371,8 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
         // If in game
         if (inGame == true) {
+            g.setFont (new Font("TimesRoman", Font.PLAIN, 30));
+            g.drawString ("Balance: " + Integer.toString (money), 600, 80);
             // Draws each enemy image
             for (int i = 0; i < enemyCount; i++) {
                 if (enemiesList[i] != null) {
