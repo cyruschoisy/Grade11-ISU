@@ -44,7 +44,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
     boolean startScreen = true;
     boolean aboutUs = false;
     boolean inGame = false;
-    int computTime = 500;
+    int computeTime = 500;
     boolean waveStart = false;
     boolean waveComplete = false;
     boolean[] clickedTowers = new boolean [48];
@@ -163,7 +163,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
             FPSCOUNT++;
 //            System.out.println(FPSCOUNT);
             try {
-                Thread.sleep(computTime / FPS);
+                Thread.sleep(computeTime / FPS);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -193,8 +193,15 @@ public class Start extends JPanel implements Runnable, MouseListener {
             if (enemiesList[enemyCount - 1] != null) {
 //                System.out.println("GOING INTO LOOP");
                 if (enemiesList[j] != null && enemiesList[j].intersects(bullet)) {
-                    money = money + 50;
-                    System.out.println ("Balance: " + money);
+                    if (enemiesKilled <= 50) {
+                        money += 40;
+                    } else if (enemiesKilled >= 51 && enemiesKilled <= 100) {
+                        money += 35;
+                    } else if (enemiesKilled >= 101 && enemiesKilled <= 175) {
+                        money += 30;
+                    } else {
+                        money += 25;
+                    }
 
                     enemiesList[j] = null;
                     enemiesKilled++;
@@ -217,7 +224,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
         //Check to see if it is time to add a new bullet to each tower
         for (int i = 0; i < towerBullets.length; i++) {
             if (towerBullets[i] != null && enemiesList [enemyTrack] != null && clickedTowers[i] == true) {
-                if ((FPSCOUNT) % 100 == 0) {
+                if ((FPSCOUNT) % 115 == 0) {
 
                     towerBullets[i].add(new Rectangle(towers[i]));
 
@@ -299,27 +306,32 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
         else if (enemyCount >= 10 && enemyCount <= 19) {
             interval = 85;
-            computTime = 350;
+            computeTime = 350;
         }
 
         else if (enemyCount >= 20 && enemyCount <= 29) {
             interval = 75;
-            computTime = 335;
+            computeTime = 335;
         }
 
         else if (enemyCount >= 30 && enemyCount <= 39) {
             interval = 50;
-            computTime = 320;
+            computeTime = 320;
         }
 
         else if (enemyCount >= 40) {
             interval = 35;
-            computTime = 305;
+            computeTime = 305;
         }
 
-        else if (enemyCount >= 100 && enemyCount < 249) {
-            interval = 30;
-            computTime = 290;
+        else if (enemyCount >= 100 && enemyCount < 175) {
+            interval = 25;
+            computeTime = 200;
+        }
+
+        else if (enemyCount >= 176 && enemyCount < 249) {
+            interval = 15;
+            computeTime = 100;
         }
         
         else if (enemiesKilled == 249) {
@@ -552,7 +564,6 @@ public class Start extends JPanel implements Runnable, MouseListener {
                 inGame = true;
                 FPSCOUNT = 1;
                 howToPlay = false;
-                System.out.println("Starting Balance: " + money);
                 repaint();
 
             } else if (x >= 289 && x <= 510 && y >= 274 && y <= 313) { // About us button
@@ -586,13 +597,13 @@ public class Start extends JPanel implements Runnable, MouseListener {
                         if (money >= costOfTower) {
                             clickedTowers[i] = true;
                             money -= costOfTower;
-                            if (costOfTower <= 1000) {
+                            if (costOfTower <= 1250) {
                                 costOfTower += 250;
+                            } else if (costOfTower <= 2500) {
+                                costOfTower += 500;
                             } else {
-                                costOfTower += 100;
+                                costOfTower += 1000;
                             }
-                            System.out.println("New Cost of Tower: " + costOfTower);
-                            System.out.println("Balance: " + money);
                         } else {
                             System.out.println("INSUFFICIENT FUNDS");
                         }
