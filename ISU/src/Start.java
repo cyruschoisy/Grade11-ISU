@@ -186,7 +186,13 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
     // Checks if a bullet has collided with any ghost
     public void checkCollision() {
-        for (int i = 0; i < )
+        for (int i = 0; i < towerBullets.length; i++) {
+            for (int j = 0; j < enemiesList.length; j++) {
+                if (enemiesList[j].x + 50 >= towerBullets[i].get(i).x && enemiesList[j].x + 50 <= towerBullets[i].get(i).x + 50) {
+                    
+                }
+            }
+        }
     }
 
     // Goes through each bullet and moves them, if it's off the page, it will undraw and remove the bullet
