@@ -228,6 +228,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
                     rotatedBullet = rotateImage(bullet, angle);
                     bullets[i] = rotatedBullet;
 
+                    System.out.println(getSlope(towers[i].x + 45, towers[i].y + 40, enemiesList[enemyTrack].x, enemiesList[enemyTrack].y));
                     slope = getSlope(towers[i].x + 45, towers[i].y + 40, enemiesList[enemyTrack].x, enemiesList[enemyTrack].y);
 
                     bulletSlope[i].add(slope);
@@ -256,7 +257,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
                         towerBullets[i].get(j).x -= bulletSlope[i].get(j) * 15;
                     }
                     // Top left
-                    if (towers [i].x > enemiesList [enemyTrack].x && towers [i].y > enemiesList [enemyTrack].y) {
+                    else if (towers [i].x > enemiesList [enemyTrack].x && towers [i].y > enemiesList [enemyTrack].y) {
                         towerBullets[i].get(j).x -= bulletSlope[i].get(j) * 15;
                         towerBullets[i].get(j).y -= bulletSlope[i].get(j) * 15;
                     }
@@ -266,7 +267,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
                         towerBullets[i].get(j).y -= bulletSlope[i].get(j) * 15;
                     }
                     // Bottom left
-                    if (towers [i].x > enemiesList [enemyTrack].x && towers [i].y < enemiesList [enemyTrack].y) {
+                    else if (towers [i].x > enemiesList [enemyTrack].x && towers [i].y < enemiesList [enemyTrack].y) {
                         towerBullets[i].get(j).x -= bulletSlope[i].get(j) * 15;
                         towerBullets[i].get(j).y += bulletSlope[i].get(j) * 15;
                     }
