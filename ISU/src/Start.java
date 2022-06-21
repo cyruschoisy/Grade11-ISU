@@ -204,6 +204,8 @@ public class Start extends JPanel implements Runnable, MouseListener {
     }
 
     // Checks if a bullet has collided with any ghost
+    // Param: Takes in Rectangle bullet
+    // Return: This method returns a boolean. Collision -> true, otherwise -> false
     public boolean checkCollision(Rectangle bullet) {
         // Loop through all enemies
         for (int j = 0; j < enemiesList.length; j++) {
@@ -247,6 +249,8 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
 
     // Goes through each bullet and moves them, if it's off the page, it will remove the bullet
+    // Param: N/A
+    // Return: N/A
     public void updateBullets() {
         //Check to see if it is time to add a new bullet to each tower
         for (int i = 0; i < towerBullets.length; i++) {
@@ -336,7 +340,9 @@ public class Start extends JPanel implements Runnable, MouseListener {
         }
     }
 
-    // Moves the enemy
+    // Moves the enemy incrementally
+    // Param: N/A
+    // Return: N/A
     public void moveEnemy() {
         // Spawn a new enemy every certain frame counts
         if (inGame == true && FPSCOUNT % interval == 0 && enemyCount < 250) {
@@ -497,6 +503,19 @@ public class Start extends JPanel implements Runnable, MouseListener {
     }
 
     // Gets theta for the angle of the turret nozzle
+    // Param: x2 (x position of the ghost), y2 (y position of the ghost), and i (the current tower to compare to)
+    // Return: This method returns angle theta as a degree
+    /*
+             (GHOST x2, y2)
+               |\
+               |  \
+               |    \
+     Vertical  |      \  Hypotenuse
+               |        \
+               |          \
+               |      Theta \
+               _______________  (TOWER x1, y1)
+     */
     public double getTheta(int x2, int y2, int i) {
 
         // Assigns the rower position to a local variable for ease of use
@@ -529,6 +548,19 @@ public class Start extends JPanel implements Runnable, MouseListener {
     // Finds the slope of two objects
     // NOTE: A slope of 1 means changing y by - 1 for every + 1 change in x
     // A slope of -1 means changing y by + 1 for every - 1 change in x
+    // Param: x1 (x position of bullet), y1 (y position of bullet), x2 (x position of ghost), y2 (y position of ghost)
+    // Return: This method returns the slope of the triangle as a double
+        /*
+             (GHOST x2, y2)
+               |\
+               |  \
+               |    \
+         Rise  |      \  Rate of Change = Slope (rise / run)
+               |        \
+               |          \
+               |   Run      \
+               _______________  (Bullet x1, y2)
+     */
     public double getSlope(int x1, int y1, int x2, int y2) {
         double vertical = y1 - y2;
         double horizontal = x2 - x1;
@@ -539,6 +571,10 @@ public class Start extends JPanel implements Runnable, MouseListener {
     }
 
     // Rotates the nozzle image to fit theta
+    // Param: The original BufferedImage and the angle in degrees
+    // Return: The new, rotated BufferedImage
+    // NOTE: This code has been reference from an online source. It is not identical, there have been decent changes
+    // SOURCE --> https://blog.idrsolutions.com/image-rotation-in-java/
     public BufferedImage rotateImage(BufferedImage image, double theta) {
         int width = (int) Math.round(image.getWidth() / 2.7 + image.getHeight() / 2.7);
         int height = (int) Math.round(image.getWidth() / 2.7 + image.getHeight() / 2.7);
