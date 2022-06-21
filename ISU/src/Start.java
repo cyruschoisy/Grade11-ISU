@@ -1,3 +1,15 @@
+/*
+Cyrus Choi, Christian Fisla
+June 21th, 2022
+
+Tower Defense! This is a game where the player will be given a certain amount of money to defend the incoming ghosts. However,
+the player must choose the tower locations wisely, as they are not cheap and some spots on the grid are better than others.
+As the game progresses, the incoming ghosts will be harder to defend and reward you with less money. In addition, towers will
+become more expensive. See how long you can last, you will win the game when 250 ghosts are defeated. Good luck!
+
+ */
+
+// Import statements
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
@@ -15,11 +27,10 @@ import javax.sound.sampled.*;
 
 import javax.swing.*;
 
+// Main class
 public class Start extends JPanel implements Runnable, MouseListener {
+    //Initialize
     public static JFrame frame;
-    public static Graphics g;
-    public static int map = 0;
-    public static int wave = 0;
     public static double slope;
     // Initializing all our images in the program
     public static BufferedImage enemyImage;
@@ -27,49 +38,56 @@ public class Start extends JPanel implements Runnable, MouseListener {
     public static BufferedImage towerSwivelImage;
     public static BufferedImage bullet;
     public static BufferedImage rotatedBullet;
-    public static BufferedImage wave1Image;
-    public static BufferedImage wave2Image;
-    public static BufferedImage wave3Image;
-    public static BufferedImage wave4Image;
-    public static BufferedImage wave5Image;
+
     // FPS / How many times the screen updates
     public final int FPS = 30;
     public int FPSCOUNT = 0;
-    // How many enemies are on the screen at once
+    // Index of the current enemy for the towers to track
     public int enemyTrack = 0;
-    // Background picture of track
+    // Current background picture
     String picture = "towerDefence";
+    // X, Y variables to handle mouse actions
     int x, y;
+    //Variable to keep track of how many enemies have been defeated so far
     int enemiesKilled = 0;
+
+    // Boolean variables to toggle different screens in the menu
     boolean startScreen = true;
     boolean aboutUs = false;
+    boolean howToPlay = false;
     boolean inGame = false;
     boolean lost = false;
+
+    // Variable to increase of decrease total thread.sleep() time. Using a variable to hold this value is useful
+    // for dynamically changing the computing time when more enemies are on the screen
     int computeTime = 500;
-    boolean waveStart = false;
-    boolean waveComplete = false;
+
+    // A boolean array to determine which grid spot has been clicked, if any
     boolean[] clickedTowers = new boolean [48];
+
+    // Keeps track of all enemies that have been spawned
     int enemyCount = 0;
+
     Rectangle[] enemiesList = new Rectangle [250]; // Number of enemies
     Rectangle[] towers = new Rectangle [48]; // Initializing rectangle array for towers
     ArrayList <Rectangle> [] towerBullets = new ArrayList [500]; // Writes array in arrayList
-    BufferedImage bullets [] = new BufferedImage [500]; // Bullets buffered image
     ArrayList <Double> bulletSlope [] = new ArrayList[500]; // ArrayList for slope of each bullet
-    Boolean setupBullets [] = new Boolean[500];
-    int [] startShot = new int[500]; // Number of bullets
-    int [] enemiesPerWave = {3, 3, 5, 7, 9};
-    boolean howToPlay = false;
-    int interval = 100;
-    int money = 750; // Amount of money each user has
-    int costOfTower = 500;
-    double tempTheta = 270;
+    BufferedImage bullets [] = new BufferedImage [500]; // Bullets buffered image
+    Boolean setupBullets [] = new Boolean[500]; // Saves the state of all bullets
+
+    int interval = 100; // Frame gap between enemy spawns
+    int money = 750; // Amount of money the user has
+    int costOfTower = 500; // The amount of money a new tower will cost
+    double tempTheta = 270; // A variable to store the temporary angle of the tower's turret. This way, they can stay in the same spot when there are no enemies currently on the screen to look at
     Clip bgdMusic, click; // Initialization of background music
 
     // Constructor
     public Start() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+        // Initialize the layout of our frame
         setLayout(new BorderLayout());
         addMouseListener(this);
 
+        // Start thread
         Thread thread = new Thread(this);
         thread.start();
 
@@ -77,20 +95,17 @@ public class Start extends JPanel implements Runnable, MouseListener {
         Image iconImage = Toolkit.getDefaultToolkit().getImage("enemyOne.png");
         frame.setIconImage(iconImage);
 
+        // Change all bullet setups to false -> they have not been setup yet
         for (int i = 0; i < setupBullets.length; i++) {
             setupBullets[i] = false;
         }
 
         try {
+            // Pull our "sprite" images
             enemyImage = ImageIO.read(new File("enemyOne.png"));
             towerBaseImage = ImageIO.read(new File("towerBase.png"));
             towerSwivelImage = ImageIO.read(new File("towerSwivelLarge2.png"));
             bullet = ImageIO.read(new File("bullet.png"));
-            wave1Image = ImageIO.read(new File("wave1.png"));
-            wave2Image = ImageIO.read(new File("wave1.png"));
-            wave3Image = ImageIO.read(new File("wave1.png"));
-            wave4Image = ImageIO.read(new File("wave1.png"));
-            wave5Image = ImageIO.read(new File("wave1.png"));
 
             // Initialization of background music
             AudioInputStream sound = AudioSystem.getAudioInputStream(new File("music.wav"));
@@ -159,11 +174,12 @@ public class Start extends JPanel implements Runnable, MouseListener {
     @Override
     public void run() {
         while (true) {
+            // Call the update function in an infinite loop to constantly update animations, etc...
             update();
             this.repaint();
             FPSCOUNT++;
-//            System.out.println(FPSCOUNT);
             try {
+                // Pause the thread using the computeTime variable to increase or decrease the time spend processing
                 Thread.sleep(computeTime / FPS);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -177,23 +193,15 @@ public class Start extends JPanel implements Runnable, MouseListener {
         updateBullets();
     }
 
-    // Returns the correct waveImage to display
-    public BufferedImage waveCount(int[] enemiesPerWave, int wave) {
-        BufferedImage[] images = {wave1Image, wave2Image, wave3Image, wave4Image, wave5Image};
-
-        BufferedImage waveImage = images[wave];
-
-        return waveImage;
-    }
-
     // Checks if a bullet has collided with any ghost
     public boolean checkCollision(Rectangle bullet) {
+        // Loop through all enemies
         for (int j = 0; j < enemiesList.length; j++) {
-//            System.out.println("BEFORE != null");
-//            System.out.println("ENEMY COUNT: " + enemyCount);
+            // Only continue if said enemy is NOT null
             if (enemiesList[enemyCount - 1] != null) {
-//                System.out.println("GOING INTO LOOP");
+                // If the enemy has intersected with a bullet
                 if (enemiesList[j] != null && enemiesList[j].intersects(bullet)) {
+                    // then award the player money, depending on how early or far they are into the game
                     if (enemiesKilled <= 50) {
                         money += 40;
                     } else if (enemiesKilled >= 51 && enemiesKilled <= 100) {
@@ -204,50 +212,73 @@ public class Start extends JPanel implements Runnable, MouseListener {
                         money += 25;
                     }
 
+                    // Take out the ghost by making its position null
+                    // The array is passed by reference, so we don't need to return it!
                     enemiesList[j] = null;
-                    enemiesKilled++;
+                    enemiesKilled++; // Increase the enemy death toll
+
+                    // Re-configure which enemy is supposed to be tracked
+                    // If the leading ghost has died -> follow to the next leading ghost
+                    // If any other ghost has died -> reconfigure to the next ghost that isn't null -> leading ghost
                     for (int i = 0; i < enemiesList.length; i++) {
                         if (enemiesList[i] != null) {
                             enemyTrack = i;
-                            break;
+                            break; // Once we've found the next target, exit the loop!
                         }
                     }
+                    // Return true if any bullet has collided with any ghost in the given frame
                     return true;
                 }
             }
         }
+        // If not, return false
         return false;
     }
 
 
-    // Goes through each bullet and moves them, if it's off the page, it will undraw and remove the bullet
+    // Goes through each bullet and moves them, if it's off the page, it will remove the bullet
     public void updateBullets() {
         //Check to see if it is time to add a new bullet to each tower
         for (int i = 0; i < towerBullets.length; i++) {
+            // Checks to make sure another bullet should be added and drawn in if there are currently enemies on the screen and a tower has been successfully placed
             if (towerBullets[i] != null && enemiesList [enemyTrack] != null && clickedTowers[i] == true) {
+                // Every 115 frames, run the code to "shoot" the bullet
                 if ((FPSCOUNT) % 115 == 0) {
 
+                    // Append a new rectangle to the arraylist
                     towerBullets[i].add(new Rectangle(towers[i]));
 
+                    // Call getTheta() with the position of the currently tracked enemies and save the angle to a variable
                     double angle = getTheta(enemiesList[enemyTrack].x, enemiesList[enemyTrack].y, i);
 
+                    // Change the angle depending on where the enemy stands in relation to the tower
                     if (towers[i].x > enemiesList[enemyTrack].x) {
                         angle = angle - 180;
                     }
 
+                    // Rotate the image of the bullet, in accordance with the angle and save it to a variable
                     rotatedBullet = rotateImage(bullet, angle);
+
+                    // Use the bullets array to save the rotated image of the bullet
                     bullets[i] = rotatedBullet;
 
+                    // Get the slope of the bullet's trajectory and save it to a variable
                     slope = getSlope(towers[i].x + 40, towers[i].y + 35, enemiesList[enemyTrack].x + 40, enemiesList[enemyTrack].y + 35);
 
+                    // Save the slope to an array list
                     bulletSlope[i].add(slope);
+
+                    // Change the setup state to true -> we do not need to calculate the rotated image and slope for this particular bullet anymore
                     setupBullets[i] = true;
                 }
             }
         }
 
+        // Loop through all the tower bullets
         for (int i = 0; i < towerBullets.length; i++) {
+            // Only proceed if not null
             if (towerBullets[i] != null) {
+                // Loops through all the bullets and adds the slope to them appropriately
                 for (int j = 0; j < towerBullets[i].size(); j++) {
                     if (towerBullets[i] != null && enemiesList[enemyTrack] != null) {
                         // Straight up
@@ -282,6 +313,8 @@ public class Start extends JPanel implements Runnable, MouseListener {
                             towerBullets[i].get(j).x += 15;
                             towerBullets[i].get(j).y += bulletSlope[i].get(j) * 15;
                         }
+                        // Run check collision. Only if it returns true, proceed with removing the bullet
+                        // this will ensure that it only collides with a single ghost
                         if (checkCollision(towerBullets[i].get(j)) || towerBullets[i].get(j).x >= 800 || towerBullets[i].get(j).y >= 800 || towerBullets[i].get(j).x <= 0 || towerBullets[i].get(j).y <= 0) {
                             towerBullets[i].remove(j);
                             bulletSlope[i].remove(j);
@@ -295,7 +328,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
     // Moves the enemy
     public void moveEnemy() {
-        //spawn a new enemy every certain frame counts
+        // Spawn a new enemy every certain frame counts
         if (inGame == true && FPSCOUNT % interval == 0 && enemyCount < 250) {
             enemiesList[enemyCount++] = new Rectangle(-100, 250, 100, 100);
         }
@@ -320,19 +353,18 @@ public class Start extends JPanel implements Runnable, MouseListener {
             computeTime = 320;
         }
 
-        else if (enemyCount >= 40) {
+        else if (enemyCount >= 40 && enemyCount <= 99) {
             interval = 35;
             computeTime = 305;
         }
 
         else if (enemyCount >= 100 && enemyCount < 175) {
-            interval = 25;
+            interval = 30;
             computeTime = 200;
         }
 
         else if (enemyCount >= 176 && enemyCount < 249) {
-            interval = 15;
-            computeTime = 100;
+            interval = 25;
         }
 
         // Loop through all the enemies and move them
@@ -357,17 +389,13 @@ public class Start extends JPanel implements Runnable, MouseListener {
                 }
             }
         }
-
-        if (enemyCount == 0 && waveStart == true) {
-            wave++;
-            waveStart = false;
-        }
     }
 
     // Paint Component
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+        // Render different ending screens if the user has one or lost
         if (lost) {
             startScreen = false;
             inGame = false;
@@ -380,14 +408,17 @@ public class Start extends JPanel implements Runnable, MouseListener {
             picture = "winner";
         }
 
+        // Get the current path
         Path currentRelativePath = Paths.get("");
         String root = currentRelativePath.toAbsolutePath().toString();
 
+        // Append the path to the directory and current picture
         String splashImagePath = root + "/ISU/media/" + picture + ".png";
         File splashImage = new File(splashImagePath);
 
         Image background;
 
+        // Check if the image is available. If not, notify in console
         if (splashImage.exists() && !splashImage.isDirectory()) {
             background = Toolkit.getDefaultToolkit().getImage(splashImagePath);
             g.drawImage(background, 0, 0, 800, 561, this);
@@ -395,8 +426,9 @@ public class Start extends JPanel implements Runnable, MouseListener {
             System.out.println("IMAGE CANNOT BE FOUND");
         }
 
-        // If in game
+        // If "start" has been pressed -> in game
         if (inGame == true) {
+            // Draw the labels for balance, costOfTower, and Enemies Killed
             g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
             g.drawString("Balance: " + Integer.toString (money), 550, 525);
             g.drawString("Cost of Tower: " + Integer.toString (costOfTower), 35, 525);
@@ -407,30 +439,32 @@ public class Start extends JPanel implements Runnable, MouseListener {
                 if (enemiesList[i] != null) {
                     g.drawImage(enemyImage, enemiesList[i].x, enemiesList[i].y, 100, 100, this);
                 }
-
-                // Changes wave image every 300 frames
-                if (FPSCOUNT % 300 == 0) {
-                    BufferedImage waveImage = waveCount(enemiesPerWave, wave);
-                    g.drawImage(waveImage, 800, 800, 100, 100, this);
-                }
             }
         }
 
         // Drawing tower image
         for (int i = 0; i < towers.length; i++) {
             if (clickedTowers[i] == true && inGame == true) {
+
+                // Always draw the base of the tower
                 g.drawImage(towerBaseImage, towers[i].x + 7, towers[i].y + 5, 80, 80, this);
 
+                // Once the game has started check if any enemies are on the screen yet
                 if (FPSCOUNT > 0) {
                     if (enemiesList[enemyTrack] != null) {
+                        // If they've spawned yet, assign the angle at which to rotate to tempTheta, then...
                         tempTheta = getTheta(enemiesList[enemyTrack].x, enemiesList[enemyTrack].y, i);
+                        // ...draw the "turret" image seperately in its correct rotation
                         g.drawImage(rotateImage(towerSwivelImage, (getTheta(enemiesList[enemyTrack].x, enemiesList[enemyTrack].y, i))), towers[i].x + 7, towers[i].y + 5, 80, 80, this);
                     } else {
+                        // If there are no enemies on the screen...
                         if (enemiesKilled != 249) {
                             if (enemiesList[enemyTrack + 1] != null) {
                                 enemyTrack++;
                             }
                         }
+                        // Draw the "turret" in the default position -> "tempTheta" default value is 270
+                        // Otherwise, use tempTheta to draw the turret in the latest position
                         g.drawImage(rotateImage(towerSwivelImage, tempTheta), towers[i].x + 7, towers[i].y + 5, 80, 80, this);
                     }
                 }
@@ -453,17 +487,27 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
     // Gets theta for the angle of the turret nozzle
     public double getTheta(int x2, int y2, int i) {
+
+        // Assigns the rower position to a local variable for ease of use
         int x1 = towers[i].x;
         int y1 = towers[i].y;
 
         double hypotenuse;
 
+        // Calculate the hypotenuse of our imaginary triangle between the tower and the ghost
+        // We can do this using the distance formula, inputting both points
         hypotenuse = Math.sqrt(((y2 - y1) * (y2 - y1)) + ((x2 - x1) * (x2 - x1)));
 
+        // Find out the vertical length of the triangle, or the "opposite" side
         double vertical = y1 - y2;
+
+        // Now that we know to sides, isolate for theta
         double theta = (Math.asin(vertical / hypotenuse));
+
+        // Trigonometric functions return radians, so we need to convert it to degrees
         theta = Math.toDegrees(theta);
 
+        // Depending on the position of te ghost, add 180 degrees to negative theta
         if (x2 > x1) {
             theta = 180 - theta;
         }
@@ -509,10 +553,10 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
     // Gets mouse clicked
     public void mouseClicked(MouseEvent e) {
+        click.start();
+
         x = e.getX();
         y = e.getY();
-
-//        System.out.println("x: " + x + " y: " + y);
 
         handleAction(x, y);
     }
@@ -560,17 +604,16 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
         // When in start screen
         if (startScreen == true) {
-            bgdMusic.start();
             if (x >= 644 && x <= 719 && y >= 507 && y <= 531) { // Exit button
                 System.exit(0);
 
             } else if (x >= 331 && x <= 467 && y >= 194 && y <= 233) { // Start button
                 picture = "firstMapGrid";
-                map = 1;
                 startScreen = false;
                 inGame = true;
                 FPSCOUNT = 1;
                 howToPlay = false;
+                bgdMusic.start();
                 repaint();
 
             } else if (x >= 289 && x <= 510 && y >= 274 && y <= 313) { // About us button
@@ -601,9 +644,11 @@ public class Start extends JPanel implements Runnable, MouseListener {
                 if (x > towers[i].x && x < towers[i].x + 100 && y > towers[i].y && y < towers[i].y + 100) {
                     if (clickedTowers[i] == false) {
                         clickedPos = i;
-                        if (money >= costOfTower) {
+                        if (money >= costOfTower) { // Only allow a purchase to be made if the user has enough money
                             clickedTowers[i] = true;
                             money -= costOfTower;
+
+                            // Increase the cost of the tower for every purchase to make it harder
                             if (costOfTower <= 1250) {
                                 costOfTower += 250;
                             } else if (costOfTower <= 2500) {
@@ -621,7 +666,6 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
             // Adds clicked pos for towers that have been clicked, also records FPS
             if (clickedPos != -1) {
-                click.start();
 
                 towerBullets[clickedPos] = new ArrayList<Rectangle>();
                 bulletSlope[clickedPos] = new ArrayList<Double>();
@@ -629,6 +673,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
         }
     }
 
+    // Main method
     public static void main(String[] args) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         frame = new JFrame("Tower Defence");
         frame.setPreferredSize(new Dimension(800, 600));
