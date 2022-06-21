@@ -79,9 +79,6 @@ public class Start extends JPanel implements Runnable, MouseListener {
             setupBullets[i] = false;
         }
 
-//        moneyText.setText (String.valueOf(money));
-//        moneyText.add (frame);
-
         try {
             enemyImage = ImageIO.read(new File("enemyOne.png"));
             towerBaseImage = ImageIO.read(new File("towerBase.png"));
@@ -567,6 +564,9 @@ public class Start extends JPanel implements Runnable, MouseListener {
             // Adds clicked pos for towers that have been clicked, also records FPS
             if (clickedPos != -1) {
                 click.start();
+                money = money - 50;
+                System.out.println ("Balance: " + money);
+                
                 towerBullets[clickedPos] = new ArrayList<Rectangle>();
                 bulletSlope[clickedPos] = new ArrayList<Double>();
                 startShot[clickedPos] = FPSCOUNT;
