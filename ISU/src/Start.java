@@ -4,8 +4,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -371,8 +370,10 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
         // If in game
         if (inGame == true) {
-            g.setFont (new Font("TimesRoman", Font.PLAIN, 30));
-            g.drawString ("Balance: " + Integer.toString (money), 600, 80);
+            g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
+            g.drawString("Balance: " + Integer.toString (money), 550, 525);
+            g.drawString("Cost of Tower: " + Integer.toString (costOfTower), 35, 525);
+
             // Draws each enemy image
             for (int i = 0; i < enemyCount; i++) {
                 if (enemiesList[i] != null) {
