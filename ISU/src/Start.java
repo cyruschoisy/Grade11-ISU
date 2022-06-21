@@ -69,7 +69,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
     // Keeps track of all enemies that have been spawned
     int enemyCount = 0;
 
-    Rectangle[] enemiesList = new Rectangle [250]; // Number of enemies
+    Rectangle[] enemiesList = new Rectangle [251]; // Number of enemies
     Rectangle[] towers = new Rectangle [48]; // Initializing rectangle array for towers
     ArrayList <Rectangle> [] towerBullets = new ArrayList [500]; // Writes array in arrayList
     ArrayList <Double> bulletSlope [] = new ArrayList[500]; // ArrayList for slope of each bullet
@@ -412,7 +412,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
             picture = "lost";
         }
 
-        if (enemiesKilled == 249) {
+        if (enemiesKilled > 249) {
             startScreen = false;
             inGame = false;
             won = true;
@@ -465,7 +465,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
                     if (enemiesList[enemyTrack] != null) {
                         // If they've spawned yet, assign the angle at which to rotate to tempTheta, then...
                         tempTheta = getTheta(enemiesList[enemyTrack].x, enemiesList[enemyTrack].y, i);
-                        // ...draw the "turret" image seperately in its correct rotation
+                        // ...draw the "turret" image separately in its correct rotation
                         g.drawImage(rotateImage(towerSwivelImage, (getTheta(enemiesList[enemyTrack].x, enemiesList[enemyTrack].y, i))), towers[i].x + 7, towers[i].y + 5, 80, 80, this);
                     } else {
                         // If there are no enemies on the screen...
