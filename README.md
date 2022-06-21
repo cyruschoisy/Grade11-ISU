@@ -17,6 +17,7 @@ Christian:
 - Set angles and slope to rotate tower turret
 - Collision for bullets + enemies
 - Implemented wave counter + wave image
+- Art for turret and map
 
 #### **Missing Functionalities**
 - Missing other levels
@@ -30,6 +31,10 @@ Christian:
 
 #### **Known bugs / Errors**
 - Crashes if you place the tower before the ghost (due to it reading null)
+- You need multiple enemies on the screen before you start placing towers
+- Sometimes bullets bounce
+- Bullets also kill 2 enemies at once ocassionally
+- Aim is slightly off, cannot aim towards the left
 
 #### **Other important Information**
 - Although this program is very different from what we originally imagined we could do in our time constraint, we hope you still enjoy playing level 1
