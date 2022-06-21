@@ -172,6 +172,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
     public void update() {
         moveEnemy();
         updateBullets();
+        checkCollision();
     }
 
     // Returns the correct waveImage to display
@@ -181,6 +182,11 @@ public class Start extends JPanel implements Runnable, MouseListener {
         BufferedImage waveImage = images[wave];
 
         return waveImage;
+    }
+
+    // Checks if a bullet has collided with any ghost
+    public void checkCollision() {
+        for (int i = 0; i < )
     }
 
     // Goes through each bullet and moves them, if it's off the page, it will undraw and remove the bullet
