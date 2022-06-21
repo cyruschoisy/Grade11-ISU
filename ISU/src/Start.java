@@ -40,9 +40,11 @@ public class Start extends JPanel implements Runnable, MouseListener {
     // Background picture of track
     String picture = "towerDefence";
     int x, y;
+    int enemiesKilled = 0;
     boolean startScreen = true;
     boolean aboutUs = false;
     boolean inGame = false;
+    int computTime = 500;
     boolean waveStart = false;
     boolean waveComplete = false;
     boolean[] clickedTowers = new boolean [48];
@@ -161,7 +163,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
             FPSCOUNT++;
 //            System.out.println(FPSCOUNT);
             try {
-                Thread.sleep(500 / FPS);
+                Thread.sleep(computTime / FPS);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -195,6 +197,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
                     System.out.println ("Balance: " + money);
 
                     enemiesList[j] = null;
+                    enemiesKilled++;
                     for (int i = 0; i < enemiesList.length; i++) {
                         if (enemiesList[i] != null) {
                             enemyTrack = i;
@@ -214,7 +217,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
         //Check to see if it is time to add a new bullet to each tower
         for (int i = 0; i < towerBullets.length; i++) {
             if (towerBullets[i] != null && enemiesList [enemyTrack] != null && clickedTowers[i] == true) {
-                if ((FPSCOUNT) % 125 == 0) {
+                if ((FPSCOUNT) % 100 == 0) {
 
                     towerBullets[i].add(new Rectangle(towers[i]));
 
@@ -227,7 +230,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
                     rotatedBullet = rotateImage(bullet, angle);
                     bullets[i] = rotatedBullet;
 
-                    slope = getSlope(towers[i].x + 45, towers[i].y + 40, enemiesList[enemyTrack].x, enemiesList[enemyTrack].y);
+                    slope = getSlope(towers[i].x + 40, towers[i].y + 35, enemiesList[enemyTrack].x + 40, enemiesList[enemyTrack].y + 35);
 
                     bulletSlope[i].add(slope);
                     setupBullets[i] = true;
@@ -236,44 +239,46 @@ public class Start extends JPanel implements Runnable, MouseListener {
         }
 
         for (int i = 0; i < towerBullets.length; i++) {
-            if (towerBullets[i] != null && enemiesList [enemyTrack] != null) {
+            if (towerBullets[i] != null) {
                 for (int j = 0; j < towerBullets[i].size(); j++) {
-                    // Straight up
-                    if (towers [i].x == enemiesList [enemyTrack].x && towers [i].y > enemiesList [enemyTrack].y) {
-                        towerBullets[i].get(j).y -= bulletSlope[i].get(j) * 15;
-                    }
-                    // Right
-                    else if (towers [i].x < enemiesList [enemyTrack].x && towers [i].y == enemiesList [enemyTrack].y) {
-                        towerBullets[i].get(j).x += 15;
-                    }
-                    // Left
-                    else if (towers [i].x > enemiesList [enemyTrack].x && towers [i].y == enemiesList [enemyTrack].y) {
-                        towerBullets[i].get(j).x -= 15;
-                    }
-                    // Top left
-                    else if (towers [i].x > enemiesList [enemyTrack].x && towers [i].y > enemiesList [enemyTrack].y) {
-                        towerBullets[i].get(j).x -= 15;
-                        towerBullets[i].get(j).y -= bulletSlope[i].get(j) * 15;
-                    }
-                    // Top right
-                    else if (towers [i].x < enemiesList [enemyTrack].x && towers [i].y > enemiesList [enemyTrack].y) {
-                        towerBullets[i].get(j).x += 15;
-                        towerBullets[i].get(j).y -= bulletSlope[i].get(j) * 15;
-                    }
-                    // Bottom left
-                    else if (towers [i].x > enemiesList [enemyTrack].x && towers [i].y < enemiesList [enemyTrack].y) {
-                        towerBullets[i].get(j).x -= 15;
-                        towerBullets[i].get(j).y += bulletSlope[i].get(j) * 15;
-                    }
-                    // Bottom right
-                    else if (towers [i].x < enemiesList [enemyTrack].x && towers [i].y < enemiesList [enemyTrack].y) {
-                        towerBullets[i].get(j).x += 15;
-                        towerBullets[i].get(j).y += bulletSlope[i].get(j) * 15;
-                    }
-                    if (checkCollision(towerBullets[i].get(j)) || towerBullets[i].get(j).x >= 800 || towerBullets[i].get(j).y >= 800 || towerBullets[i].get(j).x <= 0 || towerBullets[i].get(j).y <= 0) {
-                        towerBullets[i].remove(j);
-                        bulletSlope [i].remove (j);
-                        j--;
+                    if (towerBullets[i] != null && enemiesList[enemyTrack] != null) {
+                        // Straight up
+                        if (towers[i].x == enemiesList[enemyTrack].x && towers[i].y > enemiesList[enemyTrack].y) {
+                            towerBullets[i].get(j).y -= bulletSlope[i].get(j) * 15;
+                        }
+                        // Right
+                        else if (towers[i].x < enemiesList[enemyTrack].x && towers[i].y == enemiesList[enemyTrack].y) {
+                            towerBullets[i].get(j).x += 15;
+                        }
+                        // Left
+                        else if (towers[i].x > enemiesList[enemyTrack].x && towers[i].y == enemiesList[enemyTrack].y) {
+                            towerBullets[i].get(j).x -= 15;
+                        }
+                        // Top left
+                        else if (towers[i].x > enemiesList[enemyTrack].x && towers[i].y > enemiesList[enemyTrack].y) {
+                            towerBullets[i].get(j).x -= 15;
+                            towerBullets[i].get(j).y -= bulletSlope[i].get(j) * 15;
+                        }
+                        // Top right
+                        else if (towers[i].x < enemiesList[enemyTrack].x && towers[i].y > enemiesList[enemyTrack].y) {
+                            towerBullets[i].get(j).x += 15;
+                            towerBullets[i].get(j).y -= bulletSlope[i].get(j) * 15;
+                        }
+                        // Bottom left
+                        else if (towers[i].x > enemiesList[enemyTrack].x && towers[i].y < enemiesList[enemyTrack].y) {
+                            towerBullets[i].get(j).x -= 15;
+                            towerBullets[i].get(j).y += bulletSlope[i].get(j) * 15;
+                        }
+                        // Bottom right
+                        else if (towers[i].x < enemiesList[enemyTrack].x && towers[i].y < enemiesList[enemyTrack].y) {
+                            towerBullets[i].get(j).x += 15;
+                            towerBullets[i].get(j).y += bulletSlope[i].get(j) * 15;
+                        }
+                        if (checkCollision(towerBullets[i].get(j)) || towerBullets[i].get(j).x >= 800 || towerBullets[i].get(j).y >= 800 || towerBullets[i].get(j).x <= 0 || towerBullets[i].get(j).y <= 0) {
+                            towerBullets[i].remove(j);
+                            bulletSlope[i].remove(j);
+                            j--;
+                        }
                     }
                 }
             }
@@ -283,7 +288,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
     // Moves the enemy
     public void moveEnemy() {
         //spawn a new enemy every certain frame counts
-        if (inGame == true && FPSCOUNT % interval == 0 && enemyCount < 100) {
+        if (inGame == true && FPSCOUNT % interval == 0 && enemyCount < 250) {
             enemiesList[enemyCount++] = new Rectangle(-100, 250, 100, 100);
         }
 
@@ -294,25 +299,30 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
         else if (enemyCount >= 10 && enemyCount <= 19) {
             interval = 85;
+            computTime = 350;
         }
 
         else if (enemyCount >= 20 && enemyCount <= 29) {
             interval = 75;
+            computTime = 335;
         }
 
         else if (enemyCount >= 30 && enemyCount <= 39) {
             interval = 50;
+            computTime = 320;
         }
 
         else if (enemyCount >= 40) {
             interval = 35;
+            computTime = 305;
         }
 
         else if (enemyCount >= 100 && enemyCount < 249) {
-            interval = 20;
+            interval = 30;
+            computTime = 290;
         }
         
-        else if (enemyTrack == 249) {
+        else if (enemiesKilled == 249) {
             startScreen = false;
             picture = "winner";
             System.out.println("YOU WIN");
@@ -373,6 +383,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
             g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
             g.drawString("Balance: " + Integer.toString (money), 550, 525);
             g.drawString("Cost of Tower: " + Integer.toString (costOfTower), 35, 525);
+            g.drawString("Enemies Killed: " + Integer.toString (enemiesKilled), 35, 45);
 
             // Draws each enemy image
             for (int i = 0; i < enemyCount; i++) {
@@ -413,7 +424,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
                     // Sets up each bullet, draws the bullet image
                     if (enemiesList[enemyTrack] != null) {
                         if (setupBullets[i] == true) {
-                            g.drawImage(bullets[i], towerBullets[i].get(j).x + 45, towerBullets[i].get(j).y + 40, 20, 20, this);
+                            g.drawImage(bullets[i], towerBullets[i].get(j).x + 40, towerBullets[i].get(j).y + 35, 20, 20, this);
                         }
                     }
                 }
@@ -575,7 +586,11 @@ public class Start extends JPanel implements Runnable, MouseListener {
                         if (money >= costOfTower) {
                             clickedTowers[i] = true;
                             money -= costOfTower;
-                            costOfTower += 250;
+                            if (costOfTower <= 1000) {
+                                costOfTower += 250;
+                            } else {
+                                costOfTower += 100;
+                            }
                             System.out.println("New Cost of Tower: " + costOfTower);
                             System.out.println("Balance: " + money);
                         } else {
