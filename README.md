@@ -15,6 +15,7 @@ Christian:
 - Included multiple images at once (using buffered image)
 - Initialized our FPS counter
 - Set angles and slope to rotate tower turret
+- Collision for bullets + enemies
 
 #### **Missing Functionalities**
 - Missing other levels

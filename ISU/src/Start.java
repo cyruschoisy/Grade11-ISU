@@ -229,7 +229,6 @@ public class Start extends JPanel implements Runnable, MouseListener {
                         towerBullets[i].get(j).x -= bulletSlope[i].get(j);
                         towerBullets[i].get(j).y -= bulletSlope[i].get(j);
                     }
-
                     // Top right
                     else if (towers [i].x < enemiesList [enemyTrack].x && towers [i].y > enemiesList [enemyTrack].y) {
                         towerBullets[i].get(j).x += bulletSlope[i].get(j);
@@ -240,7 +239,6 @@ public class Start extends JPanel implements Runnable, MouseListener {
                         towerBullets[i].get(j).x -= bulletSlope[i].get(j);
                         towerBullets[i].get(j).y += bulletSlope[i].get(j);
                     }
-
                     // Bottom right
                     else if (towers [i].x < enemiesList [enemyTrack].x && towers [i].y < enemiesList [enemyTrack].y) {
                         towerBullets[i].get(j).x += bulletSlope[i].get(j);
@@ -341,7 +339,6 @@ public class Start extends JPanel implements Runnable, MouseListener {
         for (int i = 0; i < towerBullets.length; i++) {
             if (towerBullets[i] != null) {
                 for (int j = 0; j < towerBullets[i].size(); j++) {
-                    g.drawRect(towerBullets[i].get(j).x, towerBullets[i].get(j).y, 20, 20);
 
                     if (enemiesList[enemyTrack] != null) {
                         if (setupBullets[i] == true) {
@@ -349,7 +346,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
                             System.out.println("sjdflskdjf " + (bulletSlope[i].size() + "-" + towerBullets[i].size()));
 
                             System.out.println(towerBullets[i].get(j).x + ", " + towerBullets[i].get(j).y);
-                            g.drawImage(bullets[i], towerBullets[i].get(j).x, towerBullets[i].get(j).y, 10, 10, this);
+                            g.drawImage(bullets[i], towerBullets[i].get(j).x, towerBullets[i].get(j).y, 20, 20, this);
                         }
                     }
                 }
