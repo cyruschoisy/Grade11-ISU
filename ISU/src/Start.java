@@ -362,6 +362,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
         // If in game
         if (inGame == true) {
+            // Draws each enemy image
             for (int i = 0; i < enemyCount; i++) {
                 if (enemiesList[i] != null) {
                     g.drawRect(enemiesList[i].x, enemiesList[i].y, 100, 100);
@@ -376,6 +377,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
             }
         }
 
+        // Drawing tower image
         for (int i = 0; i < towers.length; i++) {
             if (clickedTowers[i] == true) {
                 g.drawImage(towerBaseImage, towers[i].x + 7, towers[i].y + 5, 80, 80, this);
@@ -385,17 +387,13 @@ public class Start extends JPanel implements Runnable, MouseListener {
                 }
             }
         }
-
+        // Draws each tower bullet
         for (int i = 0; i < towerBullets.length; i++) {
             if (towerBullets[i] != null) {
                 for (int j = 0; j < towerBullets[i].size(); j++) {
-
+                    // Sets up each bullet, draws the bullet image
                     if (enemiesList[enemyTrack] != null) {
                         if (setupBullets[i] == true) {
-                            //  System.out.println ("i: " + i);
-//                            System.out.println("sjdflskdjf " + (bulletSlope[i].size() + "-" + towerBullets[i].size()));
-
-//                            System.out.println(towerBullets[i].get(j).x + ", " + towerBullets[i].get(j).y);
                             g.drawRect(towerBullets[i].get(j).x + 45, towerBullets[i].get(j).y + 40, 20, 20);
                             g.drawImage(bullets[i], towerBullets[i].get(j).x + 45, towerBullets[i].get(j).y + 40, 20, 20, this);
                         }
