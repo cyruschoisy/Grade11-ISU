@@ -44,6 +44,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
     boolean startScreen = true;
     boolean aboutUs = false;
     boolean inGame = false;
+    boolean lost = false;
     int computeTime = 500;
     boolean waveStart = false;
     boolean waveComplete = false;
@@ -350,9 +351,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
                     for (int p = 0; p < enemiesList.length; p++) {
                         if (enemiesList[p] != null) {
                             enemyTrack = p;
-                            System.out.println ("YOU LOSE!");
-                            System.exit (0);
-                            break;
+                            lost = true;
                         }
                     }
                 }
@@ -369,12 +368,16 @@ public class Start extends JPanel implements Runnable, MouseListener {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+        if (lost) {
+            startScreen = false;
+            inGame = false;
+            picture = "lost";
+        }
+
         if (enemiesKilled == 249) {
             startScreen = false;
             inGame = false;
             picture = "winner";
-
-            System.out.println("YOU WIN");
         }
 
         Path currentRelativePath = Paths.get("");
