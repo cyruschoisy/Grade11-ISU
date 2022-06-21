@@ -57,6 +57,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
     boolean howToPlay = false;
     boolean inGame = false;
     boolean lost = false;
+    boolean won = false;
 
     // Variable to increase of decrease total thread.sleep() time. Using a variable to hold this value is useful
     // for dynamically changing the computing time when more enemies are on the screen
@@ -80,6 +81,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
     int costOfTower = 500; // The amount of money a new tower will cost
     double tempTheta = 270; // A variable to store the temporary angle of the tower's turret. This way, they can stay in the same spot when there are no enemies currently on the screen to look at
     Clip bgdMusic, click; // Initialization of background music
+    Image cursorImage; // Initialize cursor variable
 
     // Constructor
     public Start() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
@@ -99,6 +101,14 @@ public class Start extends JPanel implements Runnable, MouseListener {
         for (int i = 0; i < setupBullets.length; i++) {
             setupBullets[i] = false;
         }
+
+        // Set up the cursor
+        cursorImage = Toolkit.getDefaultToolkit().getImage("cursor.png");
+
+        Point hotspot = new Point (0, 0);
+        Toolkit toolkit = Toolkit.getDefaultToolkit ();
+        Cursor cursor = toolkit.createCustomCursor (cursorImage, hotspot, "cursor");
+        frame.setCursor (cursor);
 
         try {
             // Pull our "sprite" images
@@ -405,6 +415,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
         if (enemiesKilled == 249) {
             startScreen = false;
             inGame = false;
+            won = true;
             picture = "winner";
         }
 
@@ -475,7 +486,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
             if (towerBullets[i] != null) {
                 for (int j = 0; j < towerBullets[i].size(); j++) {
                     // Sets up each bullet, draws the bullet image
-                    if (enemiesList[enemyTrack] != null) {
+                    if (enemiesList[enemyTrack] != null && !lost && !won) {
                         if (setupBullets[i] == true) {
                             g.drawImage(bullets[i], towerBullets[i].get(j).x + 40, towerBullets[i].get(j).y + 35, 20, 20, this);
                         }
@@ -553,6 +564,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
     // Gets mouse clicked
     public void mouseClicked(MouseEvent e) {
+        click.setMicrosecondPosition(0);
         click.start();
 
         x = e.getX();
@@ -613,6 +625,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
                 inGame = true;
                 FPSCOUNT = 1;
                 howToPlay = false;
+                bgdMusic.loop(Clip.LOOP_CONTINUOUSLY);
                 bgdMusic.start();
                 repaint();
 
@@ -641,26 +654,26 @@ public class Start extends JPanel implements Runnable, MouseListener {
             // Checks if a tower has been clicked yet, if yes - returns pos, if no - returns -1
             int clickedPos = -1;
             for (int i = 0; i < towers.length; i++) {
-                if (x > towers[i].x && x < towers[i].x + 100 && y > towers[i].y && y < towers[i].y + 100) {
-                    if (clickedTowers[i] == false) {
-                        clickedPos = i;
-                        if (money >= costOfTower) { // Only allow a purchase to be made if the user has enough money
-                            clickedTowers[i] = true;
-                            money -= costOfTower;
+                if (towers[i] != null) {
+                    if (x > towers[i].x && x < towers[i].x + 100 && y > towers[i].y && y < towers[i].y + 100) {
+                        if (clickedTowers[i] == false) {
+                            clickedPos = i;
+                            if (money >= costOfTower) { // Only allow a purchase to be made if the user has enough money
+                                clickedTowers[i] = true;
+                                money -= costOfTower;
 
-                            // Increase the cost of the tower for every purchase to make it harder
-                            if (costOfTower <= 1250) {
-                                costOfTower += 250;
-                            } else if (costOfTower <= 2500) {
-                                costOfTower += 500;
-                            } else {
-                                costOfTower += 1000;
+                                // Increase the cost of the tower for every purchase to make it harder
+                                if (costOfTower <= 1250) {
+                                    costOfTower += 250;
+                                } else if (costOfTower <= 2500) {
+                                    costOfTower += 500;
+                                } else {
+                                    costOfTower += 1000;
+                                }
                             }
-                        } else {
-                            System.out.println("INSUFFICIENT FUNDS");
                         }
+                        break;
                     }
-                    break;
                 }
             }
 
