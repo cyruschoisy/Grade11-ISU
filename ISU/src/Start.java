@@ -54,13 +54,17 @@ public class Start extends JPanel implements Runnable, MouseListener {
     BufferedImage bullets[] = new BufferedImage[500];
     ArrayList <Double> bulletSlope[] = new ArrayList[500];
     Boolean setupBullets[] = new Boolean[500];
-    Clip bgdMusic, click;
+    Rectangle[] enemiesList = new Rectangle[50]; // Number of enemies
+    Rectangle[] towers = new Rectangle[48]; // Initializing rectangle array for towers
+    ArrayList <Rectangle> [] towerBullets = new ArrayList[500]; // Writes array in arrayList
+    BufferedImage bullets[] = new BufferedImage [500]; // Bullets buffered image
+    ArrayList <Double> bulletSlope[] = new ArrayList[500]; // ArrayList for slope of each bullet
+    Boolean setupBullets[] = new Boolean[500];
+    int [] startShot = new int[500]; // Number of bullets
     int [] enemiesPerWave = {3, 3, 5, 7, 9};
     boolean howToPlay = false;
-    int [][] enemyHP = {{2}, {2, 2, 2}, {2, 2, 2, 2, 2}, {2, 2, 2, 2, 2, 2, 2}, {2, 2, 2, 2, 2, 2, 2, 2, 2}};
     int interval = 100;
-    int money = 0;
-
+    int money = 0; // Amount of money each user has
 
     // Constructor
     public Start() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
@@ -89,10 +93,12 @@ public class Start extends JPanel implements Runnable, MouseListener {
             wave4Image = ImageIO.read(new File("wave1.png"));
             wave5Image = ImageIO.read(new File("wave1.png"));
 
+            // Initialization of background music
             AudioInputStream sound = AudioSystem.getAudioInputStream(new File("music.wav"));
             bgdMusic = AudioSystem.getClip();
             bgdMusic.open(sound);
 
+            // Initialization of click music
             sound = AudioSystem.getAudioInputStream(new File("click.wav"));
             click = AudioSystem.getClip();
             click.open(sound);
@@ -286,7 +292,8 @@ public class Start extends JPanel implements Runnable, MouseListener {
             enemiesList[enemyCount++] = new Rectangle(-100, 250, 100, 100);
         }
 
-        else if (enemyCount <= 9) {
+        // Makes the enemies draw in quicker
+        if (enemyCount <= 9) {
             interval = 100;
         }
 
@@ -305,9 +312,9 @@ public class Start extends JPanel implements Runnable, MouseListener {
         else if (enemyCount >= 40) {
             interval = 15;
         }
+
         // Loop through all the enemies and move them
         // Moving the ghost along the track
-
         for (int i = 0; i < enemyCount; i++) {
             if (enemiesList[i] != null) {
                 if (enemiesList[i].x <= 200 || enemiesList[i].y <= 75) {
@@ -316,6 +323,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
                     enemiesList[i].y -= 2;
                 }
 
+                // If past 800 pixels, user will lose
                 if (enemiesList[i].x > 800) {
                     enemiesList[i] = null;
                     for (int p = 0; p < enemiesList.length; p++) {
@@ -329,9 +337,8 @@ public class Start extends JPanel implements Runnable, MouseListener {
                 }
             }
         }
-//        System.out.println("ENEMY TRACK: " + enemyTrack);
+
         if (enemyCount == 0 && waveStart == true) {
-//            System.out.println(wave);
             wave++;
             waveStart = false;
         }
@@ -343,11 +350,9 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
         Path currentRelativePath = Paths.get("");
         String root = currentRelativePath.toAbsolutePath().toString();
-//        System.out.println("Current absolute path is: " + root);
 
         String splashImagePath = root + "/ISU/media/" + picture + ".png";
         File splashImage = new File(splashImagePath);
-//        System.out.println("Entire path: " + splashImagePath);
 
         Image background;
 
@@ -358,7 +363,9 @@ public class Start extends JPanel implements Runnable, MouseListener {
             System.out.println("IMAGE CANNOT BE FOUND");
         }
 
+        // If in game
         if (inGame == true) {
+            // Draws each enemy image
             for (int i = 0; i < enemyCount; i++) {
                 if (enemiesList[i] != null) {
                     g.drawRect(enemiesList[i].x, enemiesList[i].y, 100, 100);
@@ -373,6 +380,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
             }
         }
 
+        // Drawing tower image
         for (int i = 0; i < towers.length; i++) {
             if (clickedTowers[i] == true) {
                 g.drawImage(towerBaseImage, towers[i].x + 7, towers[i].y + 5, 80, 80, this);
@@ -382,17 +390,13 @@ public class Start extends JPanel implements Runnable, MouseListener {
                 }
             }
         }
-
+        // Draws each tower bullet
         for (int i = 0; i < towerBullets.length; i++) {
             if (towerBullets[i] != null) {
                 for (int j = 0; j < towerBullets[i].size(); j++) {
-
+                    // Sets up each bullet, draws the bullet image
                     if (enemiesList[enemyTrack] != null) {
                         if (setupBullets[i] == true) {
-                            //  System.out.println ("i: " + i);
-//                            System.out.println("sjdflskdjf " + (bulletSlope[i].size() + "-" + towerBullets[i].size()));
-
-//                            System.out.println(towerBullets[i].get(j).x + ", " + towerBullets[i].get(j).y);
                             g.drawRect(towerBullets[i].get(j).x + 45, towerBullets[i].get(j).y + 40, 20, 20);
                             g.drawImage(bullets[i], towerBullets[i].get(j).x + 45, towerBullets[i].get(j).y + 40, 20, 20, this);
                         }
@@ -499,7 +503,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
                 repaint();
             }
         }
-
+        // If exit button on how to play screen is clicked
         if (howToPlay == true) {
             if (x >= 642 && x <= 721 && y >= 12 && y <= 38) { // Exit button
                 picture = "towerDefence";
@@ -569,7 +573,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
                     System.out.println("INSUFFICIENT FUNDS");
                 }
                 System.out.println ("Balance: " + money);
-                
+
                 towerBullets[clickedPos] = new ArrayList<Rectangle>();
                 bulletSlope[clickedPos] = new ArrayList<Double>();
             }
