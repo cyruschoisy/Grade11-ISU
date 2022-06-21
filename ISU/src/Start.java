@@ -289,7 +289,8 @@ public class Start extends JPanel implements Runnable, MouseListener {
             enemiesList[enemyCount++] = new Rectangle(-100, 250, 100, 100);
         }
 
-        else if (enemyCount <= 9) {
+        // Makes the enemies draw in quicker
+        if (enemyCount <= 9) {
             interval = 100;
         }
 
@@ -308,9 +309,9 @@ public class Start extends JPanel implements Runnable, MouseListener {
         else if (enemyCount >= 40 && enemyCount <= 49) {
             interval = 15;
         }
+
         // Loop through all the enemies and move them
         // Moving the ghost along the track
-
         for (int i = 0; i < enemyCount; i++) {
             if (enemiesList[i] != null) {
                 if (enemiesList[i].x <= 200 || enemiesList[i].y <= 75) {
@@ -319,6 +320,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
                     enemiesList[i].y -= 2;
                 }
 
+                // If past 800 pixels, user will lose
                 if (enemiesList[i].x > 800) {
                     enemiesList[i] = null;
                     for (int p = 0; p < enemiesList.length; p++) {
@@ -332,9 +334,8 @@ public class Start extends JPanel implements Runnable, MouseListener {
                 }
             }
         }
-//        System.out.println("ENEMY TRACK: " + enemyTrack);
+
         if (enemyCount == 0 && waveStart == true) {
-//            System.out.println(wave);
             wave++;
             waveStart = false;
         }
@@ -346,11 +347,9 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
         Path currentRelativePath = Paths.get("");
         String root = currentRelativePath.toAbsolutePath().toString();
-//        System.out.println("Current absolute path is: " + root);
 
         String splashImagePath = root + "/ISU/media/" + picture + ".png";
         File splashImage = new File(splashImagePath);
-//        System.out.println("Entire path: " + splashImagePath);
 
         Image background;
 
@@ -361,6 +360,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
             System.out.println("IMAGE CANNOT BE FOUND");
         }
 
+        // If in game
         if (inGame == true) {
             for (int i = 0; i < enemyCount; i++) {
                 if (enemiesList[i] != null) {
