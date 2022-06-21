@@ -16,6 +16,7 @@ Christian:
 - Initialized our FPS counter
 - Set angles and slope to rotate tower turret
 - Collision for bullets + enemies
+- Implemented wave counter + wave image
 
 #### **Missing Functionalities**
 - Missing other levels
