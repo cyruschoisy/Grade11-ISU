@@ -213,7 +213,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
     public void updateBullets() {
         //Check to see if it is time to add a new bullet to each tower
         for (int i = 0; i < towerBullets.length; i++) {
-            if (towerBullets[i] != null && enemiesList [enemyTrack] != null) {
+            if (towerBullets[i] != null && enemiesList [enemyTrack] != null && clickedTowers[i] == true) {
                 if ((FPSCOUNT) % 125 == 0) {
 
                     towerBullets[i].add(new Rectangle(towers[i]));
@@ -236,7 +236,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
         }
 
         for (int i = 0; i < towerBullets.length; i++) {
-            if (towerBullets[i] != null) {
+            if (towerBullets[i] != null && enemiesList [enemyTrack] != null) {
                 for (int j = 0; j < towerBullets[i].size(); j++) {
                     // Straight up
                     if (towers [i].x == enemiesList [enemyTrack].x && towers [i].y > enemiesList [enemyTrack].y) {
