@@ -44,6 +44,8 @@ public class Start extends JPanel implements Runnable, MouseListener {
     boolean startScreen = true;
     boolean aboutUs = false;
     boolean inGame = false;
+    boolean waveStart = false;
+    boolean waveComplete = false;
     boolean[] clickedTowers = new boolean[48];
     int enemyCount = 0;
     Rectangle[] enemiesList = new Rectangle[10];
@@ -54,7 +56,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
     Boolean setupBullets[] = new Boolean[500];
     int [] startShot = new int[40];
     Clip bgdMusic, click;
-    int [] enemiesPerWave = {1, 3, 5, 7, 9};
+    int [] enemiesPerWave = {3, 3, 5, 7, 9};
 
     int [][] enemyHP = {{2}, {2, 2, 2}, {2, 2, 2, 2, 2}, {2, 2, 2, 2, 2, 2, 2}, {2, 2, 2, 2, 2, 2, 2, 2, 2}};
 
@@ -168,11 +170,10 @@ public class Start extends JPanel implements Runnable, MouseListener {
         }
     }
 
-    // Moving the enemy and moving the bullets
+    // Moving the enemy and moving the bullets and checking for collision
     public void update() {
         moveEnemy();
         updateBullets();
-        checkCollision();
     }
 
     // Returns the correct waveImage to display
@@ -185,15 +186,24 @@ public class Start extends JPanel implements Runnable, MouseListener {
     }
 
     // Checks if a bullet has collided with any ghost
-    public void checkCollision() {
-        for (int i = 0; i < towerBullets.length; i++) {
-            for (int j = 0; j < enemyHP[wave].length; j++) {
-                if (enemiesList[enemyCount] != null) {
-                    if (enemiesList[j].x + 100 >= towerBullets[i].get(i).x && enemiesList[j].x <= towerBullets[i].get(i).x && enemiesList[j].y + 100 >= towerBullets[i].get(i).y && enemiesList[j].y <= towerBullets[i].get(i).y) {
-                        enemyHP[wave][j]--;
-                        if (enemyHP[wave][j] == 0) {
-                            System.out.println("ENEMY HAS DIED");
+    public void checkCollision(Rectangle bullet) {
+        for (int j = 0; j < enemyHP[wave].length; j++) {
+            System.out.println("BEFORE != null");
+            System.out.println("ENEMY COUNT: " + enemyCount);
+            if (enemiesList[enemyCount - 1] != null) {
+                System.out.println("GOING INTO LOOP");
+                if (enemiesList[j] != null && enemiesList[j].intersects(bullet)) {
+                    enemyHP[wave][j]--;
+                    if (enemyHP[wave][j] == 0) {
+                        System.out.println("ENEMY HAS DIED");
+                        enemiesList[enemyCount - 1] = null;
+                        for (int i = 0; i < enemiesList.length; i++) {
+                            if (enemiesList[i] != null) {
+                                enemyTrack = i;
+                                break;
+                            }
                         }
+                        enemyCount--;
                     }
                 }
             }
@@ -219,7 +229,6 @@ public class Start extends JPanel implements Runnable, MouseListener {
                     bullets[i] = rotatedBullet;
 
                     slope = getSlope(towers[i].x, towers[i].y, enemiesList[enemyTrack].x, enemiesList[enemyTrack].y);
-//                    slope *= 20;
 
                     bulletSlope[i].add(slope);
                     setupBullets[i] = true;
@@ -266,7 +275,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
                         towerBullets[i].get(j).x += bulletSlope[i].get(j) * 20;
                         towerBullets[i].get(j).y += bulletSlope[i].get(j) * 20;
                     }
-
+                    checkCollision(towerBullets[i].get(j));
                     if (towerBullets[i].get(j).x >= 800 || towerBullets[i].get(j).y >= 800 || towerBullets[i].get(j).x <= 0 || towerBullets[i].get(j).y <= 0) {
                         towerBullets[i].remove(j);
                         bulletSlope [i].remove (j);
@@ -280,8 +289,16 @@ public class Start extends JPanel implements Runnable, MouseListener {
     // Moves the enemy
     public void moveEnemy() {
         //spawn a new enemy every certain frame counts
-        if (inGame && FPSCOUNT % 45 == 0 && enemyCount < enemiesPerWave[wave]) {
-            enemiesList[enemyCount++] = new Rectangle(-100, 250, 100, 100);
+        if (inGame && FPSCOUNT % 45 == 0 && enemyCount < enemiesPerWave[wave] && !waveComplete) {
+            if (enemyCount == enemiesPerWave[wave]) {
+                waveComplete = true;
+            } else {
+                waveStart = true;
+                enemiesList[enemyCount++] = new Rectangle(-100, 250, 100, 100);
+            }
+        }
+        if (enemyCount == 0 && waveComplete == true) {
+            waveComplete = false;
         }
         // Loop through all the enemies and move them
         // Moving the ghost along the track
@@ -293,7 +310,24 @@ public class Start extends JPanel implements Runnable, MouseListener {
                 } else {
                     enemiesList[i].y -= 2;
                 }
+
+                if (enemiesList[i].x > 800) {
+                    enemiesList[i] = null;
+                    for (int p = 0; p < enemiesList.length; p++) {
+                        if (enemiesList[p] != null) {
+                            enemyTrack = p;
+                            break;
+                        }
+                    }
+                    enemyCount--;
+                }
             }
+        }
+        System.out.println("ENEMY TRACK: " + enemyTrack);
+        if (enemyCount == 0 && waveStart == true) {
+            System.out.println(wave);
+            wave++;
+            waveStart = false;
         }
     }
 
@@ -320,7 +354,10 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
         if (inGame == true) {
             for (int i = 0; i < enemyCount; i++) {
-                g.drawImage(enemyImage, enemiesList[i].x, enemiesList[i].y, 100, 100, this);
+                if (enemiesList[i] != null) {
+                    g.drawRect(enemiesList[i].x, enemiesList[i].y, 100, 100);
+                    g.drawImage(enemyImage, enemiesList[i].x, enemiesList[i].y, 100, 100, this);
+                }
 
                 // Changes wave image every 300 frames
                 if (FPSCOUNT % 300 == 0) {
@@ -336,12 +373,6 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
                 if (FPSCOUNT > 0) {
                     g.drawImage(rotateImage(towerSwivelImage, (getTheta(enemiesList[enemyTrack].x, enemiesList[enemyTrack].y, i))), towers[i].x + 7, towers[i].y + 5, 80, 80, this);
-
-                    if (enemiesList[enemyTrack] != null && enemiesList[enemyTrack].x > 775) {
-                        enemiesList[enemyTrack] = null;
-                        enemyCount--;
-                        enemyTrack++;
-                    }
                 }
             }
         }
@@ -356,7 +387,8 @@ public class Start extends JPanel implements Runnable, MouseListener {
                             System.out.println("sjdflskdjf " + (bulletSlope[i].size() + "-" + towerBullets[i].size()));
 
                             System.out.println(towerBullets[i].get(j).x + ", " + towerBullets[i].get(j).y);
-                            g.drawImage(bullets[i], towerBullets[i].get(j).x, towerBullets[i].get(j).y, 20, 20, this);
+                            g.drawRect(towerBullets[i].get(j).x + 45, towerBullets[i].get(j).y + 40, 20, 20);
+                            g.drawImage(bullets[i], towerBullets[i].get(j).x + 45, towerBullets[i].get(j).y + 40, 20, 20, this);
                         }
                     }
                 }
