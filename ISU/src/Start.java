@@ -57,7 +57,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
     int [] startShot = new int[40];
     Clip bgdMusic, click;
     int [] enemiesPerWave = {3, 3, 5, 7, 9};
-
+    boolean howToPlay = false;
     int [][] enemyHP = {{2}, {2, 2, 2}, {2, 2, 2, 2, 2}, {2, 2, 2, 2, 2, 2, 2}, {2, 2, 2, 2, 2, 2, 2, 2, 2}};
 
 //    int money = 4534534;
@@ -323,7 +323,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
                 }
             }
         }
-        System.out.println("ENEMY TRACK: " + enemyTrack);
+//        System.out.println("ENEMY TRACK: " + enemyTrack);
         if (enemyCount == 0 && waveStart == true) {
             System.out.println(wave);
             wave++;
@@ -494,9 +494,17 @@ public class Start extends JPanel implements Runnable, MouseListener {
             }
         }
 
+        if (howToPlay == true) {
+            if (x >= 642 && x <= 721 && y >= 12 && y <= 38) { // Exit button
+                picture = "towerDefence";
+                startScreen = true;
+                inGame = false;
+                repaint();
+            }
+        }
+
         // When in start screen
         if (startScreen == true) {
-            bgdMusic.start();
             if (x >= 644 && x <= 719 && y >= 507 && y <= 531) { // Exit button
                 System.exit(0);
             } else if (x >= 331 && x <= 467 && y >= 194 && y <= 233) { // Start button
@@ -506,19 +514,27 @@ public class Start extends JPanel implements Runnable, MouseListener {
                 startScreen = false;
                 inGame = true;
                 FPSCOUNT = 1;
+                howToPlay = false;
+                bgdMusic.start();
                 repaint();
+
             } else if (x >= 289 && x <= 510 && y >= 274 && y <= 313) { // About us button
                 System.out.println("ABOUT US");
                 picture = "aboutUs";
                 aboutUs = true;
                 startScreen = false;
                 inGame = false;
+                howToPlay = false;
                 repaint();
-            } else if (x >= 244 && x <= 552 && y >= 353 && y <= 391) { // How to Play button
+
+            } else if (x >= 245 && x <= 563 && y >= 353 && y <= 391) { // How to Play button
                 System.out.println("HOW TO PLAY");
+                picture = "howtoplay";
+                howToPlay = true;
                 aboutUs = false;
                 startScreen = false;
                 inGame = false;
+                repaint();
             }
         }
 
