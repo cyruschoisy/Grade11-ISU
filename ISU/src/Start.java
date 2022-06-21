@@ -58,7 +58,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
     int [] enemiesPerWave = {3, 3, 5, 7, 9};
     boolean howToPlay = false;
     int interval = 100;
-    int money = 0; // Amount of money each user has
+    int money = 750; // Amount of money each user has
     Clip bgdMusic, click; // Initialization of background music
 
     // Constructor
@@ -214,7 +214,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
         //Check to see if it is time to add a new bullet to each tower
         for (int i = 0; i < towerBullets.length; i++) {
             if (towerBullets[i] != null && enemiesList [enemyTrack] != null) {
-                if ((FPSCOUNT) % 200 == 0) {
+                if ((FPSCOUNT) % 125 == 0) {
 
                     towerBullets[i].add(new Rectangle(towers[i]));
 
@@ -516,13 +516,13 @@ public class Start extends JPanel implements Runnable, MouseListener {
                 System.exit(0);
 
             } else if (x >= 331 && x <= 467 && y >= 194 && y <= 233) { // Start button
-//                System.out.println("START");
                 picture = "firstMapGrid";
                 map = 1;
                 startScreen = false;
                 inGame = true;
                 FPSCOUNT = 1;
                 howToPlay = false;
+                System.out.println("Starting Balance: " + money);
                 repaint();
 
             } else if (x >= 289 && x <= 510 && y >= 274 && y <= 313) { // About us button
@@ -553,7 +553,13 @@ public class Start extends JPanel implements Runnable, MouseListener {
                 if (x > towers[i].x && x < towers[i].x + 100 && y > towers[i].y && y < towers[i].y + 100) {
                     if (clickedTowers[i] == false) {
                         clickedPos = i;
-                        clickedTowers[i] = true;
+                        if (money >= 500) {
+                            clickedTowers[i] = true;
+                            money -= 500;
+                            System.out.println("Balance: " + money);
+                        } else {
+                            System.out.println("INSUFFICIENT FUNDS");
+                        }
                     }
 //                    System.out.print(clickedTowers[i]);
                     break;
@@ -563,12 +569,6 @@ public class Start extends JPanel implements Runnable, MouseListener {
             // Adds clicked pos for towers that have been clicked, also records FPS
             if (clickedPos != -1) {
                 click.start();
-                if (money >= 500) {
-                    money = money - 500;
-                } else {
-                    System.out.println("INSUFFICIENT FUNDS");
-                }
-                System.out.println ("Balance: " + money);
 
                 towerBullets[clickedPos] = new ArrayList<Rectangle>();
                 bulletSlope[clickedPos] = new ArrayList<Double>();
