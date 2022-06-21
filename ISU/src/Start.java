@@ -197,13 +197,14 @@ public class Start extends JPanel implements Runnable, MouseListener {
                     System.out.println ("Balance: " + money);
 
                     enemiesList[j] = null;
-                        for (int i = 0; i < enemiesList.length; i++) {
-                            if (enemiesList[i] != null) {
-                                enemyTrack = i;
-                                break;
-                            }
+                    for (int i = 0; i < enemiesList.length; i++) {
+                        if (enemiesList[i] != null) {
+                            enemyTrack = i;
+                            break;
                         }
-                        enemyCount--;
+                    }
+                    enemyCount--;
+                    break;
                     }
                 }
             }
@@ -245,35 +246,35 @@ public class Start extends JPanel implements Runnable, MouseListener {
                 for (int j = 0; j < towerBullets[i].size(); j++) {
                     // Straight up
                     if (towers [i].x == enemiesList [enemyTrack].x && towers [i].y > enemiesList [enemyTrack].y) {
-                        towerBullets[i].get(j).y -= bulletSlope[i].get(j) * 20;
+                        towerBullets[i].get(j).y -= bulletSlope[i].get(j);
                     }
                     // Right
                     else if (towers [i].x < enemiesList [enemyTrack].x && towers [i].y == enemiesList [enemyTrack].y) {
-                        towerBullets[i].get(j).x += bulletSlope[i].get(j) * 20;
+                        towerBullets[i].get(j).x += bulletSlope[i].get(j);
                     }
                     // Left
                     else if (towers [i].x > enemiesList [enemyTrack].x && towers [i].y == enemiesList [enemyTrack].y) {
-                        towerBullets[i].get(j).x -= bulletSlope[i].get(j) * 20;
+                        towerBullets[i].get(j).x -= bulletSlope[i].get(j);
                     }
                     // Top left
                     if (towers [i].x > enemiesList [enemyTrack].x && towers [i].y > enemiesList [enemyTrack].y) {
-                        towerBullets[i].get(j).x -= bulletSlope[i].get(j) * 20;
-                        towerBullets[i].get(j).y -= bulletSlope[i].get(j) * 20;
+                        towerBullets[i].get(j).x -= bulletSlope[i].get(j);
+                        towerBullets[i].get(j).y -= bulletSlope[i].get(j);
                     }
                     // Top right
                     else if (towers [i].x < enemiesList [enemyTrack].x && towers [i].y > enemiesList [enemyTrack].y) {
-                        towerBullets[i].get(j).x += bulletSlope[i].get(j) * 20;
-                        towerBullets[i].get(j).y -= bulletSlope[i].get(j) * 20;
+                        towerBullets[i].get(j).x += bulletSlope[i].get(j);
+                        towerBullets[i].get(j).y -= bulletSlope[i].get(j);
                     }
                     // Bottom left
                     if (towers [i].x > enemiesList [enemyTrack].x && towers [i].y < enemiesList [enemyTrack].y) {
-                        towerBullets[i].get(j).x -= bulletSlope[i].get(j) * 20;
-                        towerBullets[i].get(j).y += bulletSlope[i].get(j) * 20;
+                        towerBullets[i].get(j).x -= bulletSlope[i].get(j);
+                        towerBullets[i].get(j).y += bulletSlope[i].get(j);
                     }
                     // Bottom right
                     else if (towers [i].x < enemiesList [enemyTrack].x && towers [i].y < enemiesList [enemyTrack].y) {
-                        towerBullets[i].get(j).x += bulletSlope[i].get(j) * 20;
-                        towerBullets[i].get(j).y += bulletSlope[i].get(j) * 20;
+                        towerBullets[i].get(j).x += bulletSlope[i].get(j);
+                        towerBullets[i].get(j).y += bulletSlope[i].get(j);
                     }
                     checkCollision(towerBullets[i].get(j));
                     if (towerBullets[i].get(j).x >= 800 || towerBullets[i].get(j).y >= 800 || towerBullets[i].get(j).x <= 0 || towerBullets[i].get(j).y <= 0) {
@@ -432,7 +433,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
     // NOTE: A slope of 1 means changing y by - 1 for every + 1 change in x
     // A slope of -1 means changing y by + 1 for every - 1 change in x
     public double getSlope(int x1, int y1, int x2, int y2) {
-        double vertical = y2 - y1;
+        double vertical = y1 - y2;
         double horizontal = x2 - x1;
 
         double slope = Math.abs(vertical / horizontal);
