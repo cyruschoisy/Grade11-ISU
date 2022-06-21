@@ -59,6 +59,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
     boolean howToPlay = false;
     int interval = 100;
     int money = 750; // Amount of money each user has
+    double tempTheta = 270;
     Clip bgdMusic, click; // Initialization of background music
 
     // Constructor
@@ -194,7 +195,6 @@ public class Start extends JPanel implements Runnable, MouseListener {
                     System.out.println ("Balance: " + money);
 
                     enemiesList[j] = null;
-                    System.out.println("ENEMY DEATH");
                     for (int i = 0; i < enemiesList.length; i++) {
                         if (enemiesList[i] != null) {
                             enemyTrack = i;
@@ -227,7 +227,6 @@ public class Start extends JPanel implements Runnable, MouseListener {
                     rotatedBullet = rotateImage(bullet, angle);
                     bullets[i] = rotatedBullet;
 
-                    System.out.println(getSlope(towers[i].x + 45, towers[i].y + 40, enemiesList[enemyTrack].x, enemiesList[enemyTrack].y));
                     slope = getSlope(towers[i].x + 45, towers[i].y + 40, enemiesList[enemyTrack].x, enemiesList[enemyTrack].y);
 
                     bulletSlope[i].add(slope);
@@ -364,7 +363,6 @@ public class Start extends JPanel implements Runnable, MouseListener {
             // Draws each enemy image
             for (int i = 0; i < enemyCount; i++) {
                 if (enemiesList[i] != null) {
-                    g.drawRect(enemiesList[i].x, enemiesList[i].y, 100, 100);
                     g.drawImage(enemyImage, enemiesList[i].x, enemiesList[i].y, 100, 100, this);
                 }
 
@@ -382,7 +380,15 @@ public class Start extends JPanel implements Runnable, MouseListener {
                 g.drawImage(towerBaseImage, towers[i].x + 7, towers[i].y + 5, 80, 80, this);
 
                 if (FPSCOUNT > 0) {
-                    g.drawImage(rotateImage(towerSwivelImage, (getTheta(enemiesList[enemyTrack].x, enemiesList[enemyTrack].y, i))), towers[i].x + 7, towers[i].y + 5, 80, 80, this);
+                    if (enemiesList[enemyTrack] != null) {
+                        tempTheta = getTheta(enemiesList[enemyTrack].x, enemiesList[enemyTrack].y, i);
+                        g.drawImage(rotateImage(towerSwivelImage, (getTheta(enemiesList[enemyTrack].x, enemiesList[enemyTrack].y, i))), towers[i].x + 7, towers[i].y + 5, 80, 80, this);
+                    } else {
+                        if (enemiesList[enemyTrack + 1] != null) {
+                            enemyTrack++;
+                        }
+                        g.drawImage(rotateImage(towerSwivelImage, tempTheta), towers[i].x + 7, towers[i].y + 5, 80, 80, this);
+                    }
                 }
             }
         }
@@ -393,7 +399,6 @@ public class Start extends JPanel implements Runnable, MouseListener {
                     // Sets up each bullet, draws the bullet image
                     if (enemiesList[enemyTrack] != null) {
                         if (setupBullets[i] == true) {
-                            g.drawRect(towerBullets[i].get(j).x + 45, towerBullets[i].get(j).y + 40, 20, 20);
                             g.drawImage(bullets[i], towerBullets[i].get(j).x + 45, towerBullets[i].get(j).y + 40, 20, 20, this);
                         }
                     }
@@ -561,7 +566,6 @@ public class Start extends JPanel implements Runnable, MouseListener {
                             System.out.println("INSUFFICIENT FUNDS");
                         }
                     }
-//                    System.out.print(clickedTowers[i]);
                     break;
                 }
             }
