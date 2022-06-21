@@ -48,13 +48,12 @@ public class Start extends JPanel implements Runnable, MouseListener {
     boolean waveComplete = false;
     boolean[] clickedTowers = new boolean[48];
     int enemyCount = 0;
-    Rectangle[] enemiesList = new Rectangle[50];
+    Rectangle[] enemiesList = new Rectangle[500];
     Rectangle[] towers = new Rectangle[48];
     ArrayList<Rectangle>[] towerBullets = new ArrayList[500];
     BufferedImage bullets[] = new BufferedImage[500];
     ArrayList <Double> bulletSlope[] = new ArrayList[500];
     Boolean setupBullets[] = new Boolean[500];
-    int [] startShot = new int[500];
     Clip bgdMusic, click;
     int [] enemiesPerWave = {3, 3, 5, 7, 9};
     boolean howToPlay = false;
@@ -212,7 +211,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
         //Check to see if it is time to add a new bullet to each tower
         for (int i = 0; i < towerBullets.length; i++) {
             if (towerBullets[i] != null && enemiesList [enemyTrack] != null) {
-                if ((FPSCOUNT - startShot[i]) % 100 == 0) {
+                if ((FPSCOUNT) % 100 == 0) {
 
                     towerBullets[i].add(new Rectangle(towers[i]));
 
@@ -243,30 +242,30 @@ public class Start extends JPanel implements Runnable, MouseListener {
                     }
                     // Right
                     else if (towers [i].x < enemiesList [enemyTrack].x && towers [i].y == enemiesList [enemyTrack].y) {
-                        towerBullets[i].get(j).x += bulletSlope[i].get(j) * 15;
+                        towerBullets[i].get(j).x += 15;
                     }
                     // Left
                     else if (towers [i].x > enemiesList [enemyTrack].x && towers [i].y == enemiesList [enemyTrack].y) {
-                        towerBullets[i].get(j).x -= bulletSlope[i].get(j) * 15;
+                        towerBullets[i].get(j).x -= 15;
                     }
                     // Top left
                     else if (towers [i].x > enemiesList [enemyTrack].x && towers [i].y > enemiesList [enemyTrack].y) {
-                        towerBullets[i].get(j).x -= bulletSlope[i].get(j) * 15;
+                        towerBullets[i].get(j).x -= 15;
                         towerBullets[i].get(j).y -= bulletSlope[i].get(j) * 15;
                     }
                     // Top right
                     else if (towers [i].x < enemiesList [enemyTrack].x && towers [i].y > enemiesList [enemyTrack].y) {
-                        towerBullets[i].get(j).x += bulletSlope[i].get(j) * 15;
+                        towerBullets[i].get(j).x += 15;
                         towerBullets[i].get(j).y -= bulletSlope[i].get(j) * 15;
                     }
                     // Bottom left
                     else if (towers [i].x > enemiesList [enemyTrack].x && towers [i].y < enemiesList [enemyTrack].y) {
-                        towerBullets[i].get(j).x -= bulletSlope[i].get(j) * 15;
+                        towerBullets[i].get(j).x -= 15;
                         towerBullets[i].get(j).y += bulletSlope[i].get(j) * 15;
                     }
                     // Bottom right
                     else if (towers [i].x < enemiesList [enemyTrack].x && towers [i].y < enemiesList [enemyTrack].y) {
-                        towerBullets[i].get(j).x += bulletSlope[i].get(j) * 15;
+                        towerBullets[i].get(j).x += 15;
                         towerBullets[i].get(j).y += bulletSlope[i].get(j) * 15;
                     }
                     checkCollision(towerBullets[i].get(j));
@@ -283,7 +282,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
     // Moves the enemy
     public void moveEnemy() {
         //spawn a new enemy every certain frame counts
-        if (inGame == true && FPSCOUNT % interval == 0 && enemyCount < 50) {
+        if (inGame == true && FPSCOUNT % interval == 0 && enemyCount < 100) {
             enemiesList[enemyCount++] = new Rectangle(-100, 250, 100, 100);
         }
 
@@ -303,7 +302,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
             interval = 25;
         }
 
-        else if (enemyCount >= 40 && enemyCount <= 49) {
+        else if (enemyCount >= 40) {
             interval = 15;
         }
         // Loop through all the enemies and move them
@@ -564,12 +563,15 @@ public class Start extends JPanel implements Runnable, MouseListener {
             // Adds clicked pos for towers that have been clicked, also records FPS
             if (clickedPos != -1) {
                 click.start();
-                money = money - 50;
+                if (money >= 500) {
+                    money = money - 500;
+                } else {
+                    System.out.println("INSUFFICIENT FUNDS");
+                }
                 System.out.println ("Balance: " + money);
                 
                 towerBullets[clickedPos] = new ArrayList<Rectangle>();
                 bulletSlope[clickedPos] = new ArrayList<Double>();
-                startShot[clickedPos] = FPSCOUNT;
             }
         }
     }
