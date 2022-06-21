@@ -48,20 +48,18 @@ public class Start extends JPanel implements Runnable, MouseListener {
     boolean waveComplete = false;
     boolean[] clickedTowers = new boolean[48];
     int enemyCount = 0;
-    Rectangle[] enemiesList = new Rectangle[50];
-    Rectangle[] towers = new Rectangle[48];
-    ArrayList<Rectangle>[] towerBullets = new ArrayList[500];
-    BufferedImage bullets[] = new BufferedImage[500];
-    ArrayList <Double> bulletSlope[] = new ArrayList[500];
+    Rectangle[] enemiesList = new Rectangle[50]; // Number of enemies
+    Rectangle[] towers = new Rectangle[48]; // Initializing rectangle array for towers
+    ArrayList <Rectangle> [] towerBullets = new ArrayList[500]; // Writes array in arrayList
+    BufferedImage bullets[] = new BufferedImage [500]; // Bullets buffered image
+    ArrayList <Double> bulletSlope[] = new ArrayList[500]; // ArrayList for slope of each bullet
     Boolean setupBullets[] = new Boolean[500];
-    int [] startShot = new int[500];
+    int [] startShot = new int[500]; // Number of bullets
     Clip bgdMusic, click;
     int [] enemiesPerWave = {3, 3, 5, 7, 9};
     boolean howToPlay = false;
-    int [][] enemyHP = {{2}, {2, 2, 2}, {2, 2, 2, 2, 2}, {2, 2, 2, 2, 2, 2, 2}, {2, 2, 2, 2, 2, 2, 2, 2, 2}};
     int interval = 100;
-    int money = 0;
-
+    int money = 0; // Amount of money each user has
 
     // Constructor
     public Start() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
@@ -500,7 +498,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
                 repaint();
             }
         }
-
+        // If exit button on how to play screen is clicked
         if (howToPlay == true) {
             if (x >= 642 && x <= 721 && y >= 12 && y <= 38) { // Exit button
                 picture = "towerDefence";
