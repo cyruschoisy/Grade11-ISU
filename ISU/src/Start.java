@@ -90,10 +90,12 @@ public class Start extends JPanel implements Runnable, MouseListener {
             wave4Image = ImageIO.read(new File("wave1.png"));
             wave5Image = ImageIO.read(new File("wave1.png"));
 
+            // Initialization of background music
             AudioInputStream sound = AudioSystem.getAudioInputStream(new File("music.wav"));
             bgdMusic = AudioSystem.getClip();
             bgdMusic.open(sound);
 
+            // Initialization of click music
             sound = AudioSystem.getAudioInputStream(new File("click.wav"));
             click = AudioSystem.getClip();
             click.open(sound);
@@ -570,7 +572,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
                 click.start();
                 money = money - 50;
                 System.out.println ("Balance: " + money);
-                
+
                 towerBullets[clickedPos] = new ArrayList<Rectangle>();
                 bulletSlope[clickedPos] = new ArrayList<Double>();
                 startShot[clickedPos] = FPSCOUNT;
