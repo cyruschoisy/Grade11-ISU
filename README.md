@@ -32,7 +32,6 @@ Christian:
 #### **Known bugs / Errors**
 - Crashes if you place the tower before the ghost (due to it reading null)
 - You need multiple enemies on the screen before you start placing towers (or crash occurs)
-- Aim is slightly off, cannot aim towards the left
 - User cannot shoot many enemies at once in the event of no enemies on the screen left
 
 #### **Other important Information**
