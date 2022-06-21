@@ -13,26 +13,26 @@ Cyrus:
 
 Christian: 
 - Included multiple images at once (using buffered image)
-- Initialized our FPS counter
-- Set angles and slope to rotate tower turret
+- Initialized our FPS counter and managed thread sleep times
+- Created getTheta() to calculate the angle from the bullet to the enmy and the tower to the enemy
+- Created rotateImage() that reads in an angle in degrees and rotates and returns a BufferedImage
+- Created getSlope() which determines the bullet path using the slope of the hypotenuse 
 - Collision for bullets + enemies
-- Implemented wave counter + wave image
+- Implemented cost of tower and dynamic rates for money
 - Art for turret and map
 
 #### **Missing Functionalities**
 - Missing other levels
 - Aimed for multiple towers and upgrade options
-- Instead of array to set int values to, instead we used rectangle arrays to draw all the towers
 
 #### **Additional Functionalities**
 - Made the tower turret rotate to track each enemy
 - Added click sound
 - You can place towers on any square in the grid aside for the track
+- Tower bullets that have a certain "pierce" (1 pierce => bullet goes through one enemy, 2 pierce => bullet goes through two enemies, etc...)
 
 #### **Known bugs / Errors**
-- Crashes if you place the tower before the ghost (due to it reading null)
-- You need multiple enemies on the screen before you start placing towers (or crash occurs)
-- User cannot shoot many enemies at once in the event of no enemies on the screen left
+- crashes once it reaches the end amount of enemies
 
 #### **Other important Information**
-- Although this program is very different from what we originally imagined we could do in our time constraint, we hope you still enjoy playing level 1
+- N/A
