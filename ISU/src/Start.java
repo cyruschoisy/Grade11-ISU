@@ -328,6 +328,8 @@ public class Start extends JPanel implements Runnable, MouseListener {
                     for (int p = 0; p < enemiesList.length; p++) {
                         if (enemiesList[p] != null) {
                             enemyTrack = p;
+                            System.out.println ("YOU LOSE!");
+                            System.exit (0);
                             break;
                         }
                     }
