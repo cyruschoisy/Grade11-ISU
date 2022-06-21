@@ -230,6 +230,18 @@ public class Start extends JPanel implements Runnable, MouseListener {
         for (int i = 0; i < towerBullets.length; i++) {
             if (towerBullets[i] != null) {
                 for (int j = 0; j < towerBullets[i].size(); j++) {
+                    // Straight up
+                    if (towers [i].x == enemiesList [enemyTrack].x && towers [i].y > enemiesList [enemyTrack].y) {
+                        towerBullets[i].get(j).y -= bulletSlope[i].get(j);
+                    }
+                    // Right
+                    else if (towers [i].x < enemiesList [enemyTrack].x && towers [i].y == enemiesList [enemyTrack].y) {
+                        towerBullets[i].get(j).x += bulletSlope[i].get(j);
+                    }
+                    // Left
+                    else if (towers [i].x > enemiesList [enemyTrack].x && towers [i].y == enemiesList [enemyTrack].y) {
+                        towerBullets[i].get(j).x -= bulletSlope[i].get(j);
+                    }
                     // Top left
                     if (towers [i].x > enemiesList [enemyTrack].x && towers [i].y > enemiesList [enemyTrack].y) {
                         towerBullets[i].get(j).x -= bulletSlope[i].get(j);
@@ -249,18 +261,6 @@ public class Start extends JPanel implements Runnable, MouseListener {
                     else if (towers [i].x < enemiesList [enemyTrack].x && towers [i].y < enemiesList [enemyTrack].y) {
                         towerBullets[i].get(j).x += bulletSlope[i].get(j);
                         towerBullets[i].get(j).y += bulletSlope[i].get(j);
-                    }
-                    // Straight up
-                    else if (towers [i].x == enemiesList [enemyTrack].x && towers [i].y > enemiesList [enemyTrack].y) {
-                        towerBullets[i].get(j).y -= bulletSlope[i].get(j);
-                    }
-                    // Right
-                    else if (towers [i].x < enemiesList [enemyTrack].x && towers [i].y == enemiesList [enemyTrack].y) {
-                        towerBullets[i].get(j).x += bulletSlope[i].get(j);
-                    }
-                    // Left
-                    else if (towers [i].x > enemiesList [enemyTrack].x && towers [i].y == enemiesList [enemyTrack].y) {
-                        towerBullets[i].get(j).x -= bulletSlope[i].get(j);
                     }
 
                     if (towerBullets[i].get(j).x >= 800 || towerBullets[i].get(j).y >= 800 || towerBullets[i].get(j).x <= 0 || towerBullets[i].get(j).y <= 0) {
