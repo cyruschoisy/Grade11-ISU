@@ -48,7 +48,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
     boolean waveComplete = false;
     boolean[] clickedTowers = new boolean [48];
     int enemyCount = 0;
-    Rectangle[] enemiesList = new Rectangle [100]; // Number of enemies
+    Rectangle[] enemiesList = new Rectangle [250]; // Number of enemies
     Rectangle[] towers = new Rectangle [48]; // Initializing rectangle array for towers
     ArrayList <Rectangle> [] towerBullets = new ArrayList [500]; // Writes array in arrayList
     BufferedImage bullets [] = new BufferedImage [500]; // Bullets buffered image
@@ -307,7 +307,12 @@ public class Start extends JPanel implements Runnable, MouseListener {
         else if (enemyCount >= 40) {
             interval = 35;
         }
-        else if (enemyCount == 99) {
+
+        else if (enemyCount >= 100) {
+            interval = 20;
+        }
+        
+        else if (enemyCount == 249) {
             
         }
         // Loop through all the enemies and move them
