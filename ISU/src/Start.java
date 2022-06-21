@@ -632,7 +632,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
     // When mouse is clicked, declares what will happen
     public void handleAction(int x, int y) {
         // When on about us pane
-        if (aboutUs == true) {
+        if (aboutUs == true && !inGame) {
             if (x >= 642 && x <= 721 && y >= 12 && y <= 38) { // Exit button
                 picture = "towerDefence";
                 startScreen = true;
@@ -641,7 +641,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
             }
         }
         // If exit button on how to play screen is clicked
-        if (howToPlay == true) {
+        if (howToPlay == true && !inGame) {
             if (x >= 642 && x <= 721 && y >= 12 && y <= 38) { // Exit button
                 picture = "towerDefence";
                 startScreen = true;
