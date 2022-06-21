@@ -30,9 +30,10 @@ Christian:
 - Added click sound
 - You can place towers on any square in the grid aside for the track
 - Tower bullets that have a certain "pierce" (1 pierce => bullet goes through one enemy, 2 pierce => bullet goes through two enemies, etc...)
+- Added a cool cursor
 
 #### **Known bugs / Errors**
-- crashes once it reaches the end amount of enemies
+- N/A
 
 #### **Other important Information**
-- N/A
+- PS: If you are struggling to win the game, the top right corner has some very advantageous positions!
