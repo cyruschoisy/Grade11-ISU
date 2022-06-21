@@ -183,7 +183,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
     }
 
     // Checks if a bullet has collided with any ghost
-    public void checkCollision(Rectangle bullet) {
+    public boolean checkCollision(Rectangle bullet) {
         for (int j = 0; j < enemiesList.length; j++) {
 //            System.out.println("BEFORE != null");
 //            System.out.println("ENEMY COUNT: " + enemyCount);
@@ -201,9 +201,11 @@ public class Start extends JPanel implements Runnable, MouseListener {
                             break;
                         }
                     }
+                    return true;
                 }
             }
         }
+        return false;
     }
 
 
@@ -212,7 +214,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
         //Check to see if it is time to add a new bullet to each tower
         for (int i = 0; i < towerBullets.length; i++) {
             if (towerBullets[i] != null && enemiesList [enemyTrack] != null) {
-                if ((FPSCOUNT) % 100 == 0) {
+                if ((FPSCOUNT) % 200 == 0) {
 
                     towerBullets[i].add(new Rectangle(towers[i]));
 
@@ -269,8 +271,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
                         towerBullets[i].get(j).x += 15;
                         towerBullets[i].get(j).y += bulletSlope[i].get(j) * 15;
                     }
-                    checkCollision(towerBullets[i].get(j));
-                    if (towerBullets[i].get(j).x >= 800 || towerBullets[i].get(j).y >= 800 || towerBullets[i].get(j).x <= 0 || towerBullets[i].get(j).y <= 0) {
+                    if (checkCollision(towerBullets[i].get(j)) || towerBullets[i].get(j).x >= 800 || towerBullets[i].get(j).y >= 800 || towerBullets[i].get(j).x <= 0 || towerBullets[i].get(j).y <= 0) {
                         towerBullets[i].remove(j);
                         bulletSlope [i].remove (j);
                         j--;
@@ -293,19 +294,19 @@ public class Start extends JPanel implements Runnable, MouseListener {
         }
 
         else if (enemyCount >= 10 && enemyCount <= 19) {
-            interval = 75;
+            interval = 85;
         }
 
         else if (enemyCount >= 20 && enemyCount <= 29) {
-            interval = 50;
+            interval = 75;
         }
 
         else if (enemyCount >= 30 && enemyCount <= 39) {
-            interval = 25;
+            interval = 50;
         }
 
         else if (enemyCount >= 40) {
-            interval = 15;
+            interval = 35;
         }
 
         // Loop through all the enemies and move them
