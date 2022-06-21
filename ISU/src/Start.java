@@ -515,7 +515,9 @@ public class Start extends JPanel implements Runnable, MouseListener {
                 inGame = true;
                 FPSCOUNT = 1;
                 howToPlay = false;
+                bgdMusic.start();
                 repaint();
+
             } else if (x >= 289 && x <= 510 && y >= 274 && y <= 313) { // About us button
                 System.out.println("ABOUT US");
                 picture = "aboutUs";
@@ -524,6 +526,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
                 inGame = false;
                 howToPlay = false;
                 repaint();
+
             } else if (x >= 245 && x <= 563 && y >= 353 && y <= 391) { // How to Play button
                 System.out.println("HOW TO PLAY");
                 picture = "howtoplay";
