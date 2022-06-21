@@ -666,7 +666,6 @@ public class Start extends JPanel implements Runnable, MouseListener {
                 repaint();
 
             } else if (x >= 289 && x <= 510 && y >= 274 && y <= 313) { // About us button
-//                System.out.println("ABOUT US");
                 picture = "aboutUs";
                 aboutUs = true;
                 startScreen = false;
@@ -675,7 +674,6 @@ public class Start extends JPanel implements Runnable, MouseListener {
                 repaint();
 
             } else if (x >= 245 && x <= 563 && y >= 353 && y <= 391) { // How to Play button
-//                System.out.println("HOW TO PLAY");
                 picture = "howtoplay";
                 howToPlay = true;
                 aboutUs = false;
