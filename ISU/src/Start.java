@@ -223,7 +223,6 @@ public class Start extends JPanel implements Runnable, MouseListener {
                         towerBullets[i].get(j).x -= bulletSlope[i].get(j);
                         towerBullets[i].get(j).y -= bulletSlope[i].get(j);
                     }
-
                     // Top right
                     else if (towers [i].x < enemiesList [enemyTrack].x && towers [i].y > enemiesList [enemyTrack].y) {
                         towerBullets[i].get(j).x += bulletSlope[i].get(j);
@@ -234,7 +233,6 @@ public class Start extends JPanel implements Runnable, MouseListener {
                         towerBullets[i].get(j).x -= bulletSlope[i].get(j);
                         towerBullets[i].get(j).y += bulletSlope[i].get(j);
                     }
-
                     // Bottom right
                     else if (towers [i].x < enemiesList [enemyTrack].x && towers [i].y < enemiesList [enemyTrack].y) {
                         towerBullets[i].get(j).x += bulletSlope[i].get(j);
