@@ -31,10 +31,9 @@ Christian:
 
 #### **Known bugs / Errors**
 - Crashes if you place the tower before the ghost (due to it reading null)
-- You need multiple enemies on the screen before you start placing towers
-- Sometimes bullets bounce
-- Bullets also kill 2 enemies at once ocassionally
+- You need multiple enemies on the screen before you start placing towers (or crash occurs)
 - Aim is slightly off, cannot aim towards the left
+- User cannot shoot many enemies at once in the event of no enemies on the screen left
 
 #### **Other important Information**
 - Although this program is very different from what we originally imagined we could do in our time constraint, we hope you still enjoy playing level 1
