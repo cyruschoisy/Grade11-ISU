@@ -333,13 +333,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
             interval = 15;
             computeTime = 100;
         }
-        
-        else if (enemiesKilled == 249) {
-            startScreen = false;
-            picture = "winner";
-            System.out.println("YOU WIN");
-            repaint();
-        }
+
         // Loop through all the enemies and move them
         // Moving the ghost along the track
         for (int i = 0; i < enemyCount; i++) {
@@ -374,6 +368,12 @@ public class Start extends JPanel implements Runnable, MouseListener {
     // Paint Component
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+
+        if (enemiesKilled == 249) {
+            startScreen = false;
+            picture = "winner";
+            System.out.println("YOU WIN");
+        }
 
         Path currentRelativePath = Paths.get("");
         String root = currentRelativePath.toAbsolutePath().toString();
