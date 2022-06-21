@@ -371,7 +371,9 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
         if (enemiesKilled == 249) {
             startScreen = false;
+            inGame = false;
             picture = "winner";
+
             System.out.println("YOU WIN");
         }
 
@@ -413,7 +415,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
 
         // Drawing tower image
         for (int i = 0; i < towers.length; i++) {
-            if (clickedTowers[i] == true) {
+            if (clickedTowers[i] == true && inGame == true) {
                 g.drawImage(towerBaseImage, towers[i].x + 7, towers[i].y + 5, 80, 80, this);
 
                 if (FPSCOUNT > 0) {
@@ -421,8 +423,10 @@ public class Start extends JPanel implements Runnable, MouseListener {
                         tempTheta = getTheta(enemiesList[enemyTrack].x, enemiesList[enemyTrack].y, i);
                         g.drawImage(rotateImage(towerSwivelImage, (getTheta(enemiesList[enemyTrack].x, enemiesList[enemyTrack].y, i))), towers[i].x + 7, towers[i].y + 5, 80, 80, this);
                     } else {
-                        if (enemiesList[enemyTrack + 1] != null) {
-                            enemyTrack++;
+                        if (enemiesKilled != 249) {
+                            if (enemiesList[enemyTrack + 1] != null) {
+                                enemyTrack++;
+                            }
                         }
                         g.drawImage(rotateImage(towerSwivelImage, tempTheta), towers[i].x + 7, towers[i].y + 5, 80, 80, this);
                     }
