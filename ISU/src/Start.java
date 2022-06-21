@@ -48,12 +48,6 @@ public class Start extends JPanel implements Runnable, MouseListener {
     boolean waveComplete = false;
     boolean[] clickedTowers = new boolean[48];
     int enemyCount = 0;
-    Rectangle[] enemiesList = new Rectangle[500];
-    Rectangle[] towers = new Rectangle[48];
-    ArrayList<Rectangle>[] towerBullets = new ArrayList[500];
-    BufferedImage bullets[] = new BufferedImage[500];
-    ArrayList <Double> bulletSlope[] = new ArrayList[500];
-    Boolean setupBullets[] = new Boolean[500];
     Rectangle[] enemiesList = new Rectangle[50]; // Number of enemies
     Rectangle[] towers = new Rectangle[48]; // Initializing rectangle array for towers
     ArrayList <Rectangle> [] towerBullets = new ArrayList[500]; // Writes array in arrayList
@@ -65,6 +59,7 @@ public class Start extends JPanel implements Runnable, MouseListener {
     boolean howToPlay = false;
     int interval = 100;
     int money = 0; // Amount of money each user has
+    Clip bgdMusic, click; // Initialization of background music
 
     // Constructor
     public Start() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
