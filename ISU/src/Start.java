@@ -321,14 +321,12 @@ public class Start extends JPanel implements Runnable, MouseListener {
                 g.drawImage(towerBaseImage, towers[i].x + 7, towers[i].y + 5, 80, 80, this);
 
                 if (FPSCOUNT > 0) {
+                    g.drawImage(rotateImage(towerSwivelImage, (getTheta(enemiesList[enemyTrack].x, enemiesList[enemyTrack].y, i))), towers[i].x + 7, towers[i].y + 5, 80, 80, this);
+
                     if (enemiesList[enemyTrack] != null && enemiesList[enemyTrack].x > 775) {
                         enemiesList[enemyTrack] = null;
                         enemyCount--;
                         enemyTrack++;
-                    }
-
-                    if (enemiesList[enemyTrack] != null) {
-                        g.drawImage(rotateImage(towerSwivelImage, (getTheta(enemiesList[enemyTrack].x, enemiesList[enemyTrack].y, i))), towers[i].x + 7, towers[i].y + 5, 80, 80, this);
                     }
                 }
             }
